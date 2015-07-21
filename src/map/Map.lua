@@ -25,7 +25,11 @@ function Map.new()
     for x = 1, MAP_WIDTH do
         tiles[x] = {};
         for y = 1, MAP_HEIGHT do
-            tiles[x][y] = Tile.new(x, y);
+            if x == 1 or x == MAP_WIDTH or y == 1 or y == MAP_HEIGHT then
+                tiles[x][y] = Tile.new(x, y, 'wall');
+            else
+                tiles[x][y] = Tile.new(x, y, 'floor');
+            end
         end
     end
 
