@@ -22,7 +22,7 @@ function Tile.new(x, y, id)
     -- Decide the draw mode based on the tile's id. This can later be changed
     -- to a more elaborate function to choose a sprite.
     local drawMode = id == 'floor' and 'line' or 'fill';
-    local neighbourN, neighbourS, neighbourE, neighbourW;
+    local neighbours = {};
 
     function self:draw()
         love.graphics.rectangle(drawMode, x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
@@ -36,11 +36,14 @@ function Tile.new(x, y, id)
     end
 
     function self:setNeighbours(n, s, e, w)
-        neighbourN, neighbourS, neighbourE, neighbourW = n, s, e, w;
+        neighbours.n = n;
+        neighbours.s = s;
+        neighbours.e = e;
+        neighbours.w = w;
     end
 
     function self:getNeighbours()
-        return neighbourN, neighbourS, neighbourE, neighbourW;
+        return neighbours;
     end
 
     function self:getPosition()

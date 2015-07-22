@@ -24,19 +24,9 @@ function Player.new(tile)
     end
 
     function self:move(direction)
-        local n, s, e, w = tile:getNeighbours()
-        if direction == 'n' then
-            tile = n;
-            x, y = tile:getPosition();
-        elseif direction == 's' then
-            tile = s;
-            x, y = tile:getPosition();
-        end
-        if direction == 'e' then
-            tile = e;
-            x, y = tile:getPosition();
-        elseif direction == 'w' then
-            tile = w;
+        local neighbours = tile:getNeighbours();
+        if neighbours[direction] then
+            tile = neighbours[direction];
             x, y = tile:getPosition();
         end
     end
