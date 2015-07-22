@@ -31,15 +31,15 @@ function Tile.new(x, y, id)
     function self:update(dt)
     end
 
-    function self:getId()
-        return id;
-    end
-
     function self:setNeighbours(n, s, e, w)
         neighbours.n = n;
         neighbours.s = s;
         neighbours.e = e;
         neighbours.w = w;
+    end
+
+    function self:getId()
+        return id;
     end
 
     function self:getNeighbours()
