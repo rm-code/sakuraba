@@ -22,6 +22,7 @@ function Tile.new(x, y, id)
     -- Decide the draw mode based on the tile's id. This can later be changed
     -- to a more elaborate function to choose a sprite.
     local drawMode = id == 'floor' and 'line' or 'fill';
+    local passable = id == 'floor' and true or false;
     local neighbours = {};
 
     function self:draw()
@@ -48,6 +49,10 @@ function Tile.new(x, y, id)
 
     function self:getPosition()
         return x, y;
+    end
+
+    function self:isPassable()
+        return passable;
     end
 
     return self;

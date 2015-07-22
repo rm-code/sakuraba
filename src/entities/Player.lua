@@ -25,7 +25,7 @@ function Player.new(tile)
 
     function self:move(direction)
         local neighbours = tile:getNeighbours();
-        if neighbours[direction] then
+        if neighbours[direction] and neighbours[direction]:isPassable() then
             tile = neighbours[direction];
             x, y = tile:getPosition();
         end
