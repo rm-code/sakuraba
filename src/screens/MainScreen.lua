@@ -16,6 +16,7 @@ function MainScreen.new()
     local self = Screen.new();
 
     local map = Map.new();
+    map:init();
     local player = Player.new(2, 2);
 
     function self:draw()
