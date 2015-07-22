@@ -17,11 +17,24 @@ function MainScreen.new()
 
     local map = Map.new();
     map:init();
-    local player = Player.new(2, 2);
+    local player = Player.new(map:getTileAt(2, 2));
 
     function self:draw()
         map:draw();
         player:draw();
+    end
+
+    function self:keypressed(key)
+        if key == 'up' then
+            player:move('n');
+        elseif key == 'down' then
+            player:move('s');
+        end
+        if key == 'left' then
+            player:move('w');
+        elseif key == 'right' then
+            player:move('e');
+        end
     end
 
     return self;

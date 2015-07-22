@@ -78,6 +78,10 @@ function Map.new()
         end
     end
 
+    function self:getTileAt(x, y)
+        return tiles[x][y];
+    end
+
     return self;
 end
 

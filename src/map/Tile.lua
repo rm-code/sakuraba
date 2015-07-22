@@ -39,6 +39,14 @@ function Tile.new(x, y, id)
         neighbourN, neighbourS, neighbourE, neighbourW = n, s, e, w;
     end
 
+    function self:getNeighbours()
+        return neighbourN, neighbourS, neighbourE, neighbourW;
+    end
+
+    function self:getPosition()
+        return x, y;
+    end
+
     return self;
 end
 
