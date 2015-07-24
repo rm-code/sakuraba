@@ -54,6 +54,14 @@ function Tile.new(x, y, id)
         return x, y;
     end
 
+    function self:getX()
+        return x;
+    end
+
+    function self:getY()
+        return y;
+    end
+
     function self:isPassable()
         return passable;
     end

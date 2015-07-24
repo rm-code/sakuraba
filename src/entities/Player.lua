@@ -15,11 +15,9 @@ local Player = {};
 function Player.new(tile)
     local self = {};
 
-    local x, y = tile:getPosition();
-
     function self:draw()
         love.graphics.setColor(0, 255, 0);
-        love.graphics.print('@', x * TILE_SIZE, y * TILE_SIZE);
+        love.graphics.print('@', tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE);
         love.graphics.setColor(255, 255, 255);
     end
 
@@ -27,8 +25,15 @@ function Player.new(tile)
         local neighbours = tile:getNeighbours();
         if neighbours[direction] and neighbours[direction]:isPassable() then
             tile = neighbours[direction];
-            x, y = tile:getPosition();
         end
+    end
+
+    function self:setTile(ntile)
+        tile = ntile;
+    end
+
+    function self:getTile()
+        return tile;
     end
 
     return self;
