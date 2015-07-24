@@ -62,10 +62,8 @@ function MainScreen.new()
             if actor:getEnergy() >= ENERGY_THRESHOLD then
                 action:perform();
                 actor:setEnergy(actor:getEnergy() - ENERGY_THRESHOLD);
-                actor:grantEnergy();
-            else
-                actor:grantEnergy();
             end
+            actor:grantEnergy();
         end
     end
 
