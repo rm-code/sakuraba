@@ -6,6 +6,11 @@ local Constants = require('src.Constants');
 
 local TILE_SIZE = Constants.TILE_SIZE;
 
+local TILES = {
+    floor = { passable = true,  sprite = '.' },
+    wall  = { passable = false, sprite = '#' },
+}
+
 -- ------------------------------------------------
 -- Module
 -- ------------------------------------------------
@@ -19,14 +24,12 @@ local Tile = {};
 function Tile.new(x, y, id)
     local self = {};
 
-    -- Decide the draw mode based on the tile's id. This can later be changed
-    -- to a more elaborate function to choose a sprite.
-    local drawMode = id == 'floor' and '.' or '#';
-    local passable = id == 'floor' and true or false;
+    local sprite = TILES[id].sprite;
+    local passable = TILES[id].passable;
     local neighbours = {};
 
     function self:draw()
-        love.graphics.print(drawMode, x * TILE_SIZE, y * TILE_SIZE);
+        love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
     end
 
     function self:update(dt)
