@@ -25,22 +25,36 @@ function MainScreen.new()
 
     local map;
     local player;
+    local actors;
+
+    local currentActor = 1;
 
     function self:init()
         map = Map.new();
         map:init();
 
         player = Player.new(map:getTileAt(2, 2));
+
+        actors = {};
+        actors[#actors + 1] = player;
     end
 
     function self:draw()
         map:draw();
-        player:draw();
+        for i = 1, #actors do
+            actors[i]:draw();
+        end
     end
 
     function self:update(dt)
-        if player:getAction() then
-            player:getAction():perform();
+        while true do
+            local action = actors[currentActor]:getAction();
+            if action then
+                action:perform();
+                currentActor = currentActor == #actors and 1 or currentActor + 1;
+            else
+                break;
+            end
         end
     end
 
