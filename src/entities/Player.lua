@@ -15,21 +15,29 @@ local Player = {};
 function Player.new(tile)
     local self = {};
 
+    local action;
+
     function self:draw()
         love.graphics.setColor(0, 255, 0);
         love.graphics.print('@', tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE);
         love.graphics.setColor(255, 255, 255);
     end
 
-    function self:move(direction)
-        local neighbours = tile:getNeighbours();
-        if neighbours[direction] and neighbours[direction]:isPassable() then
-            tile = neighbours[direction];
+    function self:setAction(naction)
+        if naction then
+            action = naction;
+            action:bind(self);
+            return;
         end
+        action = nil;
     end
 
     function self:setTile(ntile)
         tile = ntile;
+    end
+
+    function self:getAction()
+        return action;
     end
 
     function self:getTile()

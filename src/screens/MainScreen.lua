@@ -1,6 +1,7 @@
 local Screen = require('lib.screenmanager.Screen');
 local Map = require('src.map.Map');
 local Player = require('src.entities.Player');
+local WalkAction = require('src.entities.actions.WalkAction');
 
 -- ------------------------------------------------
 -- Module
@@ -24,16 +25,22 @@ function MainScreen.new()
         player:draw();
     end
 
+    function self:update(dt)
+        if player:getAction() then
+            player:getAction():perform();
+        end
+    end
+
     function self:keypressed(key)
         if key == 'up' then
-            player:move('n');
+            player:setAction(WalkAction.new('n'));
         elseif key == 'down' then
-            player:move('s');
+            player:setAction(WalkAction.new('s'));
         end
         if key == 'left' then
-            player:move('w');
+            player:setAction(WalkAction.new('w'));
         elseif key == 'right' then
-            player:move('e');
+            player:setAction(WalkAction.new('e'));
         end
     end
 
