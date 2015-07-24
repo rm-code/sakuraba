@@ -48,6 +48,9 @@ function MainScreen.new()
 
     function self:update(dt)
         while true do
+            local actor = actors[currentActor];
+            actor:update(dt);
+
             local action = actors[currentActor]:getAction();
             if action then
                 action:perform();

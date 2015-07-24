@@ -17,6 +17,10 @@ function Player.new(tile)
 
     local action;
 
+    function self:update(dt)
+        return;
+    end
+
     function self:draw()
         love.graphics.setColor(0, 255, 0);
         love.graphics.print('@', tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE);
