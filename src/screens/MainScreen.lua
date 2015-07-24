@@ -9,6 +9,7 @@ local WalkAction = require('src.entities.actions.WalkAction');
 -- ------------------------------------------------
 
 local DIRECTION = Constants.DIRECTION;
+local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 
 -- ------------------------------------------------
 -- Module
@@ -26,8 +27,6 @@ function MainScreen.new()
     local map;
     local player;
     local actors;
-
-    local currentActor = 1;
 
     function self:init()
         map = Map.new();
@@ -47,16 +46,20 @@ function MainScreen.new()
     end
 
     function self:update(dt)
-        while true do
-            local actor = actors[currentActor];
+        for i, actor in ipairs(actors) do
+            if actor == player and not player:getAction() then
+                return;
+            end
+
             actor:update(dt);
 
-            local action = actors[currentActor]:getAction();
-            if action then
+            local action = actor:getAction();
+            if actor:getEnergy() >= ENERGY_THRESHOLD then
                 action:perform();
-                currentActor = currentActor == #actors and 1 or currentActor + 1;
+                actor:setEnergy(actor:getEnergy() - ENERGY_THRESHOLD);
+                actor:grantEnergy();
             else
-                break;
+                actor:grantEnergy();
             end
         end
     end

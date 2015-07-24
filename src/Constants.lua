@@ -11,4 +11,7 @@ Constants.DIRECTION = {
     WEST  = 'w',
 };
 
+-- The default amount of energy an actor has to spend to perform its task.
+Constants.ENERGY_THRESHOLD = 8;
+
 return Constants;

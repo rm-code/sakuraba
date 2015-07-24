@@ -5,6 +5,7 @@ local Constants = require('src.Constants');
 -- ------------------------------------------------
 
 local TILE_SIZE = Constants.TILE_SIZE;
+local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 
 -- ------------------------------------------------
 -- Module
@@ -16,6 +17,8 @@ function Player.new(tile)
     local self = {};
 
     local action;
+    local energyDelta = ENERGY_THRESHOLD;
+    local energy = energyDelta;
 
     function self:update(dt)
         return;
@@ -25,6 +28,10 @@ function Player.new(tile)
         love.graphics.setColor(0, 255, 0);
         love.graphics.print('@', tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE);
         love.graphics.setColor(255, 255, 255);
+    end
+
+    function self:grantEnergy()
+        energy = energy + energyDelta;
     end
 
     function self:clearAction()
@@ -39,6 +46,10 @@ function Player.new(tile)
         end
     end
 
+    function self:setEnergy(nenergy)
+        energy = nenergy;
+    end
+
     function self:setTile(ntile)
         tile = ntile;
     end
@@ -49,6 +60,10 @@ function Player.new(tile)
 
     function self:getTile()
         return tile;
+    end
+
+    function self:getEnergy()
+        return energy;
     end
 
     return self;
