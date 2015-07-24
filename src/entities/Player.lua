@@ -27,13 +27,16 @@ function Player.new(tile)
         love.graphics.setColor(255, 255, 255);
     end
 
-    function self:setAction(naction)
+    function self:clearAction()
+        action = nil;
+    end
+
+    function self:setAction()
         if naction then
             action = naction;
             action:bind(self);
             return;
         end
-        action = nil;
     end
 
     function self:setTile(ntile)

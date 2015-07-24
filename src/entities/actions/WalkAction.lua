@@ -15,7 +15,7 @@ function WalkAction.new(direction)
         if neighbours[direction] and neighbours[direction]:isPassable() then
             entity:setTile(neighbours[direction]);
         end
-        entity:setAction(nil);
+        entity:clearAction();
     end
 
     return self;
