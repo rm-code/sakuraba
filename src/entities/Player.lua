@@ -31,7 +31,7 @@ function Player.new(tile)
         action = nil;
     end
 
-    function self:setAction()
+    function self:setAction(naction)
         if naction then
             action = naction;
             action:bind(self);
