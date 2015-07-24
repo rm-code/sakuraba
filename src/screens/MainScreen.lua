@@ -64,10 +64,10 @@ function MainScreen.new()
         elseif key == 'down' then
             player:setAction(WalkAction.new(DIRECTION.SOUTH));
         end
-        if key == 'left' then
-            player:setAction(WalkAction.new(DIRECTION.WEST));
-        elseif key == 'right' then
+        if key == 'right' then
             player:setAction(WalkAction.new(DIRECTION.EAST));
+        elseif key == 'left' then
+            player:setAction(WalkAction.new(DIRECTION.WEST));
         end
     end
 
