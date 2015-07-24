@@ -1,7 +1,14 @@
 local Screen = require('lib.screenmanager.Screen');
+local Constants = require('src.Constants');
 local Map = require('src.map.Map');
 local Player = require('src.entities.Player');
 local WalkAction = require('src.entities.actions.WalkAction');
+
+-- ------------------------------------------------
+-- Constants
+-- ------------------------------------------------
+
+local DIRECTION = Constants.DIRECTION;
 
 -- ------------------------------------------------
 -- Module
@@ -33,14 +40,14 @@ function MainScreen.new()
 
     function self:keypressed(key)
         if key == 'up' then
-            player:setAction(WalkAction.new('n'));
+            player:setAction(WalkAction.new(DIRECTION.NORTH));
         elseif key == 'down' then
-            player:setAction(WalkAction.new('s'));
+            player:setAction(WalkAction.new(DIRECTION.SOUTH));
         end
         if key == 'left' then
-            player:setAction(WalkAction.new('w'));
+            player:setAction(WalkAction.new(DIRECTION.WEST));
         elseif key == 'right' then
-            player:setAction(WalkAction.new('e'));
+            player:setAction(WalkAction.new(DIRECTION.EAST));
         end
     end
 

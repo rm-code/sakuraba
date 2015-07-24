@@ -5,6 +5,7 @@ local Constants = require('src.Constants');
 -- ------------------------------------------------
 
 local TILE_SIZE = Constants.TILE_SIZE;
+local DIRECTION = Constants.DIRECTION;
 
 local TILES = {
     floor = { passable = true,  sprite = '.' },
@@ -36,10 +37,10 @@ function Tile.new(x, y, id)
     end
 
     function self:setNeighbours(n, s, e, w)
-        neighbours.n = n;
-        neighbours.s = s;
-        neighbours.e = e;
-        neighbours.w = w;
+        neighbours[DIRECTION.NORTH] = n;
+        neighbours[DIRECTION.SOUTH] = s;
+        neighbours[DIRECTION.EAST]  = e;
+        neighbours[DIRECTION.WEST]  = w;
     end
 
     function self:getId()
