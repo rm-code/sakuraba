@@ -1,5 +1,6 @@
 local WalkAction = require('src.entities.actions.WalkAction');
 local Constants = require('src.Constants');
+local Entity = require('src.entities.Entity');
 
 -- ------------------------------------------------
 -- Constants
@@ -13,6 +14,7 @@ local TYPES = {
     goblin =  { sprite = 'G', speed = 4 };
     vampire = { sprite = 'V', speed = 8 };
 }
+local COLOR = { 255, 0, 0 };
 
 -- ------------------------------------------------
 -- Module
@@ -21,11 +23,8 @@ local TYPES = {
 local Enemy = {};
 
 function Enemy.new(type, tile)
-    local self = {};
+    local self = Entity.new(tile, TYPES[type].sprite, COLOR, TYPES[type].speed);
 
-    local action;
-    local energyDelta = TYPES[type].speed;
-    local energy = energyDelta;
     local prevDirection = DIRECTION.NORTH;
 
     function self:update(dt)
@@ -40,48 +39,6 @@ function Enemy.new(type, tile)
             prevDirection = DIRECTION.WEST;
         end
         self:setAction(WalkAction.new(prevDirection));
-    end
-
-    function self:draw()
-        love.graphics.setColor(255, 0, 0);
-        love.graphics.print(TYPES[type].sprite, tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE);
-        love.graphics.setColor(255, 255, 255);
-    end
-
-    function self:clearAction()
-        action = nil;
-    end
-
-    function self:grantEnergy()
-        energy = energy + energyDelta;
-    end
-
-    function self:setAction(naction)
-        if naction then
-            action = naction;
-            action:bind(self);
-            return;
-        end
-    end
-
-    function self:setEnergy(nenergy)
-        energy = nenergy;
-    end
-
-    function self:setTile(ntile)
-        tile = ntile;
-    end
-
-    function self:getAction()
-        return action;
-    end
-
-    function self:getTile()
-        return tile;
-    end
-
-    function self:getEnergy()
-        return energy;
     end
 
     return self;
