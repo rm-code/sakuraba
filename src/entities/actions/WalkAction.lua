@@ -12,8 +12,7 @@ function WalkAction.new(direction)
     function self:perform()
         entity:clearAction();
 
-        local tile = entity:getTile();
-        local neighbours = tile:getNeighbours();
+        local neighbours = entity:getTile():getNeighbours();
         if neighbours[direction] and neighbours[direction]:isPassable() then
             entity:setTile(neighbours[direction]);
             return true;
