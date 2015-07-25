@@ -60,7 +60,8 @@ function MainScreen.new()
 
             local action = actor:getAction();
             if actor:getEnergy() >= ENERGY_THRESHOLD then
-                action:perform();
+                local success = action:perform();
+                if not success then return end
                 actor:setEnergy(actor:getEnergy() - ENERGY_THRESHOLD);
             end
             actor:grantEnergy();
