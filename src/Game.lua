@@ -9,7 +9,6 @@ local WalkAction = require('src.entities.actions.WalkAction');
 -- ------------------------------------------------
 
 local DIRECTION = Constants.DIRECTION;
-local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 
 -- ------------------------------------------------
 -- Module
@@ -58,24 +57,29 @@ function Game.new()
     end
 
     function self:update(dt)
-        -- Wait for player input before advancing a turn.
-        if not player:hasAction() then
-            return
-        end
+        return;
+    end
 
-        for i, actor in ipairs(actors) do
-            actor:update(dt);
+    function self:processTurn()
+        -- Process turns until the currently pending action of the player is
+        -- correctly performed or cancelled.
+        while player:hasAction() do
+            for i, actor in ipairs(actors) do
+                actor:update(dt);
+                actor:grantEnergy();
+                if actor:hasAction() and actor:canPerform() then
+                    local success = actor:getAction():perform();
+                    actor:drainEnergy();
 
-            local action = actor:getAction();
-            if actor:getEnergy() >= ENERGY_THRESHOLD then
-                local success = action:perform();
-                if not success then return end
-                actor:setEnergy(actor:getEnergy() - ENERGY_THRESHOLD);
+                    -- If the action is invalid we cancel the rest of the turn.
+                    -- This will only be done for the player's actions.
+                    if not success and actor == player then
+                        return;
+                    end
+                end
             end
-            actor:grantEnergy();
+            turns = turns + 1;
         end
-
-        turns = turns + 1;
     end
 
     function self:handleInput(command)

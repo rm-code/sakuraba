@@ -38,8 +38,16 @@ function Entity.new(tile, sprite, color, ed)
         energy = energy + energyDelta;
     end
 
+    function self:drainEnergy()
+        energy = energy - ENERGY_THRESHOLD;
+    end
+
     function self:clearAction()
         action = nil;
+    end
+
+    function self:canPerform()
+        return energy >= ENERGY_THRESHOLD;
     end
 
     function self:setAction(naction)
@@ -48,10 +56,6 @@ function Entity.new(tile, sprite, color, ed)
             action:bind(self);
             return;
         end
-    end
-
-    function self:setEnergy(nenergy)
-        energy = nenergy;
     end
 
     function self:setTile(ntile)

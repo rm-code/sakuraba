@@ -31,6 +31,7 @@ function MainScreen.new()
 
     function self:keypressed(key)
         game:handleInput(key);
+        game:processTurn();
     end
 
     return self;
