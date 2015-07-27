@@ -70,6 +70,10 @@ function Entity.new(tile, sprite, color, ed)
         return energy;
     end
 
+    function self:hasAction()
+        return action ~= nil;
+    end
+
     return self;
 end
 

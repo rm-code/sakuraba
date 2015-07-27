@@ -57,7 +57,7 @@ function MainScreen.new()
 
     function self:update(dt)
         -- Wait for player input before advancing a turn.
-        if not player:getAction() then
+        if not player:hasAction() then
             return
         end
 
