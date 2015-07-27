@@ -28,12 +28,21 @@ function Tile.new(x, y, id)
     local sprite = TILES[id].sprite;
     local passable = TILES[id].passable;
     local neighbours = {};
+    local content = {};
 
     function self:draw()
         love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
     end
 
     function self:update(dt)
+    end
+
+    function self:removeEntity()
+        content.entity = nil;
+    end
+
+    function self:setEntity(nentity)
+        content.entity = nentity;
     end
 
     function self:setNeighbours(n, s, e, w)
