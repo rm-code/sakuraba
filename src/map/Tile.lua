@@ -72,6 +72,10 @@ function Tile.new(x, y, id)
         return y;
     end
 
+    function self:isOccupied()
+        return content.entity ~= nil;
+    end
+
     function self:isPassable()
         return passable;
     end
