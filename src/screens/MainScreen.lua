@@ -51,11 +51,12 @@ function MainScreen.new()
     end
 
     function self:update(dt)
-        for i, actor in ipairs(actors) do
-            if actor == player and not player:getAction() then
-                return;
-            end
+        -- Wait for player input before advancing a turn.
+        if not player:getAction() then
+            return
+        end
 
+        for i, actor in ipairs(actors) do
             actor:update(dt);
 
             local action = actor:getAction();
