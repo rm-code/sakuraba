@@ -28,6 +28,7 @@ function MainScreen.new()
     local map;
     local player;
     local actors;
+    local turns;
 
     function self:init()
         map = Map.new();
@@ -41,6 +42,8 @@ function MainScreen.new()
         actors[#actors + 1] = Enemy.new('troll', map:getTileAt(8, 8));
         actors[#actors + 1] = Enemy.new('turtle', map:getTileAt(10, 10));
         actors[#actors + 1] = Enemy.new('vampire', map:getTileAt(12, 12));
+
+        turns = 0;
     end
 
     function self:draw()
@@ -48,6 +51,8 @@ function MainScreen.new()
         for i = 1, #actors do
             actors[i]:draw();
         end
+
+        love.graphics.print(string.format('%.5d', turns), love.graphics.getWidth() - 45, love.graphics.getHeight() - 20);
     end
 
     function self:update(dt)
@@ -67,6 +72,8 @@ function MainScreen.new()
             end
             actor:grantEnergy();
         end
+
+        turns = turns + 1;
     end
 
     function self:keypressed(key)
