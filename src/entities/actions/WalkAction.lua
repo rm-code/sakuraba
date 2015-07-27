@@ -13,12 +13,13 @@ function WalkAction.new(direction)
         entity:clearAction();
 
         local neighbours = entity:getTile():getNeighbours();
-        if neighbours[direction] and neighbours[direction]:isPassable() and not neighbours[direction]:isOccupied() then
+        local target = neighbours[direction];
+        if target and target:isPassable() and not target:isOccupied() then
             -- Remove the entity from the old tile, add it to the new one and
             -- give it a reference to the new tile.
             entity:getTile():removeEntity();
-            neighbours[direction]:setEntity(entity);
-            entity:setTile(neighbours[direction]);
+            target:setEntity(entity);
+            entity:setTile(target);
             return true;
         end
         return false;
