@@ -62,6 +62,10 @@ function Entity.new(tile, sprite, color, ed)
         return action;
     end
 
+    function self:getSprite()
+        return sprite;
+    end
+
     function self:getTile()
         return tile;
     end

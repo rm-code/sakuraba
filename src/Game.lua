@@ -49,6 +49,9 @@ function Game.new()
         map:draw();
         for i = 1, #actors do
             actors[i]:draw();
+            -- TODO remove
+            love.graphics.rectangle('fill', 30, 400 + i * 20, actors[i]:getEnergy() * 15, 15);
+            love.graphics.print(actors[i]:getSprite(), 10, 400 + i * 20)
         end
 
         love.graphics.print(string.format('%.5d', turns), love.graphics.getWidth() - 45, love.graphics.getHeight() - 20);
