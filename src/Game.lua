@@ -68,13 +68,23 @@ function Game.new()
                 actor:update(dt);
                 actor:grantEnergy();
                 if actor:hasAction() and actor:canPerform() then
-                    local success = actor:getAction():perform();
                     actor:drainEnergy();
+                    while true do
+                        local success = actor:getAction():perform();
 
-                    -- If the action is invalid we cancel the rest of the turn.
-                    -- This will only be done for the player's actions.
-                    if not success and actor == player then
-                        return;
+                        -- If the action is invalid we cancel the rest of the turn.
+                        -- This will only be done for the player's actions.
+                        if not success and actor == player then
+                            return;
+                        end
+
+                        -- If the action returned an alternative we set it as the
+                        -- next action and restart the loop.
+                        if type(success) ~= 'boolean' then
+                            actor:setAction(success);
+                        else
+                            break;
+                        end
                     end
                 end
             end
