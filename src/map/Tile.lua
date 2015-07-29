@@ -10,6 +10,7 @@ local DIRECTION = Constants.DIRECTION;
 local TILES = {
     floor = { passable = true,  sprite = '.' },
     wall  = { passable = false, sprite = '#' },
+    door  = { passable = false, sprite = '/' },
 }
 
 -- ------------------------------------------------
@@ -50,6 +51,14 @@ function Tile.new(x, y, id)
         neighbours[DIRECTION.SOUTH] = s;
         neighbours[DIRECTION.EAST]  = e;
         neighbours[DIRECTION.WEST]  = w;
+    end
+
+    function self:setPassable(np)
+        passable = np;
+    end
+
+    function self:setSprite(nsprite)
+        sprite = nsprite;
     end
 
     function self:getId()
