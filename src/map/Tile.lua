@@ -32,7 +32,9 @@ function Tile.new(x, y, id)
     local content = {};
 
     function self:draw()
-        love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
+        if not self:isOccupied() then
+            love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
+        end
     end
 
     function self:update(dt)
