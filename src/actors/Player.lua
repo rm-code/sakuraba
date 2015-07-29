@@ -1,5 +1,5 @@
 local Constants = require('src.Constants');
-local Entity = require('src.entities.Entity');
+local Actor = require('src.actors.Actor');
 
 -- ------------------------------------------------
 -- Constants
@@ -17,7 +17,7 @@ local SPRITE = '@';
 local Player = {};
 
 function Player.new(tile)
-    local self = Entity.new(tile, SPRITE, COLOR, ENERGY_THRESHOLD);
+    local self = Actor.new(tile, SPRITE, COLOR, ENERGY_THRESHOLD);
 
     return self;
 end

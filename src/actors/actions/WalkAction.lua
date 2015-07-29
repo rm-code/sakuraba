@@ -1,29 +1,29 @@
-local OpenDoor = require('src.entities.actions.OpenDoor');
+local OpenDoor = require('src.actors.actions.OpenDoor');
 
 local WalkAction = {};
 
 function WalkAction.new(direction)
     local self = {};
 
-    local entity;
+    local actor;
 
-    function self:bind(nentity)
-        entity = nentity;
+    function self:bind(nactor)
+        actor = nactor;
     end
 
     function self:perform()
-        entity:clearAction();
+        actor:clearAction();
 
-        local neighbours = entity:getTile():getNeighbours();
+        local neighbours = actor:getTile():getNeighbours();
         local target = neighbours[direction];
         if not target:isPassable() then
             return OpenDoor.new(direction);
         elseif target:isPassable() and not target:isOccupied() then
-            -- Remove the entity from the old tile, add it to the new one and
+            -- Remove the actor from the old tile, add it to the new one and
             -- give it a reference to the new tile.
-            entity:getTile():removeEntity();
-            target:setEntity(entity);
-            entity:setTile(target);
+            actor:getTile():removeActor();
+            target:setActor(actor);
+            actor:setTile(target);
             return true;
         end
         return false;

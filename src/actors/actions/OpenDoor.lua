@@ -3,16 +3,16 @@ local OpenDoor = {};
 function OpenDoor.new(direction)
     local self = {};
 
-    local entity;
+    local actor;
 
-    function self:bind(nentity)
-        entity = nentity;
+    function self:bind(nactor)
+        actor = nactor;
     end
 
     function self:perform()
-        entity:clearAction();
+        actor:clearAction();
 
-        local neighbours = entity:getTile():getNeighbours();
+        local neighbours = actor:getTile():getNeighbours();
         local target = neighbours[direction];
         if target:getId() == 'door' and not target:isPassable() then
             target:open();

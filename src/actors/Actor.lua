@@ -11,13 +11,13 @@ local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 -- Module
 -- ------------------------------------------------
 
-local Entity = {};
+local Actor = {};
 
 ---
--- @param tile - The tile the entity is located on.
--- @param ed - The amount of energy this entity gets per turn.
+-- @param tile - The tile the actor is located on.
+-- @param ed - The amount of energy this actor gets per turn.
 --
-function Entity.new(tile, sprite, color, ed)
+function Actor.new(tile, sprite, color, ed)
     local self = {};
 
     local action;
@@ -85,4 +85,4 @@ function Entity.new(tile, sprite, color, ed)
     return self;
 end
 
-return Entity;
+return Actor;

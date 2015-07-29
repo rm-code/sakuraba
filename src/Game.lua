@@ -1,8 +1,8 @@
 local Constants = require('src.Constants');
 local Map = require('src.map.Map');
-local Player = require('src.entities.Player');
-local Enemy = require('src.entities.Enemy');
-local WalkAction = require('src.entities.actions.WalkAction');
+local Player = require('src.actors.Player');
+local Enemy = require('src.actors.Enemy');
+local WalkAction = require('src.actors.actions.WalkAction');
 
 -- ------------------------------------------------
 -- Constants

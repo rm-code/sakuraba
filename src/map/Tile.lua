@@ -40,12 +40,12 @@ function Tile.new(x, y, id)
     function self:update(dt)
     end
 
-    function self:removeEntity()
-        content.entity = nil;
+    function self:removeActor()
+        content.actor = nil;
     end
 
-    function self:setEntity(nentity)
-        content.entity = nentity;
+    function self:setActor(nactor)
+        content.actor = nactor;
     end
 
     function self:setNeighbours(n, s, e, w)
@@ -84,7 +84,7 @@ function Tile.new(x, y, id)
     end
 
     function self:isOccupied()
-        return content.entity ~= nil;
+        return content.actor ~= nil;
     end
 
     function self:isPassable()

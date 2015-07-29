@@ -1,6 +1,6 @@
-local WalkAction = require('src.entities.actions.WalkAction');
+local WalkAction = require('src.actors.actions.WalkAction');
 local Constants = require('src.Constants');
-local Entity = require('src.entities.Entity');
+local Actor = require('src.actors.Actor');
 
 -- ------------------------------------------------
 -- Constants
@@ -23,7 +23,7 @@ local COLOR = { 255, 0, 0 };
 local Enemy = {};
 
 function Enemy.new(type, tile)
-    local self = Entity.new(tile, TYPES[type].sprite, COLOR, TYPES[type].speed);
+    local self = Actor.new(tile, TYPES[type].sprite, COLOR, TYPES[type].speed);
 
     local prevDirection = DIRECTION.NORTH;
 
