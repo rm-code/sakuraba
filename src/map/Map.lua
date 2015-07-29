@@ -1,4 +1,3 @@
-local Constants = require('src.Constants');
 local Tile = require('src.map.Tile');
 
 -- ------------------------------------------------
@@ -11,8 +10,23 @@ local Map = {};
 -- Constants
 -- ------------------------------------------------
 
-local MAP_WIDTH  = Constants.MAP_WIDTH;
-local MAP_HEIGHT = Constants.MAP_HEIGHT;
+local TEST_MAP = {
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+    { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+};
 
 -- ------------------------------------------------
 -- Constructor
@@ -27,21 +41,20 @@ function Map.new()
         local tiles = {};
 
         -- Create tiles.
-        -- TODO use templates
-        for x = 1, MAP_WIDTH do
+        for x = 1, #TEST_MAP do
             tiles[x] = {};
-            for y = 1, MAP_HEIGHT do
-                if x == 1 or x == MAP_WIDTH or y == 1 or y == MAP_HEIGHT then
+            for y = 1, #TEST_MAP[x] do
+                if TEST_MAP[x][y] == 1 then
                     tiles[x][y] = Tile.new(x, y, 'wall');
-                else
+                elseif TEST_MAP[x][y] == 0 then
                     tiles[x][y] = Tile.new(x, y, 'floor');
                 end
             end
         end
 
         -- Give each tile a reference to its neighbours.
-        for x = 1, MAP_WIDTH do
-            for y = 1, MAP_WIDTH do
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
                 local n, s, e, w;
                 if tiles[x][y - 1] then
                     n = tiles[x][y - 1];
@@ -71,8 +84,8 @@ function Map.new()
     end
 
     function self:draw()
-        for x = 1, MAP_WIDTH do
-            for y = 1, MAP_HEIGHT do
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
                 tiles[x][y]:draw();
             end
         end
