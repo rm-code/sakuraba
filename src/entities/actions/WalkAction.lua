@@ -1,3 +1,5 @@
+local OpenDoor = require('src.entities.actions.OpenDoor');
+
 local WalkAction = {};
 
 function WalkAction.new(direction)
@@ -14,7 +16,9 @@ function WalkAction.new(direction)
 
         local neighbours = entity:getTile():getNeighbours();
         local target = neighbours[direction];
-        if target and target:isPassable() and not target:isOccupied() then
+        if not target:isPassable() then
+            return OpenDoor.new(direction);
+        elseif target:isPassable() and not target:isOccupied() then
             -- Remove the entity from the old tile, add it to the new one and
             -- give it a reference to the new tile.
             entity:getTile():removeEntity();
