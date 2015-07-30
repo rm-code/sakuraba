@@ -126,6 +126,40 @@ function Map.new()
         end
     end
 
+    ---
+    -- Resets the visibility flags for all tiles in the map.
+    --
+    function self:resetVisibility()
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
+                tiles[x][y]:setVisible(false);
+            end
+        end
+    end
+
+    ---
+    -- Cast rays in a 360° radius.
+    --
+    function self:calculateVisibility(tile)
+        local tx, ty = tile:getPosition();
+
+        for i = 1, 360 do
+            local ox, oy = tx + 0.5, ty + 0.5;
+            local rad = math.rad(i);
+            local rx, ry = math.cos(rad), math.sin(rad);
+
+            for i = 1, 3 + love.math.random(1, 4) do
+                local target = tiles[math.floor(ox)][math.floor(oy)];
+                target:setVisible(true);
+                if not target:isPassable() then
+                    break;
+                end
+                ox = ox + rx;
+                oy = oy + ry;
+            end
+        end
+    end
+
     -- ------------------------------------------------
     -- Getters
     -- ------------------------------------------------

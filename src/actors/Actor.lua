@@ -33,6 +33,10 @@ function Actor.new(tile, sprite, color, ed)
     end
 
     function self:draw()
+        if not tile:isVisible() then
+            return;
+        end
+
         love.graphics.setColor(color);
         love.graphics.print(sprite, tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE);
         love.graphics.setColor(255, 255, 255);

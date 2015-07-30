@@ -13,6 +13,11 @@ local TILES = {
     door  = { passable = false, sprite = '/' },
 }
 
+local COLORS = {
+    visible = { 255, 255, 255 },
+    notvisible = { 50, 50, 50 },
+};
+
 -- ------------------------------------------------
 -- Module
 -- ------------------------------------------------
@@ -30,9 +35,14 @@ function Tile.new(x, y, id)
     local passable = TILES[id].passable;
     local neighbours = {};
     local content = {};
+    local visible = false;
 
     function self:draw()
-        if not self:isOccupied() then
+        if not visible then
+            love.graphics.setColor(50, 50, 50, 255);
+            love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
+            love.graphics.setColor(255, 255, 255, 255);
+        elseif not self:isOccupied() then
             love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
         end
     end
@@ -61,6 +71,10 @@ function Tile.new(x, y, id)
 
     function self:setSprite(nsprite)
         sprite = nsprite;
+    end
+
+    function self:setVisible(nvisible)
+        visible = nvisible;
     end
 
     function self:getActor()
@@ -93,6 +107,10 @@ function Tile.new(x, y, id)
 
     function self:isPassable()
         return passable;
+    end
+
+    function self:isVisible()
+        return visible;
     end
 
     return self;

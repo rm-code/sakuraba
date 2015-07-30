@@ -116,6 +116,8 @@ function Game.new()
                     end
                 end
             end
+            map:resetVisibility();
+            map:calculateVisibility(player:getTile());
             turns = turns + 1;
         end
 
