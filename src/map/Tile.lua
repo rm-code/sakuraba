@@ -63,6 +63,10 @@ function Tile.new(x, y, id)
         sprite = nsprite;
     end
 
+    function self:getActor()
+        return content.actor;
+    end
+
     function self:getId()
         return id;
     end

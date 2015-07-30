@@ -1,4 +1,5 @@
 local OpenDoor = require('src.actors.actions.OpenDoor');
+local Attack   = require('src.actors.actions.Attack');
 
 local WalkAction = {};
 
@@ -18,6 +19,8 @@ function WalkAction.new(direction)
         local target = neighbours[direction];
         if not target:isPassable() then
             return OpenDoor.new(direction);
+        elseif target:isOccupied() then
+            return Attack.new(direction);
         elseif target:isPassable() and not target:isOccupied() then
             -- Remove the actor from the old tile, add it to the new one and
             -- give it a reference to the new tile.
