@@ -89,25 +89,28 @@ function Game.new()
         -- correctly performed or cancelled.
         while player:hasAction() do
             for i, actor in ipairs(actors) do
-                actor:update(dt);
-                actor:grantEnergy();
-                if actor:hasAction() and actor:canPerform() then
-                    actor:drainEnergy();
-                    while true do
-                        local success = actor:getAction():perform();
+                if not actor:isDead() then
+                    actor:update(dt);
+                    actor:grantEnergy();
 
-                        -- If the action is invalid we cancel the rest of the turn.
-                        -- This will only be done for the player's actions.
-                        if not success and actor == player then
-                            return;
-                        end
+                    if actor:hasAction() and actor:canPerform() then
+                        actor:drainEnergy();
+                        while true do
+                            local success = actor:getAction():perform();
 
-                        -- If the action returned an alternative we set it as the
-                        -- next action and restart the loop.
-                        if type(success) ~= 'boolean' then
-                            actor:setAction(success);
-                        else
-                            break;
+                            -- If the action is invalid we cancel the rest of the turn.
+                            -- This will only be done for the player's actions.
+                            if not success and actor == player then
+                                return;
+                            end
+
+                            -- If the action returned an alternative we set it as the
+                            -- next action and restart the loop.
+                            if type(success) ~= 'boolean' then
+                                actor:setAction(success);
+                            else
+                                break;
+                            end
                         end
                     end
                 end
