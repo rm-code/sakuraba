@@ -23,6 +23,7 @@ function Actor.new(tile, sprite, color, ed)
     local action;
     local energyDelta = ed;
     local energy = energyDelta;
+    local dead = false;
 
     function self:update(dt)
         return;
@@ -58,6 +59,10 @@ function Actor.new(tile, sprite, color, ed)
         end
     end
 
+    function self:setDead(ndead)
+        dead = ndead;
+    end
+
     function self:setTile(ntile)
         tile = ntile;
     end
@@ -80,6 +85,10 @@ function Actor.new(tile, sprite, color, ed)
 
     function self:hasAction()
         return action ~= nil;
+    end
+
+    function self:isDead()
+        return dead;
     end
 
     return self;
