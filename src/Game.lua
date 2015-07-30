@@ -3,6 +3,7 @@ local Map = require('src.map.Map');
 local Player = require('src.actors.Player');
 local Enemy = require('src.actors.Enemy');
 local WalkAction = require('src.actors.actions.WalkAction');
+local Wait = require('src.actors.actions.Wait');
 
 -- ------------------------------------------------
 -- Constants
@@ -132,6 +133,9 @@ function Game.new()
             player:setAction(WalkAction.new(DIRECTION.EAST));
         elseif command == 'left' then
             player:setAction(WalkAction.new(DIRECTION.WEST));
+        end
+        if command == 'return' then
+            player:setAction(Wait.new());
         end
     end
 
