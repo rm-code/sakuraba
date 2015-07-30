@@ -28,6 +28,30 @@ function Game.new()
     local actors;
     local turns;
 
+    -- ------------------------------------------------
+    -- Private Functions
+    -- ------------------------------------------------
+
+    ---
+    -- Removes all dead actors from the game.
+    -- We iterate from the top so that we can remove the actor and shift keys
+    -- without breaking the iteration. Besides removing each actor from the list
+    -- of actors we also have to remove its reference from the tile it last
+    -- occupied.
+    local function removeDeadActors(actors)
+        for i = #actors, 1, -1 do
+            local actor = actors[i];
+            if actor:isDead() then
+                actor:getTile():removeActor();
+                table.remove(actors, i);
+            end
+        end
+    end
+
+    -- ------------------------------------------------
+    -- Public Functions
+    -- ------------------------------------------------
+
     function self:init()
         map = Map.new();
         map:init();
@@ -90,6 +114,9 @@ function Game.new()
             end
             turns = turns + 1;
         end
+
+        -- Remove actors which have died during this turn from the game.
+        removeDeadActors(actors);
     end
 
     function self:handleInput(command)
