@@ -19,6 +19,10 @@ local Player = {};
 function Player.new(tile)
     local self = Actor.new(tile, SPRITE, COLOR, ENERGY_THRESHOLD);
 
+    function self:setDead(ndead)
+        return;
+    end
+
     return self;
 end
 
