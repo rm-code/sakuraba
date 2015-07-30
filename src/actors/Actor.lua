@@ -20,6 +20,9 @@ local Actor = {};
 function Actor.new(tile, sprite, color, ed)
     local self = {};
 
+    -- Register the actor on the tile it spawns.
+    tile:setActor(self);
+
     local action;
     local energyDelta = ed;
     local energy = energyDelta;
