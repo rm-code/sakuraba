@@ -56,6 +56,9 @@ function Map.new()
     -- Private Functions
     -- ------------------------------------------------
 
+    ---
+    -- Fills the map grid with actual tiles.
+    --
     local function createTiles()
         local tiles = {};
 
@@ -73,7 +76,13 @@ function Map.new()
             end
         end
 
-        -- Give each tile a reference to its neighbours.
+        return tiles;
+    end
+
+    ---
+    -- Gives each tile a reference to its neighbours.
+    --
+    local function addNeighbours(tiles)
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
                 local n, s, e, w;
@@ -102,6 +111,7 @@ function Map.new()
 
     function self:init()
         tiles = createTiles();
+        tiles = addNeighbours(tiles);
     end
 
     function self:update(dt)
