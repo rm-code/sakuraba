@@ -52,6 +52,10 @@ function Map.new()
 
     local tiles;
 
+    -- ------------------------------------------------
+    -- Private Functions
+    -- ------------------------------------------------
+
     local function createTiles()
         local tiles = {};
 
@@ -92,12 +96,16 @@ function Map.new()
         return tiles;
     end
 
+    -- ------------------------------------------------
+    -- Public Functions
+    -- ------------------------------------------------
+
     function self:init()
         tiles = createTiles();
     end
 
     function self:update(dt)
-
+        return;
     end
 
     function self:draw()
@@ -107,6 +115,10 @@ function Map.new()
             end
         end
     end
+
+    -- ------------------------------------------------
+    -- Getters
+    -- ------------------------------------------------
 
     function self:getTileAt(x, y)
         return tiles[x][y];
