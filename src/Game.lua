@@ -67,6 +67,8 @@ function Game.new()
         actors[#actors + 1] = Enemy.new('vampire', map:getTileAt(12, 12));
 
         turns = 0;
+
+        map:calculateVisibility(player:getTile());
     end
 
     function self:draw()
