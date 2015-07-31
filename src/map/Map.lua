@@ -148,7 +148,7 @@ function Map.new()
             local rad = math.rad(i);
             local rx, ry = math.cos(rad), math.sin(rad);
 
-            for i = 1, 3 + love.math.random(1, 4) do
+            for i = 1, 12 do
                 local target = tiles[math.floor(ox)][math.floor(oy)];
                 target:setVisible(true);
                 target:setExplored(true);
