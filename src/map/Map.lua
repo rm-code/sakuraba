@@ -151,6 +151,7 @@ function Map.new()
             for i = 1, 3 + love.math.random(1, 4) do
                 local target = tiles[math.floor(ox)][math.floor(oy)];
                 target:setVisible(true);
+                target:setExplored(true);
                 if not target:isPassable() then
                     break;
                 end

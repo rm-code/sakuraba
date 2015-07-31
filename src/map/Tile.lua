@@ -36,9 +36,12 @@ function Tile.new(x, y, id)
     local neighbours = {};
     local content = {};
     local visible = false;
+    local explored = false;
 
     function self:draw()
-        if not visible then
+        if not explored then
+            return;
+        elseif not visible then
             love.graphics.setColor(50, 50, 50, 255);
             love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
             love.graphics.setColor(255, 255, 255, 255);
@@ -56,6 +59,10 @@ function Tile.new(x, y, id)
 
     function self:setActor(nactor)
         content.actor = nactor;
+    end
+
+    function self:setExplored(nexplored)
+        explored = nexplored;
     end
 
     function self:setNeighbours(n, s, e, w)
