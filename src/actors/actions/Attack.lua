@@ -15,8 +15,11 @@ function Attack.new(direction)
         local neighbours = actor:getTile():getNeighbours();
         local target = neighbours[direction];
         if target:isOccupied() then
-            target:getActor():setDead(true);
-            return true;
+            local opponent = target:getActor();
+            if opponent:getFaction() ~= actor:getFaction() then
+                opponent:setDead(true);
+                return true;
+            end
         end
         return false;
     end

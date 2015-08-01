@@ -9,6 +9,13 @@ Constants.DIRECTION = {
     WEST  = 'w',
 };
 
+-- The factions to which the actors can belong. The factions are created from
+-- the player's POV so allied means all actors which are friendly to the player.
+Constants.FACTIONS = {
+    ALLIED = 'allied',
+    ENEMY  = 'enemy',
+}
+
 -- The default amount of energy an actor has to spend to perform its task.
 Constants.ENERGY_THRESHOLD = 8;
 

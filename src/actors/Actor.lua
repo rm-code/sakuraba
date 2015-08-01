@@ -17,7 +17,7 @@ local Actor = {};
 -- @param tile - The tile the actor is located on.
 -- @param ed - The amount of energy this actor gets per turn.
 --
-function Actor.new(tile, sprite, color, ed)
+function Actor.new(tile, faction, sprite, color, ed)
     local self = {};
 
     -- Register the actor on the tile it spawns.
@@ -76,6 +76,10 @@ function Actor.new(tile, sprite, color, ed)
 
     function self:getAction()
         return action;
+    end
+
+    function self:getFaction()
+        return faction;
     end
 
     function self:getSprite()
