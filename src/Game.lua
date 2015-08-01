@@ -55,6 +55,8 @@ function Game.new()
     -- ------------------------------------------------
 
     function self:init()
+        love.keyboard.setKeyRepeat(true);
+
         map = Map.new();
         map:init();
 
