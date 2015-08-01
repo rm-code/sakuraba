@@ -57,7 +57,7 @@ function Game.new()
         map = Map.new();
         map:init();
 
-        player = Player.new(map:getTileAt(2, 2));
+        player = Player.new(map:getTileAt(26, 2));
 
         actors = {};
         actors[#actors + 1] = player;
