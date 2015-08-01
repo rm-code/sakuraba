@@ -1,3 +1,5 @@
+local SwitchPositions = require('src.actors.actions.SwitchPositions');
+
 local Attack = {};
 
 function Attack.new(direction)
@@ -19,6 +21,8 @@ function Attack.new(direction)
             if opponent:getFaction() ~= actor:getFaction() then
                 opponent:setDead(true);
                 return true;
+            else
+                return SwitchPositions.new(direction);
             end
         end
         return false;
