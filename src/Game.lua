@@ -2,6 +2,7 @@ local Constants = require('src.Constants');
 local Map = require('src.map.Map');
 local Player = require('src.actors.Player');
 local Enemy = require('src.actors.Enemy');
+local Ally = require('src.actors.Ally');
 local WalkAction = require('src.actors.actions.WalkAction');
 local Wait = require('src.actors.actions.Wait');
 
@@ -61,6 +62,7 @@ function Game.new()
 
         actors = {};
         actors[#actors + 1] = player;
+        actors[#actors + 1] = Ally.new(map:getTileAt(26, 6));
         actors[#actors + 1] = Enemy.new('goblin', map:getTileAt(8, 2));
         actors[#actors + 1] = Enemy.new('troll', map:getTileAt(8, 8));
         actors[#actors + 1] = Enemy.new('turtle', map:getTileAt(10, 10));
