@@ -13,6 +13,7 @@ function Interact.new()
     end
 
     function self:perform()
+        actor:clearAction();
         local neighbours = actor:getTile():getNeighbours();
 
         for direction, tile in pairs(neighbours) do
