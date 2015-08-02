@@ -5,6 +5,7 @@ local Enemy = require('src.actors.Enemy');
 local Ally = require('src.actors.Ally');
 local WalkAction = require('src.actors.actions.WalkAction');
 local Wait = require('src.actors.actions.Wait');
+local Interact = require('src.actors.actions.Interact');
 
 -- ------------------------------------------------
 -- Constants
@@ -144,6 +145,9 @@ function Game.new()
         end
         if command == 'return' then
             player:setAction(Wait.new());
+        end
+        if command == 'e' then
+            player:setAction(Interact.new());
         end
     end
 
