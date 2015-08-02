@@ -1,4 +1,4 @@
-local WalkAction = require('src.actors.actions.WalkAction');
+local Walk = require('src.actors.actions.Walk');
 local Constants = require('src.Constants');
 local Actor = require('src.actors.Actor');
 
@@ -39,7 +39,7 @@ function Enemy.new(type, tile)
         elseif rnd == 4 then
             prevDirection = DIRECTION.WEST;
         end
-        self:setAction(WalkAction.new(prevDirection));
+        self:setAction(Walk.new(prevDirection));
     end
 
     return self;

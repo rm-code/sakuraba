@@ -1,9 +1,9 @@
 local OpenDoor = require('src.actors.actions.OpenDoor');
 local Attack   = require('src.actors.actions.Attack');
 
-local WalkAction = {};
+local Walk = {};
 
-function WalkAction.new(direction)
+function Walk.new(direction)
     local self = {};
 
     local actor;
@@ -35,4 +35,4 @@ function WalkAction.new(direction)
     return self;
 end
 
-return WalkAction;
+return Walk;

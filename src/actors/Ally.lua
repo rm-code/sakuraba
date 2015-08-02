@@ -1,6 +1,6 @@
 local Constants = require('src.Constants');
 local Actor = require('src.actors.Actor');
-local WalkAction = require('src.actors.actions.WalkAction');
+local Walk = require('src.actors.actions.Walk');
 
 -- ------------------------------------------------
 -- Constants
@@ -35,7 +35,7 @@ function Ally.new(tile)
         elseif rnd == 4 then
             prevDirection = DIRECTION.WEST;
         end
-        self:setAction(WalkAction.new(prevDirection));
+        self:setAction(Walk.new(prevDirection));
     end
 
     return self;

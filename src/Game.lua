@@ -3,7 +3,7 @@ local Map = require('src.map.Map');
 local Player = require('src.actors.Player');
 local Enemy = require('src.actors.Enemy');
 local Ally = require('src.actors.Ally');
-local WalkAction = require('src.actors.actions.WalkAction');
+local Walk = require('src.actors.actions.Walk');
 local Wait = require('src.actors.actions.Wait');
 local Interact = require('src.actors.actions.Interact');
 
@@ -134,14 +134,14 @@ function Game.new()
 
     function self:handleInput(command)
         if command == 'up' then
-            player:setAction(WalkAction.new(DIRECTION.NORTH));
+            player:setAction(Walk.new(DIRECTION.NORTH));
         elseif command == 'down' then
-            player:setAction(WalkAction.new(DIRECTION.SOUTH));
+            player:setAction(Walk.new(DIRECTION.SOUTH));
         end
         if command == 'right' then
-            player:setAction(WalkAction.new(DIRECTION.EAST));
+            player:setAction(Walk.new(DIRECTION.EAST));
         elseif command == 'left' then
-            player:setAction(WalkAction.new(DIRECTION.WEST));
+            player:setAction(Walk.new(DIRECTION.WEST));
         end
         if command == 'return' then
             player:setAction(Wait.new());
