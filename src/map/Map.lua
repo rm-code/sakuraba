@@ -1,5 +1,5 @@
-local Tile = require('src.map.Tile');
-local Door = require('src.map.Door');
+local Tile = require('src.map.tiles.Tile');
+local Door = require('src.map.tiles.Door');
 
 -- ------------------------------------------------
 -- Module

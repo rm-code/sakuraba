@@ -1,4 +1,4 @@
-local Tile = require('src.map.Tile');
+local Tile = require('src.map.tiles.Tile');
 
 local Door = {};
 
