@@ -1,5 +1,6 @@
-local Tile = require('src.map.tiles.Tile');
-local Door = require('src.map.tiles.Door');
+local Floor = require('src.map.tiles.Floor');
+local Wall  = require('src.map.tiles.Wall');
+local Door  = require('src.map.tiles.Door');
 
 -- ------------------------------------------------
 -- Module
@@ -67,9 +68,9 @@ function Map.new()
             tiles[x] = {};
             for y = 1, #TEST_MAP[x] do
                 if TEST_MAP[x][y] == 1 then
-                    tiles[x][y] = Tile.new(x, y, 'wall');
+                    tiles[x][y] = Wall.new(x, y);
                 elseif TEST_MAP[x][y] == 0 then
-                    tiles[x][y] = Tile.new(x, y, 'floor');
+                    tiles[x][y] = Floor.new(x, y);
                 elseif TEST_MAP[x][y] == 2 then
                     tiles[x][y] = Door.new(x, y);
                 end
