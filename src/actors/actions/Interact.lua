@@ -17,9 +17,9 @@ function Interact.new()
         local neighbours = actor:getTile():getNeighbours();
 
         for direction, tile in pairs(neighbours) do
-            if tile:getId() == 'door' and not tile:isPassable() then
+            if tile:getType() == 'door' and not tile:isPassable() then
                 return OpenDoor.new(direction);
-            elseif tile:getId() == 'door' and tile:isPassable() then
+            elseif tile:getType() == 'door' and tile:isPassable() then
                 return CloseDoor.new(direction);
             end
         end

@@ -28,11 +28,11 @@ local Tile = {};
 -- Constructor
 -- ------------------------------------------------
 
-function Tile.new(x, y, id)
+function Tile.new(x, y, type)
     local self = {};
 
-    local sprite = TILES[id].sprite;
-    local passable = TILES[id].passable;
+    local sprite = TILES[type].sprite;
+    local passable = TILES[type].passable;
     local neighbours = {};
     local content = {};
     local visible = false;
@@ -88,8 +88,8 @@ function Tile.new(x, y, id)
         return content.actor;
     end
 
-    function self:getId()
-        return id;
+    function self:getType()
+        return type;
     end
 
     function self:getNeighbours()

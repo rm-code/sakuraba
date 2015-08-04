@@ -14,7 +14,7 @@ function OpenDoor.new(direction)
 
         local neighbours = actor:getTile():getNeighbours();
         local target = neighbours[direction];
-        if target:getId() == 'door' and not target:isPassable() then
+        if target:getType() == 'door' and not target:isPassable() then
             target:open();
             return true;
         end
