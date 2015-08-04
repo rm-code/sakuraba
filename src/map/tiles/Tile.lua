@@ -7,12 +7,6 @@ local Constants = require('src.Constants');
 local TILE_SIZE = Constants.TILE_SIZE;
 local DIRECTION = Constants.DIRECTION;
 
-local TILES = {
-    floor = { passable = true,  sprite = '.' },
-    wall  = { passable = false, sprite = '#' },
-    door  = { passable = false, sprite = '/' },
-}
-
 local COLORS = {
     visible = { 255, 255, 255 },
     notvisible = { 50, 50, 50 },
@@ -28,11 +22,9 @@ local Tile = {};
 -- Constructor
 -- ------------------------------------------------
 
-function Tile.new(x, y, type)
+function Tile.new(x, y, type, passable, sprite)
     local self = {};
 
-    local sprite = TILES[type].sprite;
-    local passable = TILES[type].passable;
     local neighbours = {};
     local content = {};
     local visible = false;

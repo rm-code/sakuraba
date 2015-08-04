@@ -1,11 +1,14 @@
 local Tile = require('src.map.tiles.Tile');
+local Constants = require('src.Constants');
+
+local TILE_TYPES = Constants.TILE_TYPES;
+local PASSABLE = false;
+local SPRITE = '#';
 
 local Wall = {};
 
 function Wall.new(x, y)
-    local self = Tile.new(x, y, 'wall');
-
-    return self;
+    return Tile.new(x, y, TILE_TYPES.WALL, PASSABLE, SPRITE);
 end
 
 return Wall;

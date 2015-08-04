@@ -16,6 +16,12 @@ Constants.FACTIONS = {
     ENEMY  = 'enemy',
 }
 
+Constants.TILE_TYPES = {
+    WALL = 'wall',
+    FLOOR = 'floor',
+    DOOR = 'door',
+}
+
 -- The default amount of energy an actor has to spend to perform its task.
 Constants.ENERGY_THRESHOLD = 8;
 
