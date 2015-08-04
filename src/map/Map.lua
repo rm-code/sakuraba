@@ -1,3 +1,4 @@
+local Constants = require('src.Constants');
 local Floor = require('src.map.tiles.Floor');
 local Wall  = require('src.map.tiles.Wall');
 local Door  = require('src.map.tiles.Door');
@@ -12,6 +13,8 @@ local Map = {};
 -- Constants
 -- ------------------------------------------------
 
+local TILE_SIZE = Constants.TILE_SIZE;
+local TILE_TYPES = Constants.TILE_TYPES;
 local TEST_MAP = {
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
     { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
@@ -42,6 +45,19 @@ local TEST_MAP = {
     { 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
     { 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
     { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+};
+
+local COLORS = {
+    INVISIBLE = { 0, 0, 0, 0 },
+    WHITE = { 255, 255 , 255, 255 },
+    DARK_GREY = { 50, 50, 50, 255 },
+}
+
+local SPRITES = {
+    floor = '.',
+    wall = '#',
+    doorclosed = '/',
+    dooropen = 'O',
 };
 
 -- ------------------------------------------------
@@ -106,6 +122,53 @@ function Map.new()
         return tiles;
     end
 
+    ---
+    -- Draws a sprite at the given position.
+    --
+    local function drawTile(sprite, x, y)
+        love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
+    end
+
+    ---
+    -- Returns the color with which the tile will be drawn.
+    -- Visible tiles will be drawn in a bright white, whereas tiles which are
+    -- hidden from the player will be dimmed by using a dark grey. If a tile-
+    -- hasn't been explored yet it will be hidden completely.
+    --
+    local function selectTileColor(tile)
+        -- Hide unexplored tiles.
+        if not tile:isExplored() then
+            return COLORS.INVISIBLE;
+        end
+
+        -- Dim tiles hidden from the player.
+        if not tile:isVisible() then
+            return COLORS.DARK_GREY;
+        end
+
+        -- Occupied tiles will be invisible.
+        if tile:isOccupied() then
+            return COLORS.INVISIBLE;
+        end
+
+        return COLORS.WHITE;
+    end
+
+    ---
+    -- Returns a sprite based on the tile type.
+    --
+    local function selectTileSprite(tile)
+        local type = tile:getType();
+        if type == TILE_TYPES.DOOR then
+            if tile:isPassable() then
+                return SPRITES['dooropen'];
+            else
+                return SPRITES['doorclosed'];
+            end
+        end
+        return SPRITES[type];
+    end
+
     -- ------------------------------------------------
     -- Public Functions
     -- ------------------------------------------------
@@ -122,7 +185,10 @@ function Map.new()
     function self:draw()
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
-                tiles[x][y]:draw();
+                local tile = tiles[x][y];
+                love.graphics.setColor(selectTileColor(tile));
+                drawTile(selectTileSprite(tile), x, y);
+                love.graphics.setColor(255, 255, 255, 255);
             end
         end
     end

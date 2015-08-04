@@ -4,13 +4,7 @@ local Constants = require('src.Constants');
 -- Constants
 -- ------------------------------------------------
 
-local TILE_SIZE = Constants.TILE_SIZE;
 local DIRECTION = Constants.DIRECTION;
-
-local COLORS = {
-    visible = { 255, 255, 255 },
-    notvisible = { 50, 50, 50 },
-};
 
 -- ------------------------------------------------
 -- Module
@@ -22,25 +16,13 @@ local Tile = {};
 -- Constructor
 -- ------------------------------------------------
 
-function Tile.new(x, y, type, passable, sprite)
+function Tile.new(x, y, type, passable)
     local self = {};
 
     local neighbours = {};
     local content = {};
     local visible = false;
     local explored = false;
-
-    function self:draw()
-        if not explored then
-            return;
-        elseif not visible then
-            love.graphics.setColor(50, 50, 50, 255);
-            love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
-            love.graphics.setColor(255, 255, 255, 255);
-        elseif not self:isOccupied() then
-            love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
-        end
-    end
 
     function self:update(dt)
     end
@@ -66,10 +48,6 @@ function Tile.new(x, y, type, passable, sprite)
 
     function self:setPassable(np)
         passable = np;
-    end
-
-    function self:setSprite(nsprite)
-        sprite = nsprite;
     end
 
     function self:setVisible(nvisible)
@@ -98,6 +76,10 @@ function Tile.new(x, y, type, passable, sprite)
 
     function self:getY()
         return y;
+    end
+
+    function self:isExplored()
+        return explored;
     end
 
     function self:isOccupied()

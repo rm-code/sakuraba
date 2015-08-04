@@ -12,12 +12,10 @@ function Door.new(x, y)
 
     function self:open()
         self:setPassable(true);
-        self:setSprite('O');
     end
 
     function self:close()
         self:setPassable(false);
-        self:setSprite('/');
     end
 
     return self;
