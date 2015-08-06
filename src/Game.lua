@@ -70,6 +70,8 @@ function Game.new()
         actors[#actors + 1] = Enemy.new('troll', map:getTileAt(8, 8));
         actors[#actors + 1] = Enemy.new('turtle', map:getTileAt(10, 10));
         actors[#actors + 1] = Enemy.new('vampire', map:getTileAt(12, 12));
+        actors[#actors + 1] = Enemy.new('turtle', map:getTileAt(18, 18));
+        actors[#actors + 1] = Enemy.new('goblin', map:getTileAt(18, 2));
 
         turns = 0;
 
