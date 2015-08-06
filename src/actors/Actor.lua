@@ -25,6 +25,11 @@ function Actor.new(type, tile, faction)
     tile:setActor(self);
 
     local action;
+
+    local maxhealth = ACTOR_STATS[type].maxhealth;
+    local health = maxhealth;
+    local ar = ACTOR_STATS[type].ar;
+    local dr = ACTOR_STATS[type].dr;
     local energyDelta = ACTOR_STATS[type].speed;
     local energy = energyDelta;
     local dead = false;
@@ -49,16 +54,23 @@ function Actor.new(type, tile, faction)
         return energy >= ENERGY_THRESHOLD;
     end
 
+    function self:damage(dam)
+        health = health - dam;
+        if health <= 0 then
+            dead = true;
+        end
+    end
+
+    function self:heal(nval)
+        health = health + nval > maxhealth and maxhealth or health + nval;
+    end
+
     function self:setAction(naction)
         if naction then
             action = naction;
             action:bind(self);
             return;
         end
-    end
-
-    function self:setDead(ndead)
-        dead = ndead;
     end
 
     function self:setTile(ntile)
@@ -69,8 +81,20 @@ function Actor.new(type, tile, faction)
         return action;
     end
 
+    function self:getAttackRating()
+        return ar;
+    end
+
+    function self:getDefenseRating()
+        return dr;
+    end
+
     function self:getFaction()
         return faction;
+    end
+
+    function self:getHealth()
+        return health;
     end
 
     function self:getType()

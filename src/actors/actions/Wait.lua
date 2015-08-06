@@ -11,6 +11,7 @@ function Wait.new()
 
     function self:perform()
         actor:clearAction();
+        actor:heal(love.math.random(1, 3));
         return true;
     end
 

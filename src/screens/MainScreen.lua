@@ -115,8 +115,9 @@ function MainScreen.new()
             end
 
             -- TODO remove
-            love.graphics.rectangle('fill', 30, 400 + i * 20, actors[i]:getEnergy() * 15, 15);
             love.graphics.print(selectTileSprite(actor), 10, 400 + i * 20)
+            love.graphics.print(actor:getHealth(), 30, 400 + i * 20)
+            love.graphics.rectangle('fill', 50, 400 + i * 20, actors[i]:getEnergy() * 15, 15);
         end
     end
 
