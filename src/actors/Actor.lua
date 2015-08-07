@@ -32,7 +32,6 @@ function Actor.new(type, tile, faction)
     local dr = ACTOR_STATS[type].dr;
     local energyDelta = ACTOR_STATS[type].speed;
     local energy = energyDelta;
-    local dead = false;
 
     function self:update(dt)
         return;
@@ -56,9 +55,6 @@ function Actor.new(type, tile, faction)
 
     function self:damage(dam)
         health = health - dam;
-        if health <= 0 then
-            dead = true;
-        end
     end
 
     function self:heal(nval)
@@ -114,7 +110,7 @@ function Actor.new(type, tile, faction)
     end
 
     function self:isDead()
-        return dead;
+        return health <= 0;
     end
 
     return self;
