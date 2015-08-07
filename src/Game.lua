@@ -95,6 +95,10 @@ function Game.new()
     end
 
     function self:processTurn()
+        if player:isDead() then
+            return;
+        end
+
         -- Process turns until the currently pending action of the player is
         -- correctly performed or cancelled.
         while player:hasAction() do
