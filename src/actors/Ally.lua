@@ -10,8 +10,9 @@ local TILE_SIZE = Constants.TILE_SIZE;
 local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 local DIRECTION = Constants.DIRECTION;
 local FACTIONS = Constants.FACTIONS;
+local ACTOR_STATS = Constants.ACTOR_STATS;
+local TILE_SPRITES = Constants.TILE_SPRITES;
 local COLOR = { 0, 255, 0 };
-local SPRITE = 'C';
 
 -- ------------------------------------------------
 -- Module
@@ -19,8 +20,8 @@ local SPRITE = 'C';
 
 local Ally = {};
 
-function Ally.new(tile)
-    local self = Actor.new(tile, FACTIONS.ALLIED, SPRITE, COLOR, ENERGY_THRESHOLD);
+function Ally.new(type, tile)
+    local self = Actor.new(tile, FACTIONS.ALLIED, TILE_SPRITES[type], COLOR, ACTOR_STATS[type].speed);
 
     local prevDirection = DIRECTION.NORTH;
 

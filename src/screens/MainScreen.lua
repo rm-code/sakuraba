@@ -8,19 +8,13 @@ local Game = require('src.Game');
 
 local TILE_SIZE  = Constants.TILE_SIZE;
 local TILE_TYPES = Constants.TILE_TYPES;
+local TILE_SPRITES = Constants.TILE_SPRITES;
 
 local COLORS = {
     INVISIBLE = { 0, 0, 0, 0 },
     WHITE = { 255, 255 , 255, 255 },
     DARK_GREY = { 50, 50, 50, 255 },
 }
-
-local SPRITES = {
-    floor = '.',
-    wall = '#',
-    doorclosed = '/',
-    dooropen = 'O',
-};
 
 -- ------------------------------------------------
 -- Module
@@ -86,12 +80,12 @@ function MainScreen.new()
         local type = tile:getType();
         if type == TILE_TYPES.DOOR then
             if tile:isPassable() then
-                return SPRITES['dooropen'];
+                return TILE_SPRITES[TILE_TYPES.DOOROPEN];
             else
-                return SPRITES['doorclosed'];
+                return TILE_SPRITES[TILE_TYPES.DOORCLOSED];
             end
         end
-        return SPRITES[type];
+        return TILE_SPRITES[type];
     end
 
     ---

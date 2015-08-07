@@ -12,6 +12,7 @@ local Interact = require('src.actors.actions.Interact');
 -- ------------------------------------------------
 
 local DIRECTION = Constants.DIRECTION;
+local ACTOR_TYPES = Constants.ACTOR_TYPES;
 
 -- ------------------------------------------------
 -- Module
@@ -61,17 +62,17 @@ function Game.new()
         map = Map.new();
         map:init();
 
-        player = Player.new(map:getTileAt(26, 2));
+        player = Player.new(ACTOR_TYPES.PLAYER, map:getTileAt(26, 2));
 
         actors = {};
-        actors[#actors + 1] = player;
-        actors[#actors + 1] = Ally.new(map:getTileAt(26, 6));
-        actors[#actors + 1] = Enemy.new('goblin', map:getTileAt(8, 2));
-        actors[#actors + 1] = Enemy.new('troll', map:getTileAt(8, 8));
-        actors[#actors + 1] = Enemy.new('turtle', map:getTileAt(10, 10));
-        actors[#actors + 1] = Enemy.new('vampire', map:getTileAt(12, 12));
-        actors[#actors + 1] = Enemy.new('turtle', map:getTileAt(18, 18));
-        actors[#actors + 1] = Enemy.new('goblin', map:getTileAt(18, 2));
+        actors[#actors + 1] =  player;
+        actors[#actors + 1] =  Ally.new(ACTOR_TYPES.CAT,     map:getTileAt(26,  6));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.GOBLIN,  map:getTileAt( 8,  2));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.TROLL,   map:getTileAt( 8,  8));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.TURTLE,  map:getTileAt(10, 10));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.VAMPIRE, map:getTileAt(12, 12));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.TURTLE,  map:getTileAt(18, 18));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.GOBLIN,  map:getTileAt(18,  2));
 
         turns = 0;
 

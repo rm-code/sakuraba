@@ -9,12 +9,8 @@ local Actor = require('src.actors.Actor');
 local TILE_SIZE = Constants.TILE_SIZE;
 local DIRECTION = Constants.DIRECTION;
 local FACTIONS  = Constants.FACTIONS;
-local TYPES = {
-    turtle =  { sprite = 'O', speed = 1 };
-    troll  =  { sprite = 'T', speed = 2 };
-    goblin =  { sprite = 'G', speed = 4 };
-    vampire = { sprite = 'V', speed = 8 };
-}
+local ACTOR_STATS = Constants.ACTOR_STATS;
+local TILE_SPRITES = Constants.TILE_SPRITES;
 local COLOR = { 255, 0, 0 };
 
 -- ------------------------------------------------
@@ -24,7 +20,7 @@ local COLOR = { 255, 0, 0 };
 local Enemy = {};
 
 function Enemy.new(type, tile)
-    local self = Actor.new(tile, FACTIONS.ENEMY, TYPES[type].sprite, COLOR, TYPES[type].speed);
+    local self = Actor.new(tile, FACTIONS.ENEMY, TILE_SPRITES[type], COLOR, ACTOR_STATS[type].speed);
 
     local prevDirection = DIRECTION.NORTH;
 
