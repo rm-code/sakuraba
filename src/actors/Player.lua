@@ -18,10 +18,6 @@ local Player = {};
 function Player.new(type, tile)
     local self = Actor.new(type, tile, FACTIONS.ALLIED);
 
-    function self:setDead(ndead)
-        return;
-    end
-
     return self;
 end
 
