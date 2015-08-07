@@ -45,7 +45,7 @@ function Game.new()
     local function removeDeadActors(actors)
         for i = #actors, 1, -1 do
             local actor = actors[i];
-            if actor:isDead() then
+            if actor:health():isDead() then
                 actor:getTile():removeActor();
                 table.remove(actors, i);
             end
@@ -84,22 +84,22 @@ function Game.new()
     end
 
     function self:processTurn()
-        if player:isDead() then
+        if player:health():isDead() then
             return;
         end
 
         -- Process turns until the currently pending action of the player is
         -- correctly performed or cancelled.
-        while player:hasAction() do
+        while player:action():hasAction() do
             for i, actor in ipairs(actors) do
-                if not actor:isDead() then
+                if not actor:health():isDead() then
                     actor:update(dt);
-                    actor:grantEnergy();
+                    actor:energy():grantEnergy();
 
-                    if actor:hasAction() and actor:canPerform() then
-                        actor:drainEnergy();
+                    if actor:action():hasAction() and actor:energy():canPerform() then
+                        actor:energy():drainEnergy();
                         while true do
-                            local success = actor:getAction():perform();
+                            local success = actor:action():getAction():perform();
 
                             -- If the action is invalid we cancel the rest of the turn.
                             -- This will only be done for the player's actions.
@@ -110,7 +110,7 @@ function Game.new()
                             -- If the action returned an alternative we set it as the
                             -- next action and restart the loop.
                             if type(success) ~= 'boolean' then
-                                actor:setAction(success);
+                                actor:action():setAction(success);
                             else
                                 break;
                             end
@@ -129,20 +129,20 @@ function Game.new()
 
     function self:handleInput(command)
         if command == 'up' then
-            player:setAction(Walk.new(DIRECTION.NORTH));
+            player:action():setAction(Walk.new(DIRECTION.NORTH));
         elseif command == 'down' then
-            player:setAction(Walk.new(DIRECTION.SOUTH));
+            player:action():setAction(Walk.new(DIRECTION.SOUTH));
         end
         if command == 'right' then
-            player:setAction(Walk.new(DIRECTION.EAST));
+            player:action():setAction(Walk.new(DIRECTION.EAST));
         elseif command == 'left' then
-            player:setAction(Walk.new(DIRECTION.WEST));
+            player:action():setAction(Walk.new(DIRECTION.WEST));
         end
         if command == 'return' then
-            player:setAction(Wait.new());
+            player:action():setAction(Wait.new());
         end
         if command == 'e' then
-            player:setAction(Interact.new());
+            player:action():setAction(Interact.new());
         end
     end
 

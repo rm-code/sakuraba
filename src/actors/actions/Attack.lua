@@ -26,11 +26,11 @@ function Attack.new(direction)
     end
 
     local function calculateOutcome(attacker, defender)
-        local ar = attacker:getAttackRating();
-        local dr = defender:getDefenseRating();
+        local ar = attacker:attributes():getAttackRating();
+        local dr = defender:attributes():getDefenseRating();
 
         if doesHit(ar, dr) then
-            defender:damage(4);
+            defender:health():damage(4);
             print(attacker:getType() .. ' hits ' .. defender:getType());
             return;
         end
@@ -47,13 +47,13 @@ function Attack.new(direction)
     end
 
     function self:perform()
-        actor:clearAction();
+        actor:action():clearAction();
 
         local neighbours = actor:getTile():getNeighbours();
         local target = neighbours[direction];
         if target:isOccupied() then
             local opponent = target:getActor();
-            if opponent:getFaction() ~= actor:getFaction() then
+            if opponent:attributes():getFaction() ~= actor:attributes():getFaction() then
                 calculateOutcome(actor, opponent);
                 return true;
             else

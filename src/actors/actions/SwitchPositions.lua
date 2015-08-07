@@ -16,7 +16,7 @@ function SwitchPositions.new(direction)
     end
 
     function self:perform()
-        actor:clearAction();
+        actor:action():clearAction();
 
         local currentTile = actor:getTile();
         local neighbours = currentTile:getNeighbours();
@@ -24,7 +24,7 @@ function SwitchPositions.new(direction)
 
         if targetTile:isOccupied() then
             local targetActor = targetTile:getActor();
-            if targetActor:getFaction() == actor:getFaction() then
+            if targetActor:attributes():getFaction() == actor:attributes():getFaction() then
                 -- Remove the target actor and move the performing actor to the new tile.
                 moveToTile(targetTile, actor);
 

@@ -13,7 +13,7 @@ function Walk.new(direction)
     end
 
     function self:perform()
-        actor:clearAction();
+        actor:action():clearAction();
 
         local neighbours = actor:getTile():getNeighbours();
         local target = neighbours[direction];

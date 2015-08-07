@@ -1,11 +1,14 @@
 local Constants = require('src.Constants');
+local Health = require('src.actors.components.Health');
+local Energy = require('src.actors.components.Energy');
+local Attributes = require('src.actors.components.Attributes');
+local Action = require('src.actors.components.Action');
 
 -- ------------------------------------------------
 -- Constants
 -- ------------------------------------------------
 
 local TILE_SIZE = Constants.TILE_SIZE;
-local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 local ACTOR_STATS = Constants.ACTOR_STATS;
 
 -- ------------------------------------------------
@@ -24,93 +27,42 @@ function Actor.new(type, tile, faction)
     -- Register the actor on the tile it spawns.
     tile:setActor(self);
 
-    local action;
-
-    local maxhealth = ACTOR_STATS[type].maxhealth;
-    local health = maxhealth;
-    local ar = ACTOR_STATS[type].ar;
-    local dr = ACTOR_STATS[type].dr;
-    local energyDelta = ACTOR_STATS[type].speed;
-    local energy = energyDelta;
+    -- Load components.
+    local health = Health.new(ACTOR_STATS[type].maxhealth);
+    local energy = Energy.new(ACTOR_STATS[type].speed);
+    local attributes = Attributes.new(faction, ACTOR_STATS[type].ar, ACTOR_STATS[type].dr);
+    local action = Action.new(self);
 
     function self:update(dt)
         return;
-    end
-
-    function self:grantEnergy()
-        energy = energy + energyDelta;
-    end
-
-    function self:drainEnergy()
-        energy = energy - ENERGY_THRESHOLD;
-    end
-
-    function self:clearAction()
-        action = nil;
-    end
-
-    function self:canPerform()
-        return energy >= ENERGY_THRESHOLD;
-    end
-
-    function self:damage(dam)
-        health = health - dam;
-    end
-
-    function self:heal(nval)
-        health = health + nval > maxhealth and maxhealth or health + nval;
-    end
-
-    function self:setAction(naction)
-        if naction then
-            action = naction;
-            action:bind(self);
-            return;
-        end
     end
 
     function self:setTile(ntile)
         tile = ntile;
     end
 
-    function self:getAction()
-        return action;
-    end
-
-    function self:getAttackRating()
-        return ar;
-    end
-
-    function self:getDefenseRating()
-        return dr;
-    end
-
-    function self:getFaction()
-        return faction;
-    end
-
-    function self:getHealth()
-        return health;
+    function self:getTile()
+        return tile;
     end
 
     function self:getType()
         return type;
     end
 
-    function self:getTile()
-        return tile;
+    function self:health()
+        return health;
     end
 
-    function self:getEnergy()
+    function self:energy()
         return energy;
     end
 
-    function self:hasAction()
-        return action ~= nil;
+    function self:attributes()
+        return attributes;
     end
 
-    function self:isDead()
-        return health <= 0;
+    function self:action()
+        return action;
     end
 
     return self;

@@ -10,8 +10,8 @@ function Wait.new()
     end
 
     function self:perform()
-        actor:clearAction();
-        actor:heal(love.math.random(1, 3));
+        actor:action():clearAction();
+        actor:health():heal(love.math.random(1, 3));
         return true;
     end
 

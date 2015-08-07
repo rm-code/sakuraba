@@ -32,7 +32,7 @@ function Enemy.new(type, tile)
         elseif rnd == 4 then
             prevDirection = DIRECTION.WEST;
         end
-        self:setAction(Walk.new(prevDirection));
+        self:action():setAction(Walk.new(prevDirection));
     end
 
     return self;
