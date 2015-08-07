@@ -48,8 +48,10 @@ function MainScreen.new()
     ---
     -- Draws a sprite at the given position.
     --
-    local function drawTile(sprite, x, y)
+    local function drawTile(sprite, x, y, color)
+        love.graphics.setColor(color);
         love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
+        love.graphics.setColor(255, 255, 255, 255);
     end
 
     ---
@@ -100,9 +102,7 @@ function MainScreen.new()
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
                 local tile = tiles[x][y];
-                love.graphics.setColor(selectTileColor(tile));
-                drawTile(selectTileSprite(tile), x, y);
-                love.graphics.setColor(255, 255, 255, 255);
+                drawTile(selectTileSprite(tile), x, y, selectTileColor(tile));
             end
         end
     end
