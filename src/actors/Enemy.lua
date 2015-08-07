@@ -9,7 +9,6 @@ local Actor = require('src.actors.Actor');
 local TILE_SIZE = Constants.TILE_SIZE;
 local DIRECTION = Constants.DIRECTION;
 local FACTIONS  = Constants.FACTIONS;
-local ACTOR_STATS = Constants.ACTOR_STATS;
 
 -- ------------------------------------------------
 -- Module
@@ -18,7 +17,7 @@ local ACTOR_STATS = Constants.ACTOR_STATS;
 local Enemy = {};
 
 function Enemy.new(type, tile)
-    local self = Actor.new(tile, FACTIONS.ENEMY, type, ACTOR_STATS[type].speed);
+    local self = Actor.new(type, tile, FACTIONS.ENEMY);
 
     local prevDirection = DIRECTION.NORTH;
 

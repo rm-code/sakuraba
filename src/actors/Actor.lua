@@ -6,6 +6,7 @@ local Constants = require('src.Constants');
 
 local TILE_SIZE = Constants.TILE_SIZE;
 local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
+local ACTOR_STATS = Constants.ACTOR_STATS;
 
 -- ------------------------------------------------
 -- Module
@@ -17,14 +18,14 @@ local Actor = {};
 -- @param tile - The tile the actor is located on.
 -- @param ed - The amount of energy this actor gets per turn.
 --
-function Actor.new(tile, faction, type, ed)
+function Actor.new(type, tile, faction)
     local self = {};
 
     -- Register the actor on the tile it spawns.
     tile:setActor(self);
 
     local action;
-    local energyDelta = ed;
+    local energyDelta = ACTOR_STATS[type].speed;
     local energy = energyDelta;
     local dead = false;
 

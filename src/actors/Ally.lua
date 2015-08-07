@@ -10,7 +10,6 @@ local TILE_SIZE = Constants.TILE_SIZE;
 local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 local DIRECTION = Constants.DIRECTION;
 local FACTIONS = Constants.FACTIONS;
-local ACTOR_STATS = Constants.ACTOR_STATS;
 
 -- ------------------------------------------------
 -- Module
@@ -19,7 +18,7 @@ local ACTOR_STATS = Constants.ACTOR_STATS;
 local Ally = {};
 
 function Ally.new(type, tile)
-    local self = Actor.new(tile, FACTIONS.ALLIED, type, ACTOR_STATS[type].speed);
+    local self = Actor.new(type, tile, FACTIONS.ALLIED);
 
     local prevDirection = DIRECTION.NORTH;
 
