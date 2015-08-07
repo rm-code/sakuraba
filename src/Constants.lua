@@ -56,6 +56,14 @@ local TILE_SPRITES = {
     [ACTOR_TYPES.VAMPIRE] = 'V'
 }
 
+local COLORS = {
+    INVISIBLE = {   0,   0,   0,   0 },
+    WHITE     = { 255, 255, 255, 255 },
+    DARK_GREY = {  50,  50,  50, 255 },
+    RED       = { 255,   0,   0, 255 },
+    GREEN     = {   0, 255,   0, 255 },
+}
+
 -- The default amount of energy an actor has to spend to perform its task.
 local ENERGY_THRESHOLD = 8;
 
@@ -68,5 +76,6 @@ return {
     TILE_TYPES   = TILE_TYPES,
     ACTOR_STATS  = ACTOR_STATS,
     TILE_SPRITES = TILE_SPRITES,
+    COLORS       = COLORS,
     ENERGY_THRESHOLD = ENERGY_THRESHOLD,
 };

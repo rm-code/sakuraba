@@ -9,16 +9,8 @@ local Game = require('src.Game');
 local TILE_SIZE  = Constants.TILE_SIZE;
 local TILE_TYPES = Constants.TILE_TYPES;
 local TILE_SPRITES = Constants.TILE_SPRITES;
-
+local COLORS = Constants.COLORS;
 local FACTIONS = Constants.FACTIONS;
-
-local COLORS = {
-    INVISIBLE = {   0,   0,   0,   0 },
-    WHITE     = { 255, 255, 255, 255 },
-    DARK_GREY = {  50,  50,  50, 255 },
-    RED       = { 255,   0,   0, 255 },
-    GREEN     = {   0, 255,   0, 255 },
-}
 
 -- ------------------------------------------------
 -- Module
