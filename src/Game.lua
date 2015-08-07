@@ -78,18 +78,6 @@ function Game.new()
         map:calculateVisibility(player:getTile());
     end
 
-    function self:draw()
-        map:draw();
-        for i = 1, #actors do
-            actors[i]:draw();
-            -- TODO remove
-            love.graphics.rectangle('fill', 30, 400 + i * 20, actors[i]:getEnergy() * 15, 15);
-            love.graphics.print(actors[i]:getSprite(), 10, 400 + i * 20)
-        end
-
-        love.graphics.print(string.format('%.5d', turns), love.graphics.getWidth() - 45, love.graphics.getHeight() - 20);
-    end
-
     function self:update(dt)
         return;
     end
@@ -155,6 +143,18 @@ function Game.new()
         if command == 'e' then
             player:setAction(Interact.new());
         end
+    end
+
+    function self:getMap()
+        return map;
+    end
+
+    function self:getActors()
+        return actors;
+    end
+
+    function self:getTurns()
+        return turns;
     end
 
     return self;
