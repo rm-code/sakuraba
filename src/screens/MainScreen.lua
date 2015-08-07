@@ -10,10 +10,14 @@ local TILE_SIZE  = Constants.TILE_SIZE;
 local TILE_TYPES = Constants.TILE_TYPES;
 local TILE_SPRITES = Constants.TILE_SPRITES;
 
+local FACTIONS = Constants.FACTIONS;
+
 local COLORS = {
-    INVISIBLE = { 0, 0, 0, 0 },
-    WHITE = { 255, 255 , 255, 255 },
-    DARK_GREY = { 50, 50, 50, 255 },
+    INVISIBLE = {   0,   0,   0,   0 },
+    WHITE     = { 255, 255, 255, 255 },
+    DARK_GREY = {  50,  50,  50, 255 },
+    RED       = { 255,   0,   0, 255 },
+    GREEN     = {   0, 255,   0, 255 },
 }
 
 -- ------------------------------------------------
@@ -73,6 +77,14 @@ function MainScreen.new()
         return COLORS.WHITE;
     end
 
+    function selectActorColor(actor)
+        if actor:getFaction() == FACTIONS.ALLIED then
+            return COLORS.GREEN;
+        end
+        return COLORS.RED;
+    end
+
+
     ---
     -- Returns a sprite based on the tile type.
     --
@@ -101,6 +113,21 @@ function MainScreen.new()
         end
     end
 
+    local function drawActors(actors)
+        for i = 1, #actors do
+            local actor = actors[i];
+            local tile = actor:getTile();
+
+            if tile:isVisible() then
+                drawTile(selectTileSprite(actor), tile:getX(), tile:getY(), selectActorColor(actor));
+            end
+
+            -- TODO remove
+            love.graphics.rectangle('fill', 30, 400 + i * 20, actors[i]:getEnergy() * 15, 15);
+            love.graphics.print(selectTileSprite(actor), 10, 400 + i * 20)
+        end
+    end
+
     -- ------------------------------------------------
     -- Public Functions
     -- ------------------------------------------------
@@ -112,13 +139,7 @@ function MainScreen.new()
 
     function self:draw()
         drawMap(map);
-
-        for i = 1, #actors do
-            actors[i]:draw();
-            -- TODO remove
-            love.graphics.rectangle('fill', 30, 400 + i * 20, actors[i]:getEnergy() * 15, 15);
-            love.graphics.print(actors[i]:getSprite(), 10, 400 + i * 20)
-        end
+        drawActors(actors);
 
         love.graphics.print(string.format('%.5d', turns), love.graphics.getWidth() - 45, love.graphics.getHeight() - 20);
     end

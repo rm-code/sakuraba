@@ -17,7 +17,7 @@ local Actor = {};
 -- @param tile - The tile the actor is located on.
 -- @param ed - The amount of energy this actor gets per turn.
 --
-function Actor.new(tile, faction, sprite, color, ed)
+function Actor.new(tile, faction, type, ed)
     local self = {};
 
     -- Register the actor on the tile it spawns.
@@ -30,16 +30,6 @@ function Actor.new(tile, faction, sprite, color, ed)
 
     function self:update(dt)
         return;
-    end
-
-    function self:draw()
-        if not tile:isVisible() then
-            return;
-        end
-
-        love.graphics.setColor(color);
-        love.graphics.print(sprite, tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE);
-        love.graphics.setColor(255, 255, 255);
     end
 
     function self:grantEnergy()
@@ -82,8 +72,8 @@ function Actor.new(tile, faction, sprite, color, ed)
         return faction;
     end
 
-    function self:getSprite()
-        return sprite;
+    function self:getType()
+        return type;
     end
 
     function self:getTile()

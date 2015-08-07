@@ -10,8 +10,6 @@ local TILE_SIZE = Constants.TILE_SIZE;
 local DIRECTION = Constants.DIRECTION;
 local FACTIONS  = Constants.FACTIONS;
 local ACTOR_STATS = Constants.ACTOR_STATS;
-local TILE_SPRITES = Constants.TILE_SPRITES;
-local COLOR = { 255, 0, 0 };
 
 -- ------------------------------------------------
 -- Module
@@ -20,7 +18,7 @@ local COLOR = { 255, 0, 0 };
 local Enemy = {};
 
 function Enemy.new(type, tile)
-    local self = Actor.new(tile, FACTIONS.ENEMY, TILE_SPRITES[type], COLOR, ACTOR_STATS[type].speed);
+    local self = Actor.new(tile, FACTIONS.ENEMY, type, ACTOR_STATS[type].speed);
 
     local prevDirection = DIRECTION.NORTH;
 
