@@ -31,10 +31,8 @@ function Attack.new(direction)
 
         if doesHit(ar, dr) then
             defender:health():damage(4);
-            print(attacker:getType() .. ' hits ' .. defender:getType());
             return;
         end
-        print(attacker:getType() .. ' misses ' .. defender:getType());
         return;
     end
 
