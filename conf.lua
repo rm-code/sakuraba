@@ -1,4 +1,4 @@
-local PROJECT_TITLE = "Codename: Sakuraba";
+local PROJECT_TITLE = "Sakuraba (Working Title)";
 
 local PROJECT_IDENTITY = "rmcode_Sakuraba";
 
