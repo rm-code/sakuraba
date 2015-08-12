@@ -11,7 +11,6 @@ local Interact = require('src.actors.actions.Interact');
 -- Constants
 -- ------------------------------------------------
 
-local DIRECTION = Constants.DIRECTION;
 local ACTOR_TYPES = Constants.ACTOR_TYPES;
 
 -- ------------------------------------------------
@@ -123,23 +122,17 @@ function Game.new()
         removeDeadActors(actors);
     end
 
-    function self:handleInput(command)
-        if command == 'up' then
-            player:action():setAction(Walk.new(DIRECTION.NORTH));
-        elseif command == 'down' then
-            player:action():setAction(Walk.new(DIRECTION.SOUTH));
-        end
-        if command == 'right' then
-            player:action():setAction(Walk.new(DIRECTION.EAST));
-        elseif command == 'left' then
-            player:action():setAction(Walk.new(DIRECTION.WEST));
-        end
-        if command == 'return' then
+    function self:control(msg, arg)
+        if msg == 'walk' then
+            player:action():setAction(Walk.new(arg));
+        elseif msg == 'wait' then
             player:action():setAction(Wait.new());
-        end
-        if command == 'e' then
+        elseif msg == 'interact' then
             player:action():setAction(Interact.new());
         end
+
+        -- Process the next turn and return control back to the player at the end.
+        self:processTurn();
     end
 
     function self:getMap()

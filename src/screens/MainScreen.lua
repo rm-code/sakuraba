@@ -11,6 +11,7 @@ local TILE_TYPES = Constants.TILE_TYPES;
 local TILE_SPRITES = Constants.TILE_SPRITES;
 local COLORS = Constants.COLORS;
 local FACTIONS = Constants.FACTIONS;
+local DIRECTION = Constants.DIRECTION;
 
 -- ------------------------------------------------
 -- Module
@@ -146,8 +147,23 @@ function MainScreen.new()
     end
 
     function self:keypressed(key)
-        game:handleInput(key);
-        game:processTurn();
+        if key == 'up' then
+            game:control('walk', DIRECTION.NORTH);
+        elseif key == 'down' then
+            game:control('walk', DIRECTION.SOUTH);
+        elseif key == 'right' then
+            game:control('walk', DIRECTION.EAST);
+        elseif key == 'left' then
+            game:control('walk', DIRECTION.WEST);
+        end
+
+        if key == 'return' then
+            game:control('wait');
+        end
+
+        if key == 'e' then
+            game:control('interact');
+        end
     end
 
     return self;
