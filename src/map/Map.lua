@@ -1,4 +1,4 @@
-local Constants = require('src.Constants');
+local Constants = require('src.constants.Constants');
 local Floor = require('src.map.tiles.Floor');
 local Wall  = require('src.map.tiles.Wall');
 local Door  = require('src.map.tiles.Door');

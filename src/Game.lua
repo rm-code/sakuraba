@@ -1,4 +1,4 @@
-local Constants = require('src.Constants');
+local Constants = require('src.constants.Constants');
 local Map = require('src.map.Map');
 local Player = require('src.actors.Player');
 local Enemy = require('src.actors.Enemy');

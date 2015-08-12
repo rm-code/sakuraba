@@ -1,5 +1,5 @@
 local Walk = require('src.actors.actions.Walk');
-local Constants = require('src.Constants');
+local Constants = require('src.constants.Constants');
 local Actor = require('src.actors.Actor');
 
 -- ------------------------------------------------

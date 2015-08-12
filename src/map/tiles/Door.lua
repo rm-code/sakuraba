@@ -1,5 +1,5 @@
 local Tile = require('src.map.tiles.Tile');
-local Constants = require('src.Constants');
+local Constants = require('src.constants.Constants');
 
 local TILE_TYPES = Constants.TILE_TYPES;
 local PASSABLE = false;

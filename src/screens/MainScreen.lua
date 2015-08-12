@@ -1,5 +1,5 @@
 local Screen = require('lib.screenmanager.Screen');
-local Constants = require('src.Constants');
+local Constants = require('src.constants.Constants');
 local Game = require('src.Game');
 
 -- ------------------------------------------------

@@ -1,4 +1,4 @@
-local Constants = require('src.Constants');
+local Constants = require('src.constants.Constants');
 
 local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 
