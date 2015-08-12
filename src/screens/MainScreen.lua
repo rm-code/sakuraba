@@ -82,9 +82,13 @@ function MainScreen.new()
     end
 
     ---
-    -- Returns an anonymous function which allows the player to select a direction.
+    -- Returns an anonymous function which blocks the key input until the player
+    -- has selected a target tile.
+    -- @param game - A reference to the game object.
+    -- @param msg - The message to send to the game's control function.
+    -- @param confirmationKey - The key to confirm the selection.
     --
-    local function selectTarget(game)
+    local function selectTarget(game, msg, confirmationKey)
         local player = game:getPlayer();
         local tile = player:getTile();
 
@@ -97,10 +101,13 @@ function MainScreen.new()
                 target = DIRECTION.EAST;
             elseif key == 'left' then
                 target = DIRECTION.WEST;
-            elseif key == 'a' then
-                -- Do not attack when no target is selected.
+            end
+
+            if key == confirmationKey then
+                -- Don't send the command to the game object if no target
+                -- selection was performed.
                 if target then
-                    game:control('attack', target);
+                    game:control(msg, target);
                 end
                 blockingFunction = nil;
                 target = nil;
@@ -210,11 +217,11 @@ function MainScreen.new()
         end
 
         if key == 'e' then
-            game:control('interact');
+            blockingFunction = selectTarget(game, 'interact', 'e');
         end
 
         if key == 'a' then
-            blockingFunction = selectTarget(game);
+            blockingFunction = selectTarget(game, 'attack', 'a');
         end
     end
 

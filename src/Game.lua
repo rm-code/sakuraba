@@ -129,7 +129,7 @@ function Game.new()
         elseif msg == 'wait' then
             player:action():setAction(Wait.new());
         elseif msg == 'interact' then
-            player:action():setAction(Interact.new());
+            player:action():setAction(Interact.new(arg));
         elseif msg == 'attack' then
             player:action():setAction(Attack.new(arg));
         end

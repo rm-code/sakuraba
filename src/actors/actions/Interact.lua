@@ -3,7 +3,7 @@ local CloseDoor = require('src.actors.actions.CloseDoor');
 
 local Interact = {};
 
-function Interact.new()
+function Interact.new(direction)
     local self = {};
 
     local actor;
@@ -14,14 +14,12 @@ function Interact.new()
 
     function self:perform()
         actor:action():clearAction();
-        local neighbours = actor:getTile():getNeighbours();
 
-        for direction, tile in pairs(neighbours) do
-            if tile:getType() == 'door' and not tile:isPassable() then
-                return OpenDoor.new(direction);
-            elseif tile:getType() == 'door' and tile:isPassable() then
-                return CloseDoor.new(direction);
-            end
+        local tile = actor:getTile():getNeighbours()[direction];
+        if tile:getType() == 'door' and not tile:isPassable() then
+            return OpenDoor.new(direction);
+        elseif tile:getType() == 'door' and tile:isPassable() then
+            return CloseDoor.new(direction);
         end
 
         return false;
