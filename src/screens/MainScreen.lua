@@ -70,7 +70,7 @@ function MainScreen.new()
         return COLORS.WHITE;
     end
 
-    function selectActorColor(actor)
+    local function selectActorColor(actor)
         if actor:attributes():getFaction() == FACTIONS.ALLIED then
             return COLORS.GREEN;
         end
