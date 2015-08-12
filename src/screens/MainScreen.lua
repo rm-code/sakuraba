@@ -32,6 +32,10 @@ function MainScreen.new()
     local actors;
     local turns;
 
+    local blockingFunction;
+
+    local target;
+
     -- ------------------------------------------------
     -- Local Functions
     -- ------------------------------------------------
@@ -77,6 +81,35 @@ function MainScreen.new()
         return COLORS.RED;
     end
 
+    ---
+    -- Returns an anonymous function which allows the player to select a direction.
+    --
+    local function selectTarget(game)
+        local player = game:getPlayer();
+        local tile = player:getTile();
+
+        return function(key)
+            if key == 'up' then
+                target = DIRECTION.NORTH;
+            elseif key == 'down' then
+                target = DIRECTION.SOUTH;
+            elseif key == 'right' then
+                target = DIRECTION.EAST;
+            elseif key == 'left' then
+                target = DIRECTION.WEST;
+            elseif key == 'a' then
+                -- Do not attack when no target is selected.
+                if target then
+                    game:control('attack', target);
+                end
+                blockingFunction = nil;
+                target = nil;
+            elseif key == 'escape' then
+                blockingFunction = nil;
+                target = nil;
+            end
+        end
+    end
 
     ---
     -- Returns a sprite based on the tile type.
@@ -122,6 +155,15 @@ function MainScreen.new()
         end
     end
 
+    local function drawHighlight(player)
+        if not target then return end
+
+        local tile = player:getTile():getNeighbours()[target];
+        love.graphics.setColor(0, 0, 255);
+        love.graphics.rectangle('line', tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        love.graphics.setColor(255, 255, 255);
+    end
+
     -- ------------------------------------------------
     -- Public Functions
     -- ------------------------------------------------
@@ -134,6 +176,7 @@ function MainScreen.new()
     function self:draw()
         drawMap(map);
         drawActors(actors);
+        drawHighlight(game:getPlayer());
 
         love.graphics.print(string.format('%.5d', turns), love.graphics.getWidth() - 45, love.graphics.getHeight() - 20);
     end
@@ -147,6 +190,11 @@ function MainScreen.new()
     end
 
     function self:keypressed(key)
+        if blockingFunction then
+            blockingFunction(key);
+            return;
+        end
+
         if key == 'up' then
             game:control('walk', DIRECTION.NORTH);
         elseif key == 'down' then
@@ -163,6 +211,10 @@ function MainScreen.new()
 
         if key == 'e' then
             game:control('interact');
+        end
+
+        if key == 'a' then
+            blockingFunction = selectTarget(game);
         end
     end
 

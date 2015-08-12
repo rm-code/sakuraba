@@ -6,6 +6,7 @@ local Ally = require('src.actors.Ally');
 local Walk = require('src.actors.actions.Walk');
 local Wait = require('src.actors.actions.Wait');
 local Interact = require('src.actors.actions.Interact');
+local Attack = require('src.actors.actions.Attack');
 
 -- ------------------------------------------------
 -- Constants
@@ -129,6 +130,8 @@ function Game.new()
             player:action():setAction(Wait.new());
         elseif msg == 'interact' then
             player:action():setAction(Interact.new());
+        elseif msg == 'attack' then
+            player:action():setAction(Attack.new(arg));
         end
 
         -- Process the next turn and return control back to the player at the end.
@@ -141,6 +144,10 @@ function Game.new()
 
     function self:getActors()
         return actors;
+    end
+
+    function self:getPlayer()
+        return player;
     end
 
     function self:getTurns()
