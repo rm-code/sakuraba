@@ -7,6 +7,7 @@ local Walk = require('src.actors.actions.Walk');
 local Wait = require('src.actors.actions.Wait');
 local Interact = require('src.actors.actions.Interact');
 local Attack = require('src.actors.actions.Attack');
+local RangedAttack = require('src.actors.actions.RangedAttack');
 
 -- ------------------------------------------------
 -- Constants
@@ -132,6 +133,8 @@ function Game.new()
             player:action():setAction(Interact.new(arg));
         elseif msg == 'attack' then
             player:action():setAction(Attack.new(arg));
+        elseif msg == 'rangedattack' then
+            player:action():setAction(RangedAttack.new(arg));
         end
 
         -- Process the next turn and return control back to the player at the end.
