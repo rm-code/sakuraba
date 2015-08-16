@@ -132,7 +132,6 @@ function InputHandler.new(game)
             local line = {};
             calcPoints(origin:getX(), origin:getY(), target:getX(), target:getY(), function (nx, ny, counter)
                     if counter > 8 then
-                        print('blargh')
                         return false;
                     end
                     if not map:getTileAt(nx, ny):isPassable() then
