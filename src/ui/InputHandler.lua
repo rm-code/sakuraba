@@ -9,6 +9,9 @@ local DIRECTION = Constants.DIRECTION;
 local COLORS = Constants.COLORS;
 local TILE_SIZE  = Constants.TILE_SIZE;
 
+local RANGE_ADJACENT = 1;
+local RANGE_COMBAT   = 8; -- TODO base this on player stats
+
 -- ------------------------------------------------
 -- Module
 -- ------------------------------------------------
@@ -23,9 +26,7 @@ function InputHandler.new(game)
     -- ------------------------------------------------
 
     local blockingFunction;
-
-    local target;
-    local points = {};
+    local highlights;
 
     -- ------------------------------------------------
     -- Private Functions
@@ -35,12 +36,15 @@ function InputHandler.new(game)
     -- Returns an anonymous function which blocks the key input until the player
     -- has selected a target tile.
     -- @param game - A reference to the game object.
+    -- @param range - The range in which to select the target.
     -- @param msg - The message to send to the game's control function.
     -- @param confirmationKey - The key to confirm the selection.
     --
-    local function selectTarget(game, msg, confirmationKey)
+    local function selectTarget(game, range, msg, confirmationKey)
+        local map = game:getMap();
         local player = game:getPlayer();
-        local tile = player:getTile();
+        local origin = player:getTile();
+        local target = origin;
         local direction;
 
         return function(key)
@@ -54,78 +58,54 @@ function InputHandler.new(game)
                 direction = DIRECTION.WEST;
             end
 
-            target = tile:getNeighbours()[direction];
+            if target:getNeighbours()[direction] then
+                target = target:getNeighbours()[direction];
+                direction = nil; -- Reset direction for next turn.
+            end
+
+            local highlights = {}; -- Reset the previous tile highlights.
+
+            -- Map the line from the origin to the target tile and see if it can
+            -- reach it. The line stops if the maximumg range is surpassed, or if
+            -- the target lies outside of the grid.
+            Bresenham.calculateLine(origin:getX(), origin:getY(),
+                    target:getX(), target:getY(),
+                    -- Callback for each tile the line visits.
+                    function (nx, ny, counter)
+                        -- Stop the algorithm if the maximum range is reached.
+                        if counter > range then
+                            return false;
+                        end
+
+                        -- Stop the algorithm if the target tile is not passable.
+                        if not map:getTileAt(nx, ny):isPassable() then
+                            highlights[#highlights + 1] = { x = nx , y = ny, col = COLORS.RED };
+                            return false;
+                        end
+
+                        highlights[#highlights + 1] = { x = nx , y = ny, col = COLORS.GREEN };
+
+                        return true;
+                    end);
+
+            -- This line makes sure that the target never lies outside of the range specified
+            -- for Bresenham's algorithm by (re)setting the target tile to the last valid tile
+            -- specified by the line algorithm.
+            target = map:getTileAt(highlights[#highlights].x, highlights[#highlights].y);
 
             if key == confirmationKey then
-                -- Don't send the command to the game object if no target
-                -- selection was performed.
+                -- Only send the command to the game object if a valid selection was performed.
                 if target then
                     game:control(msg, target);
                 end
                 blockingFunction = nil;
-                target = nil;
-            elseif key == 'escape' then
-                blockingFunction = nil;
-                target = nil;
-            end
-        end
-    end
-
-    ---
-    -- Returns an anonymous function which blocks the key input until the player
-    -- has selected a target tile.
-    -- @param game - A reference to the game object.
-    -- @param msg - The message to send to the game's control function.
-    -- @param confirmationKey - The key to confirm the selection.
-    --
-    local function selectRangedTarget(game, msg, confirmationKey)
-        local map = game:getMap();
-        local player = game:getPlayer();
-        local origin = player:getTile();
-        local target = origin;
-
-        return function(key)
-            if key == 'up' then
-                target = target:getNeighbours()[DIRECTION.NORTH] or target;
-            elseif key == 'down' then
-                target = target:getNeighbours()[DIRECTION.SOUTH] or target;
-            elseif key == 'right' then
-                target = target:getNeighbours()[DIRECTION.EAST] or target;
-            elseif key == 'left' then
-                target = target:getNeighbours()[DIRECTION.WEST] or target;
-            end
-
-            local line = {};
-            Bresenham.calculateLine(origin:getX(), origin:getY(), target:getX(), target:getY(), function (nx, ny, counter)
-                    if counter > 8 then
-                        return false;
-                    end
-                    if not map:getTileAt(nx, ny):isPassable() then
-                        line[#line + 1] = { x = nx , y = ny, col = COLORS.RED };
-                        return false;
-                    end
-
-                    line[#line + 1] = { x = nx , y = ny, col = COLORS.GREEN };
-
-                    return true;
-                end);
-
-            if key == confirmationKey then
-                -- Don't send the command to the game object if no target
-                -- selection was performed.
-                if target then
-                    game:control(msg, target);
-                end
-                blockingFunction = nil;
-                target = nil;
                 return;
             elseif key == 'escape' then
                 blockingFunction = nil;
-                target = nil;
                 return;
             end
 
-            return line;
+            return highlights;
         end
     end
 
@@ -134,17 +114,10 @@ function InputHandler.new(game)
     -- ------------------------------------------------
 
     function self:draw()
-        if target then
-            love.graphics.setColor(0, 0, 255);
-            love.graphics.rectangle('line', target:getX() * TILE_SIZE, target:getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-            love.graphics.setColor(255, 255, 255);
-        end
-
-        -- TODO remove
-        if points then
-            for i = 1, #points do
-                love.graphics.setColor(points[i].col[1], points[i].col[2], points[i].col[3], 200);
-                love.graphics.rectangle('line', points[i].x * TILE_SIZE, points[i].y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+        if highlights then
+            for i = 1, #highlights do
+                love.graphics.setColor(highlights[i].col[1], highlights[i].col[2], highlights[i].col[3], 200);
+                love.graphics.rectangle('line', highlights[i].x * TILE_SIZE, highlights[i].y * TILE_SIZE, TILE_SIZE, TILE_SIZE);
                 love.graphics.setColor(255, 255, 255);
             end
         end
@@ -152,7 +125,7 @@ function InputHandler.new(game)
 
     function self:keypressed(key)
         if blockingFunction then
-            points = blockingFunction(key);
+            highlights = blockingFunction(key);
             return;
         end
 
@@ -171,15 +144,15 @@ function InputHandler.new(game)
         end
 
         if key == 'e' then
-            blockingFunction = selectTarget(game, 'interact', 'e');
+            blockingFunction = selectTarget(game, 1, 'interact', 'e');
         end
 
         if key == 'a' then
-            blockingFunction = selectTarget(game, 'attack', 'a');
+            blockingFunction = selectTarget(game, 1, 'attack', 'a');
         end
 
         if key == 'f' then
-            blockingFunction = selectRangedTarget(game, 'rangedattack', 'f');
+            blockingFunction = selectTarget(game, 8, 'rangedattack', 'f');
         end
     end
 
