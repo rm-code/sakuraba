@@ -95,6 +95,13 @@ function MainScreen.new()
     end
 
     ---
+    -- Returns a sprite for actors based on their type.
+    --
+    local function selectActorSprite(actor)
+        return TILE_SPRITES[actor:getType()];
+    end
+
+    ---
     -- Draws all tiles of the map.
     --
     local function drawMap(map)
@@ -113,11 +120,11 @@ function MainScreen.new()
             local tile = actor:getTile();
 
             if tile:isVisible() then
-                drawTile(selectTileSprite(actor), tile:getX(), tile:getY(), selectActorColor(actor));
+                drawTile(selectActorSprite(actor), tile:getX(), tile:getY(), selectActorColor(actor));
             end
 
             -- TODO remove
-            love.graphics.print(selectTileSprite(actor), 10, 400 + i * 20)
+            love.graphics.print(selectActorSprite(actor), 10, 400 + i * 20)
             love.graphics.print(actor:health():getHealth(), 30, 400 + i * 20)
             love.graphics.rectangle('fill', 50, 400 + i * 20, actors[i]:energy():getEnergy() * 15, 15);
         end
