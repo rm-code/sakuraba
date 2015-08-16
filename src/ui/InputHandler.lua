@@ -43,9 +43,12 @@ function InputHandler.new(game)
     local function selectTarget(game, range, msg, confirmationKey)
         local map = game:getMap();
         local player = game:getPlayer();
+        local actors = game:getActors();
         local origin = player:getTile();
         local target = origin;
         local direction;
+
+        local actorIndex = 1;
 
         return function(key)
             if key == 'up' then
@@ -56,6 +59,27 @@ function InputHandler.new(game)
                 direction = DIRECTION.EAST;
             elseif key == 'left' then
                 direction = DIRECTION.WEST;
+            elseif key == 'tab' then
+                -- Cycle through all actors and select them as targets automatially.
+                local tmp = actorIndex;
+                while true do
+                    actorIndex = actorIndex == #actors and 1 or actorIndex + 1;
+
+                    -- Use the actor as a target if it isn't the same as the player,
+                    -- is visible and belongs to a hostile faction.
+                    local actor = actors[actorIndex];
+                    if actor ~= player and
+                        actor:getTile():isVisible() and
+                        actor:attributes():getFaction() ~= player:attributes():getFaction() then
+                            target = actor:getTile();
+                            break;
+                    end
+
+                    -- Stop the loop when we have iterated over all actors once.
+                    if tmp == actorIndex then
+                        break;
+                    end
+                end
             end
 
             if target:getNeighbours()[direction] then
@@ -145,14 +169,17 @@ function InputHandler.new(game)
 
         if key == 'e' then
             blockingFunction = selectTarget(game, 1, 'interact', 'e');
+            blockingFunction();
         end
 
         if key == 'a' then
             blockingFunction = selectTarget(game, 1, 'attack', 'a');
+            blockingFunction();
         end
 
         if key == 'f' then
             blockingFunction = selectTarget(game, 8, 'rangedattack', 'f');
+            blockingFunction();
         end
     end
 
