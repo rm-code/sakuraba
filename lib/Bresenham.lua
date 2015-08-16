@@ -48,12 +48,12 @@ function Bresenham.calculateLine(ox, oy, ex, ey, callback)
 
     local counter = 0;
     while true do
-        counter = counter + 1;
         local continue = callback(ox, oy, counter);
-
         if not continue then
             return;
         end
+
+        counter = counter + 1;
 
         if ox == ex and oy == ey then
             return;
