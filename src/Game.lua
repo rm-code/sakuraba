@@ -8,6 +8,7 @@ local Wait = require('src.actors.actions.Wait');
 local Interact = require('src.actors.actions.Interact');
 local Attack = require('src.actors.actions.Attack');
 local RangedAttack = require('src.actors.actions.RangedAttack');
+local BaseItem = require('src.items.BaseItem');
 
 -- ------------------------------------------------
 -- Constants
@@ -36,6 +37,18 @@ function Game.new()
     -- ------------------------------------------------
     -- Private Functions
     -- ------------------------------------------------
+
+    ---
+    -- Create items on the tiles actors have died on during the turn.
+    --
+    local function spawnItems(actors)
+        for i = 1, #actors do
+            local actor = actors[i];
+            if actor:health():isDead() then
+                actor:getTile():addItem(BaseItem.new());
+            end
+        end
+    end
 
     ---
     -- Removes all dead actors from the game.
@@ -119,6 +132,9 @@ function Game.new()
             map:calculateVisibility(player:getTile());
             turns = turns + 1;
         end
+
+        -- Spawn items where actors have died.
+        spawnItems(actors);
 
         -- Remove actors which have died during this turn from the game.
         removeDeadActors(actors);

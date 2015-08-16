@@ -69,6 +69,11 @@ function MainScreen.new()
             return COLORS.INVISIBLE;
         end
 
+        -- Tiles containing items are purple.
+        if tile:hasItems() then
+            return COLORS.PURPLE;
+        end
+
         return COLORS.WHITE;
     end
 
@@ -90,6 +95,8 @@ function MainScreen.new()
             else
                 return TILE_SPRITES[TILE_TYPES.DOORCLOSED];
             end
+        elseif tile:hasItems() then
+            return TILE_SPRITES[TILE_TYPES.ITEM_STACK];
         end
         return TILE_SPRITES[type];
     end

@@ -23,8 +23,13 @@ function Tile.new(x, y, type, passable)
     local content = {};
     local visible = false;
     local explored = false;
+    local inventory = {};
 
     function self:update(dt)
+    end
+
+    function self:addItem(item)
+        inventory[#inventory + 1] = item;
     end
 
     function self:removeActor()
@@ -76,6 +81,10 @@ function Tile.new(x, y, type, passable)
 
     function self:getY()
         return y;
+    end
+
+    function self:hasItems()
+        return #inventory > 0;
     end
 
     function self:isExplored()

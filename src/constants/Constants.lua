@@ -29,6 +29,7 @@ local TILE_TYPES = {
     DOOR = 'door',
     DOOROPEN = 'dooropen',
     DOORCLOSED = 'doorclosed',
+    ITEM_STACK = 'itemstack',
 }
 
 local ACTOR_STATS = {
@@ -46,6 +47,7 @@ local TILE_SPRITES = {
     [TILE_TYPES.FLOOR]      = '.',
     [TILE_TYPES.DOOROPEN]   = 'O',
     [TILE_TYPES.DOORCLOSED] = '/',
+    [TILE_TYPES.ITEM_STACK] = '!',
 
     -- Actor Tiles
     [ACTOR_TYPES.PLAYER]  = '@',
@@ -62,6 +64,7 @@ local COLORS = {
     DARK_GREY = {  50,  50,  50, 255 },
     RED       = { 255,   0,   0, 255 },
     GREEN     = {   0, 255,   0, 255 },
+    PURPLE    = { 148,   0, 211, 255 },
 }
 
 -- The default amount of energy an actor has to spend to perform its task.
