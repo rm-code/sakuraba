@@ -36,6 +36,10 @@ function Tile.new(x, y, type, passable)
         content.actor = nil;
     end
 
+    function self:removeItem(index)
+        inventory[index] = nil;
+    end
+
     function self:setActor(nactor)
         content.actor = nactor;
     end
@@ -61,6 +65,10 @@ function Tile.new(x, y, type, passable)
 
     function self:getActor()
         return content.actor;
+    end
+
+    function self:getItems()
+        return inventory;
     end
 
     function self:getType()

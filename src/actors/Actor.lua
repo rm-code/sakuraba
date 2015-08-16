@@ -3,6 +3,7 @@ local Health = require('src.actors.components.Health');
 local Energy = require('src.actors.components.Energy');
 local Attributes = require('src.actors.components.Attributes');
 local Action = require('src.actors.components.Action');
+local Inventory = require('src.actors.components.Inventory');
 
 -- ------------------------------------------------
 -- Constants
@@ -32,6 +33,7 @@ function Actor.new(type, tile, faction)
     local energy = Energy.new(ACTOR_STATS[type].speed);
     local attributes = Attributes.new(faction, ACTOR_STATS[type].ar, ACTOR_STATS[type].dr);
     local action = Action.new(self);
+    local inventory = Inventory.new(self);
 
     function self:update(dt)
         return;
@@ -63,6 +65,10 @@ function Actor.new(type, tile, faction)
 
     function self:action()
         return action;
+    end
+
+    function self:inventory()
+        return inventory;
     end
 
     return self;

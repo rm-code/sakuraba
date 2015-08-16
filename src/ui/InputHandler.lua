@@ -181,6 +181,10 @@ function InputHandler.new(game)
             blockingFunction = selectTarget(game, 8, 'rangedattack', 'f');
             blockingFunction();
         end
+
+        if key == 'g' then
+            game:control('grab');
+        end
     end
 
     return self;
