@@ -1,6 +1,6 @@
 local OpenDoor = {};
 
-function OpenDoor.new(direction)
+function OpenDoor.new(target)
     local self = {};
 
     local actor;
@@ -12,8 +12,6 @@ function OpenDoor.new(direction)
     function self:perform()
         actor:action():clearAction();
 
-        local neighbours = actor:getTile():getNeighbours();
-        local target = neighbours[direction];
         if target:getType() == 'door' and not target:isPassable() then
             target:open();
             return true;

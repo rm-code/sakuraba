@@ -1,6 +1,6 @@
 local SwitchPositions = {};
 
-function SwitchPositions.new(direction)
+function SwitchPositions.new(target)
     local self = {};
 
     local actor;
@@ -19,8 +19,7 @@ function SwitchPositions.new(direction)
         actor:action():clearAction();
 
         local currentTile = actor:getTile();
-        local neighbours = currentTile:getNeighbours();
-        local targetTile = neighbours[direction];
+        local targetTile = target;
 
         if targetTile:isOccupied() then
             local targetActor = targetTile:getActor();

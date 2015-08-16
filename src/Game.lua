@@ -126,7 +126,7 @@ function Game.new()
 
     function self:control(msg, arg)
         if msg == 'walk' then
-            player:action():setAction(Walk.new(arg));
+            player:action():setAction(Walk.new(player:getTile():getNeighbours()[arg]));
         elseif msg == 'wait' then
             player:action():setAction(Wait.new());
         elseif msg == 'interact' then

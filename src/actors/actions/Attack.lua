@@ -2,7 +2,7 @@ local SwitchPositions = require('src.actors.actions.SwitchPositions');
 
 local Attack = {};
 
-function Attack.new(direction)
+function Attack.new(target)
     local self = {};
 
     local actor;
@@ -47,15 +47,13 @@ function Attack.new(direction)
     function self:perform()
         actor:action():clearAction();
 
-        local neighbours = actor:getTile():getNeighbours();
-        local target = neighbours[direction];
         if target:isOccupied() then
             local opponent = target:getActor();
             if opponent:attributes():getFaction() ~= actor:attributes():getFaction() then
                 calculateOutcome(actor, opponent);
                 return true;
             else
-                return SwitchPositions.new(direction);
+                return SwitchPositions.new(target);
             end
         end
         return false;

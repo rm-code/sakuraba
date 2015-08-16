@@ -20,20 +20,21 @@ local Ally = {};
 function Ally.new(type, tile)
     local self = Actor.new(type, tile, FACTIONS.ALLIED);
 
-    local prevDirection = DIRECTION.NORTH;
+    local direction = DIRECTION.NORTH;
 
     function self:update(dt)
         local rnd = love.math.random(4);
         if rnd == 1 then
-            prevDirection = DIRECTION.NORTH;
+            direction = DIRECTION.NORTH;
         elseif rnd == 2 then
-            prevDirection = DIRECTION.SOUTH;
+            direction = DIRECTION.SOUTH;
         elseif rnd == 3 then
-            prevDirection = DIRECTION.EAST;
+            direction = DIRECTION.EAST;
         elseif rnd == 4 then
-            prevDirection = DIRECTION.WEST;
+            direction = DIRECTION.WEST;
         end
-        self:action():setAction(Walk.new(prevDirection));
+
+        self:action():setAction(Walk.new(self:getTile():getNeighbours()[direction]));
     end
 
     return self;

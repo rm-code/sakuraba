@@ -41,17 +41,20 @@ function InputHandler.new(game)
     local function selectTarget(game, msg, confirmationKey)
         local player = game:getPlayer();
         local tile = player:getTile();
+        local direction;
 
         return function(key)
             if key == 'up' then
-                target = DIRECTION.NORTH;
+                direction = DIRECTION.NORTH;
             elseif key == 'down' then
-                target = DIRECTION.SOUTH;
+                direction = DIRECTION.SOUTH;
             elseif key == 'right' then
-                target = DIRECTION.EAST;
+                direction = DIRECTION.EAST;
             elseif key == 'left' then
-                target = DIRECTION.WEST;
+                direction = DIRECTION.WEST;
             end
+
+            target = tile:getNeighbours()[direction];
 
             if key == confirmationKey then
                 -- Don't send the command to the game object if no target
@@ -132,9 +135,8 @@ function InputHandler.new(game)
 
     function self:draw()
         if target then
-            local tile = game:getPlayer():getTile():getNeighbours()[target];
             love.graphics.setColor(0, 0, 255);
-            love.graphics.rectangle('line', tile:getX() * TILE_SIZE, tile:getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            love.graphics.rectangle('line', target:getX() * TILE_SIZE, target:getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
             love.graphics.setColor(255, 255, 255);
         end
 
