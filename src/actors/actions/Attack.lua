@@ -1,11 +1,10 @@
+local BaseAction = require('src.actors.actions.BaseAction');
 local SwitchPositions = require('src.actors.actions.SwitchPositions');
 
 local Attack = {};
 
 function Attack.new(target)
-    local self = {};
-
-    local actor;
+    local self = BaseAction.new();
 
     -- ------------------------------------------------
     -- Local Functions
@@ -40,11 +39,8 @@ function Attack.new(target)
     -- Public Functions
     -- ------------------------------------------------
 
-    function self:bind(nactor)
-        actor = nactor;
-    end
-
     function self:perform()
+        local actor = self:getActor();
         actor:action():clearAction();
 
         if target:isOccupied() then

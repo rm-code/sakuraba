@@ -1,9 +1,9 @@
+local BaseAction = require('src.actors.actions.BaseAction');
+
 local SwitchPositions = {};
 
 function SwitchPositions.new(target)
-    local self = {};
-
-    local actor;
+    local self = BaseAction.new();
 
     local function moveToTile(tile, actor)
         tile:removeActor();
@@ -11,11 +11,8 @@ function SwitchPositions.new(target)
         actor:setTile(tile);
     end
 
-    function self:bind(nactor)
-        actor = nactor;
-    end
-
     function self:perform()
+        local actor = self:getActor();
         actor:action():clearAction();
 
         local currentTile = actor:getTile();

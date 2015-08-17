@@ -1,15 +1,12 @@
+local BaseAction = require('src.actors.actions.BaseAction');
+
 local OpenDoor = {};
 
 function OpenDoor.new(target)
-    local self = {};
-
-    local actor;
-
-    function self:bind(nactor)
-        actor = nactor;
-    end
+    local self = BaseAction.new();
 
     function self:perform()
+        local actor = self:getActor();
         actor:action():clearAction();
 
         if target:getType() == 'door' and not target:isPassable() then

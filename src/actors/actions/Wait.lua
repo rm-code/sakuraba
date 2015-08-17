@@ -1,16 +1,14 @@
+local BaseAction = require('src.actors.actions.BaseAction');
+
 local Wait = {};
 
 function Wait.new()
-    local self = {};
-
-    local actor;
-
-    function self:bind(nactor)
-        actor = nactor;
-    end
+    local self = BaseAction.new();
 
     function self:perform()
+        local actor = self:getActor();
         actor:action():clearAction();
+
         actor:health():heal(love.math.random(1, 3));
         return true;
     end

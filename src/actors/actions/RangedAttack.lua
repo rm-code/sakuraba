@@ -1,9 +1,9 @@
+local BaseAction = require('src.actors.actions.BaseAction');
+
 local RangedAttack = {};
 
 function RangedAttack.new(target)
-    local self = {};
-
-    local actor;
+    local self = BaseAction.new();
 
     -- ------------------------------------------------
     -- Local Functions
@@ -38,11 +38,8 @@ function RangedAttack.new(target)
     -- Public Functions
     -- ------------------------------------------------
 
-    function self:bind(nactor)
-        actor = nactor;
-    end
-
     function self:perform()
+        local actor = self:getActor();
         actor:action():clearAction();
 
          -- Get the actor standing on the target tile.
