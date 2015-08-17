@@ -14,6 +14,11 @@ function Inventory.new(actor)
 
     function self:equip(item)
         if item:getType() == ITEM_TYPES.WEAPON then
+            -- Unequip item if the slot is already taken.
+            if equippedItems[ITEM_TYPES.WEAPON] then
+                self:unequip(equippedItems[ITEM_TYPES.WEAPON]);
+            end
+
             equippedItems[ITEM_TYPES.WEAPON] = item;
             item:setEquipped(true);
         end
