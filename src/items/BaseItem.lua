@@ -1,6 +1,9 @@
+local DEFAULT_NAME = 'DefaultName';
+local DEFAULT_TYPE = 'DefaultType';
+
 local BaseItem = {};
 
-function BaseItem.new()
+function BaseItem.new(name, type)
     local self = {};
 
     local equipped = false;
@@ -13,8 +16,12 @@ function BaseItem.new()
         return 1.0;
     end
 
+    function self:getName()
+        return name or DEFAULT_NAME;
+    end
+
     function self:getType()
-        return 'Dummy';
+        return type or DEFAULT_TYPE;
     end
 
     function self:isEquipped()
