@@ -1,6 +1,7 @@
 local Screen = require('lib.screenmanager.Screen');
 local Constants = require('src.constants.Constants');
 local InputHandler = require('src.ui.InputHandler');
+local InventoryScreen = require('src.ui.InventoryScreen');
 local Game = require('src.Game');
 
 -- ------------------------------------------------
@@ -145,12 +146,16 @@ function MainScreen.new()
         game = Game.new();
         game:init();
 
-        input = InputHandler.new(game);
+        inventory = InventoryScreen.new(game);
+
+        input = InputHandler.new(game, inventory);
     end
 
     function self:draw()
         drawMap(map);
         drawActors(actors);
+
+        inventory:draw();
 
         input:draw();
 

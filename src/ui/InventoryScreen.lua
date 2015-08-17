@@ -1,0 +1,34 @@
+local InventoryScreen = {};
+
+function InventoryScreen.new(game)
+    local self = {};
+
+    local inventory = game:getPlayer():inventory():getItems();
+    local equipment = game:getPlayer():inventory():getEquippedItems();
+
+    local selection;
+
+    function self:draw()
+        love.graphics.print('Inventory', love.graphics.getWidth() - 200, 10);
+        for i = 1, #inventory do
+            if i == selection then
+                love.graphics.setColor(0, 255, 0);
+            end
+            love.graphics.print(i .. '. ' .. inventory[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 20);
+            love.graphics.setColor(255, 255, 255);
+        end
+
+        love.graphics.print('Equipped', love.graphics.getWidth() - 200, 180);
+        for i = 1, #equipment do
+            love.graphics.print(i .. '. ' .. equipment[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 200);
+        end
+    end
+
+    function self:setInventorySelection(nselection)
+        selection = nselection;
+    end
+
+    return self;
+end
+
+return InventoryScreen;

@@ -18,7 +18,7 @@ local RANGE_COMBAT   = 8; -- TODO base this on player stats
 
 local InputHandler = {};
 
-function InputHandler.new(game)
+function InputHandler.new(game, inventory)
     local self = {};
 
     -- ------------------------------------------------
@@ -27,7 +27,6 @@ function InputHandler.new(game)
 
     local blockingFunction;
     local highlights;
-    local inventoryHighlight;
 
     -- ------------------------------------------------
     -- Private Functions
@@ -38,7 +37,7 @@ function InputHandler.new(game)
         local items = player:inventory():getItems();
         local index = 1;
 
-        inventoryHighlight = index;
+        inventory:setInventorySelection(index);
 
         return function(key)
             if key == 'up' then
@@ -53,8 +52,7 @@ function InputHandler.new(game)
                 index = 1;
             end
 
-            -- Upvalue.
-            inventoryHighlight = index;
+            inventory:setInventorySelection(index);
 
             if key == 'e' then
                 -- Only send the command to the game object if a valid selection was performed.
@@ -63,11 +61,11 @@ function InputHandler.new(game)
                 end
 
                 blockingFunction = nil;
-                inventoryHighlight = nil;
+                inventory:setInventorySelection(0);
                 return;
             elseif key == 'escape' then
                 blockingFunction = nil;
-                inventoryHighlight = nil;
+                inventory:setInventorySelection(0);
                 return;
             end
         end
@@ -179,22 +177,6 @@ function InputHandler.new(game)
     -- ------------------------------------------------
 
     function self:draw()
-        -- TODO move to inventory screen class.
-        local inv = game:getPlayer():inventory():getItems();
-        love.graphics.print('Inventory', love.graphics.getWidth() - 200, 10);
-        for i = 1, #inv do
-            if i == inventoryHighlight then
-                love.graphics.setColor(0, 255, 0);
-            end
-            love.graphics.print(i .. '. ' .. inv[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 20);
-            love.graphics.setColor(255, 255, 255);
-        end
-        inv = game:getPlayer():inventory():getEquippedItems();
-        love.graphics.print('Equipped', love.graphics.getWidth() - 200, 180);
-        for i = 1, #inv do
-            love.graphics.print(i .. '. ' .. inv[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 200);
-        end
-
         if highlights then
             for i = 1, #highlights do
                 love.graphics.setColor(highlights[i].col[1], highlights[i].col[2], highlights[i].col[3], 200);
