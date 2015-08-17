@@ -20,8 +20,8 @@ function Player.new(type, tile)
     local self = Actor.new(type, tile, FACTIONS.ALLIED);
 
     local weapon = Weapon.new('knife');
-    self:inventory():addItem(weapon);
-    self:inventory():equipItem(weapon);
+    self:inventory():add(weapon);
+    self:inventory():equip(weapon);
 
     return self;
 end

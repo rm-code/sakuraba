@@ -9,7 +9,7 @@ function Equip.new(item)
         local actor = self:getActor();
 
         if not item:isEquipped() then
-            actor:inventory():equipItem(item);
+            actor:inventory():equip(item);
             return true;
         end
         return false;

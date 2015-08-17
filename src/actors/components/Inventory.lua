@@ -12,21 +12,25 @@ function Inventory.new(actor)
         [ITEM_TYPES.WEAPON] = nil,
     };
 
-    function self:equipItem(item)
+    function self:equip(item)
         if item:getType() == ITEM_TYPES.WEAPON then
             equippedItems[ITEM_TYPES.WEAPON] = item;
             item:setEquipped(true);
         end
     end
 
-    function self:unequipItem(item)
+    function self:unequip(item)
         if item:getType() == ITEM_TYPES.WEAPON then
             equippedItems[ITEM_TYPES.WEAPON] = nil;
             item:setEquipped(false);
         end
     end
 
-    function self:removeItem(item)
+    function self:add(item)
+        items[#items + 1] = item;
+    end
+
+    function self:remove(item)
         local toRemove;
         for i = 1, #items do
             if items[i] == item then
@@ -39,10 +43,6 @@ function Inventory.new(actor)
 
     function self:getItems()
         return items;
-    end
-
-    function self:addItem(item)
-        items[#items + 1] = item;
     end
 
     function self:getEquippedItems()

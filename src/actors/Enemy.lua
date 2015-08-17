@@ -21,8 +21,8 @@ function Enemy.new(type, tile)
     local self = Actor.new(type, tile, FACTIONS.ENEMY);
 
     local weapon = Weapon.new('claw');
-    self:inventory():addItem(weapon);
-    self:inventory():equipItem(weapon);
+    self:inventory():add(weapon);
+    self:inventory():equip(weapon);
 
     local direction = DIRECTION.NORTH;
 

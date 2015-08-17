@@ -11,7 +11,7 @@ function Grab.new()
         local tile = actor:getTile();
         local items = tile:getItems();
         for i = #items, 1, -1 do
-            actor:inventory():addItem(items[i]);
+            actor:inventory():add(items[i]);
             tile:removeItem(i);
         end
 
