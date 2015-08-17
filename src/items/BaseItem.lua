@@ -12,10 +12,6 @@ function BaseItem.new(name, type)
         equipped = nequipped;
     end
 
-    function self:getWeight()
-        return 1.0;
-    end
-
     function self:getName()
         return name or DEFAULT_NAME;
     end
