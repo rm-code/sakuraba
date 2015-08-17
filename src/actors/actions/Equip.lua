@@ -12,9 +12,12 @@ function Equip.new(item)
     function self:perform()
         actor:action():clearAction();
 
-        actor:inventory():equipItem(item);
-        actor:inventory():removeItem(item);
-        return true;
+        if not item:isEquipped() then
+            actor:inventory():equipItem(item);
+            item:setEquipped(true);
+            return true;
+        end
+        return false;
     end
 
     return self;

@@ -17,6 +17,8 @@ function InventoryScreen.new(game)
         for i = 1, #inventory do
             if i == selection then
                 love.graphics.setColor(COLORS.GREEN);
+            elseif inventory[i]:isEquipped() then
+                love.graphics.setColor(COLORS.PURPLE);
             end
             love.graphics.print(i .. '. ' .. inventory[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 20);
             love.graphics.setColor(COLORS.WHITE);
