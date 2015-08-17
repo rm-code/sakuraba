@@ -1,3 +1,7 @@
+local Constants = require('src.constants.Constants');
+
+local COLORS = Constants.COLORS;
+
 local InventoryScreen = {};
 
 function InventoryScreen.new(game)
@@ -12,10 +16,10 @@ function InventoryScreen.new(game)
         love.graphics.print('Inventory', love.graphics.getWidth() - 200, 10);
         for i = 1, #inventory do
             if i == selection then
-                love.graphics.setColor(0, 255, 0);
+                love.graphics.setColor(COLORS.GREEN);
             end
             love.graphics.print(i .. '. ' .. inventory[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 20);
-            love.graphics.setColor(255, 255, 255);
+            love.graphics.setColor(COLORS.WHITE);
         end
 
         love.graphics.print('Equipped', love.graphics.getWidth() - 200, 180);
