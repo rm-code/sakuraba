@@ -30,9 +30,7 @@ function Attack.new(target)
 
         if doesHit(ar, dr) then
             defender:health():damage(4);
-            return;
         end
-        return;
     end
 
     -- ------------------------------------------------
