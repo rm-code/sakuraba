@@ -10,6 +10,17 @@ function Inventory.new(actor)
         equippedItems[#equippedItems + 1] = item;
     end
 
+    function self:unequipItem(item)
+        local toRemove;
+        for i = 1, #equippedItems do
+            if items[i] == item then
+                toRemove = i;
+                break;
+            end
+        end
+        table.remove(equippedItems, toRemove);
+    end
+
     function self:removeItem(item)
         local toRemove;
         for i = 1, #items do

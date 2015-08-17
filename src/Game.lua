@@ -10,6 +10,7 @@ local Attack = require('src.actors.actions.Attack');
 local RangedAttack = require('src.actors.actions.RangedAttack');
 local Grab = require('src.actors.actions.Grab');
 local Equip = require('src.actors.actions.Equip');
+local Unequip = require('src.actors.actions.Unequip');
 local BaseItem = require('src.items.BaseItem');
 
 -- ------------------------------------------------
@@ -157,6 +158,8 @@ function Game.new()
             player:action():setAction(Grab.new());
         elseif msg == 'equip' then
             player:action():setAction(Equip.new(arg));
+        elseif msg == 'unequip' then
+            player:action():setAction(Unequip.new(arg));
         end
 
         -- Process the next turn and return control back to the player at the end.
