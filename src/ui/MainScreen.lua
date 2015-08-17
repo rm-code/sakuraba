@@ -154,11 +154,6 @@ function MainScreen.new()
 
         input:draw();
 
-        local inv = game:getPlayer():inventory():getItems();
-        for i = 1, #inv do
-            love.graphics.print(i .. '. ' .. inv[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 20);
-        end
-
         love.graphics.print(string.format('%.5d', turns), love.graphics.getWidth() - 45, love.graphics.getHeight() - 20);
     end
 

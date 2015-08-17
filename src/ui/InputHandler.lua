@@ -27,10 +27,51 @@ function InputHandler.new(game)
 
     local blockingFunction;
     local highlights;
+    local inventoryHighlight;
 
     -- ------------------------------------------------
     -- Private Functions
     -- ------------------------------------------------
+
+    local function modifyInventory(game)
+        local player = game:getPlayer();
+        local items = player:inventory():getItems();
+        local index = 1;
+
+        inventoryHighlight = index;
+
+        return function(key)
+            if key == 'up' then
+                index = index - 1;
+            elseif key == 'down' then
+                index = index + 1;
+            end
+
+            if index < 1 then
+                index = #items;
+            elseif index > #items then
+                index = 1;
+            end
+
+            -- Upvalue.
+            inventoryHighlight = index;
+
+            if key == 'e' then
+                -- Only send the command to the game object if a valid selection was performed.
+                if items[index] then
+                    game:control('equip', items[index]);
+                end
+
+                blockingFunction = nil;
+                inventoryHighlight = nil;
+                return;
+            elseif key == 'escape' then
+                blockingFunction = nil;
+                inventoryHighlight = nil;
+                return;
+            end
+        end
+    end
 
     ---
     -- Returns an anonymous function which blocks the key input until the player
@@ -138,6 +179,22 @@ function InputHandler.new(game)
     -- ------------------------------------------------
 
     function self:draw()
+        -- TODO move to inventory screen class.
+        local inv = game:getPlayer():inventory():getItems();
+        love.graphics.print('Inventory', love.graphics.getWidth() - 200, 10);
+        for i = 1, #inv do
+            if i == inventoryHighlight then
+                love.graphics.setColor(0, 255, 0);
+            end
+            love.graphics.print(i .. '. ' .. inv[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 20);
+            love.graphics.setColor(255, 255, 255);
+        end
+        inv = game:getPlayer():inventory():getEquippedItems();
+        love.graphics.print('Equipped', love.graphics.getWidth() - 200, 180);
+        for i = 1, #inv do
+            love.graphics.print(i .. '. ' .. inv[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 200);
+        end
+
         if highlights then
             for i = 1, #highlights do
                 love.graphics.setColor(highlights[i].col[1], highlights[i].col[2], highlights[i].col[3], 200);
@@ -180,6 +237,10 @@ function InputHandler.new(game)
         if key == 'f' then
             blockingFunction = selectTarget(game, 8, 'rangedattack', 'f');
             blockingFunction();
+        end
+
+        if key == 'i' then
+            blockingFunction = modifyInventory(game);
         end
 
         if key == 'g' then
