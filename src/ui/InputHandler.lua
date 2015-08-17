@@ -72,6 +72,15 @@ function InputHandler.new(game, inventory)
                 blockingFunction = nil;
                 inventory:setInventorySelection(0);
                 return;
+            elseif key == 'd' then
+                -- Only send the command to the game object if a valid selection was performed.
+                if items[index] then
+                    game:control('drop', items[index]);
+                end
+
+                blockingFunction = nil;
+                inventory:setInventorySelection(0);
+                return;
             elseif key == 'escape' then
                 blockingFunction = nil;
                 inventory:setInventorySelection(0);
