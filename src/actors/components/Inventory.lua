@@ -1,26 +1,29 @@
+local Constants = require('src.constants.Constants');
+
+local ITEM_TYPES = Constants.ITEM_TYPES;
+
 local Inventory = {};
 
 function Inventory.new(actor)
     local self = {};
 
     local items = {};
-    local equippedItems = {};
+    local equippedItems = {
+        [ITEM_TYPES.WEAPON] = nil,
+    };
 
     function self:equipItem(item)
-        equippedItems[#equippedItems + 1] = item;
-        item:setEquipped(true);
+        if item:getType() == ITEM_TYPES.WEAPON then
+            equippedItems[ITEM_TYPES.WEAPON] = item;
+            item:setEquipped(true);
+        end
     end
 
     function self:unequipItem(item)
-        local toRemove;
-        for i = 1, #equippedItems do
-            if items[i] == item then
-                toRemove = i;
-                break;
-            end
+        if item:getType() == ITEM_TYPES.WEAPON then
+            equippedItems[ITEM_TYPES.WEAPON] = nil;
+            item:setEquipped(false);
         end
-        table.remove(equippedItems, toRemove);
-        item:setEquipped(false);
     end
 
     function self:removeItem(item)
@@ -45,6 +48,11 @@ function Inventory.new(actor)
     function self:getEquippedItems()
         return equippedItems;
     end
+
+    function self:getWeapon()
+        return equippedItems[ITEM_TYPES.WEAPON];
+    end
+
 
     return self;
 end

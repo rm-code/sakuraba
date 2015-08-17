@@ -20,14 +20,11 @@ function InventoryScreen.new(game)
             elseif inventory[i]:isEquipped() then
                 love.graphics.setColor(COLORS.PURPLE);
             end
-            love.graphics.print(i .. '. ' .. inventory[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 20);
+            love.graphics.print(inventory[i]:getName(), love.graphics.getWidth() - 200, i * 20 + 20);
             love.graphics.setColor(COLORS.WHITE);
         end
 
-        love.graphics.print('Equipped', love.graphics.getWidth() - 200, 180);
-        for i = 1, #equipment do
-            love.graphics.print(i .. '. ' .. equipment[i]:getType(), love.graphics.getWidth() - 200, i * 20 + 200);
-        end
+        love.graphics.print('Weapon: ' .. (equipment.weapon and equipment.weapon:getName() or 'none'), love.graphics.getWidth() - 200, 200);
     end
 
     function self:setInventorySelection(nselection)

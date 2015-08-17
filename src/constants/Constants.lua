@@ -32,6 +32,10 @@ local TILE_TYPES = {
     ITEM_STACK = 'itemstack',
 }
 
+local ITEM_TYPES = {
+    WEAPON = 'weapon',
+}
+
 local ACTOR_STATS = {
     [ACTOR_TYPES.PLAYER]  = { maxhealth = 20, ar = 10, dr = 10, speed = 8 },
     [ACTOR_TYPES.CAT]     = { maxhealth = 6,  ar =  5, dr =  2, speed = 6 },
@@ -77,6 +81,7 @@ return {
     FACTIONS     = FACTIONS,
     ACTOR_TYPES  = ACTOR_TYPES,
     TILE_TYPES   = TILE_TYPES,
+    ITEM_TYPES   = ITEM_TYPES,
     ACTOR_STATS  = ACTOR_STATS,
     TILE_SPRITES = TILE_SPRITES,
     COLORS       = COLORS,
