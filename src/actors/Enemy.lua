@@ -1,6 +1,7 @@
 local Walk = require('src.actors.actions.Walk');
 local Constants = require('src.constants.Constants');
 local Actor = require('src.actors.Actor');
+local Weapon = require('src.items.Weapon');
 
 -- ------------------------------------------------
 -- Constants
@@ -18,6 +19,10 @@ local Enemy = {};
 
 function Enemy.new(type, tile)
     local self = Actor.new(type, tile, FACTIONS.ENEMY);
+
+    local weapon = Weapon.new('claw');
+    self:inventory():addItem(weapon);
+    self:inventory():equipItem(weapon);
 
     local direction = DIRECTION.NORTH;
 
