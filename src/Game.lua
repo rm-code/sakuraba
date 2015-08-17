@@ -12,7 +12,7 @@ local Grab = require('src.actors.actions.Grab');
 local Equip = require('src.actors.actions.Equip');
 local Unequip = require('src.actors.actions.Unequip');
 local DropItem = require('src.actors.actions.DropItem');
-local BaseItem = require('src.items.BaseItem');
+local Weapon = require('src.items.Weapon');
 
 -- ------------------------------------------------
 -- Constants
@@ -49,7 +49,10 @@ function Game.new()
         for i = 1, #actors do
             local actor = actors[i];
             if actor:health():isDead() then
-                actor:getTile():addItem(BaseItem.new());
+                -- TODO replace with proper loot system
+                local loot = { 'knife', 'sword' };
+                local rnd = loot[love.math.random(1, 2)];
+                actor:getTile():addItem(Weapon.new(rnd));
             end
         end
     end
