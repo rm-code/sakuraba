@@ -6,9 +6,6 @@ function CloseDoor.new(target)
     local self = BaseAction.new();
 
     function self:perform()
-        local actor = self:getActor();
-        actor:action():clearAction();
-
         if target:getType() == 'door' and target:isPassable() then
             target:close();
             return true;

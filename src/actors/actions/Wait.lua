@@ -6,10 +6,7 @@ function Wait.new()
     local self = BaseAction.new();
 
     function self:perform()
-        local actor = self:getActor();
-        actor:action():clearAction();
-
-        actor:health():heal(love.math.random(1, 3));
+        self:getActor():health():heal(love.math.random(1, 3));
         return true;
     end
 

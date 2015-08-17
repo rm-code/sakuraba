@@ -41,7 +41,6 @@ function Attack.new(target)
 
     function self:perform()
         local actor = self:getActor();
-        actor:action():clearAction();
 
         if target:isOccupied() then
             local opponent = target:getActor();

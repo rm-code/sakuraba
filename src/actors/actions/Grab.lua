@@ -7,7 +7,6 @@ function Grab.new()
 
     function self:perform()
         local actor = self:getActor();
-        actor:action():clearAction();
 
         local tile = actor:getTile();
         local items = tile:getItems();

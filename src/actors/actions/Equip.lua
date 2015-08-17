@@ -7,7 +7,6 @@ function Equip.new(item)
 
     function self:perform()
         local actor = self:getActor();
-        actor:action():clearAction();
 
         if not item:isEquipped() then
             actor:inventory():equipItem(item);

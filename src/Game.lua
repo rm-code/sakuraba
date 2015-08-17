@@ -114,6 +114,7 @@ function Game.new()
                         actor:energy():drainEnergy();
                         while true do
                             local success = actor:action():getAction():perform();
+                            actor:action():clearAction();
 
                             -- If the action is invalid we cancel the rest of the turn.
                             -- This will only be done for the player's actions.

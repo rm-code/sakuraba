@@ -7,7 +7,6 @@ function Unequip.new(item)
 
     function self:perform()
         local actor = self:getActor();
-        actor:action():clearAction();
 
         if item:isEquipped() then
             actor:inventory():unequipItem(item);

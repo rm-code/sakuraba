@@ -13,7 +13,6 @@ function SwitchPositions.new(target)
 
     function self:perform()
         local actor = self:getActor();
-        actor:action():clearAction();
 
         local currentTile = actor:getTile();
         local targetTile = target;

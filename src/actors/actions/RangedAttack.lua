@@ -40,7 +40,6 @@ function RangedAttack.new(target)
 
     function self:perform()
         local actor = self:getActor();
-        actor:action():clearAction();
 
          -- Get the actor standing on the target tile.
         if target:isOccupied() then

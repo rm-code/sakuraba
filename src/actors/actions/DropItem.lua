@@ -7,7 +7,6 @@ function DropItem.new(item)
 
     function self:perform()
         local actor = self:getActor();
-        actor:action():clearAction();
 
         -- Unequip the item if it is currently equipped.
         if item:isEquipped() then

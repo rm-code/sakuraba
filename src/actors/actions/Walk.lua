@@ -9,7 +9,6 @@ function Walk.new(target)
 
     function self:perform()
         local actor = self:getActor();
-        actor:action():clearAction();
 
         if not target:isPassable() then
             return OpenDoor.new(target);
