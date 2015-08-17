@@ -10,7 +10,6 @@ function Unequip.new(item)
 
         if item:isEquipped() then
             actor:inventory():unequipItem(item);
-            item:setEquipped(false);
             return true;
         end
         return false;

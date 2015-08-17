@@ -11,7 +11,6 @@ function DropItem.new(item)
         -- Unequip the item if it is currently equipped.
         if item:isEquipped() then
             actor:inventory():unequipItem(item);
-            item:setEquipped(false);
         end
 
         -- Remove the item from the actor's inventory.

@@ -8,6 +8,7 @@ function Inventory.new(actor)
 
     function self:equipItem(item)
         equippedItems[#equippedItems + 1] = item;
+        item:setEquipped(true);
     end
 
     function self:unequipItem(item)
@@ -19,6 +20,7 @@ function Inventory.new(actor)
             end
         end
         table.remove(equippedItems, toRemove);
+        item:setEquipped(false);
     end
 
     function self:removeItem(item)

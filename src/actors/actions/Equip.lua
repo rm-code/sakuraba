@@ -10,7 +10,6 @@ function Equip.new(item)
 
         if not item:isEquipped() then
             actor:inventory():equipItem(item);
-            item:setEquipped(true);
             return true;
         end
         return false;
