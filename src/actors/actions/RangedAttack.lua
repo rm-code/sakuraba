@@ -28,7 +28,11 @@ function RangedAttack.new(target)
         local dr = defender:attributes():getDefenseRating();
 
         if doesHit(ar, dr) then
-            defender:health():damage(4);
+            local weapon = attacker:inventory():getWeapon();
+            defender:health():damage(weapon:getDamage());
+
+            -- TODO remove
+            print(attacker:getType() .. ' hit ' .. defender:getType() .. ' with a ' .. weapon:getName() .. ' for ' .. weapon:getDamage() .. ' dmg.');
             return;
         end
         return;
