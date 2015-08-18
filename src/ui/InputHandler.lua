@@ -230,13 +230,14 @@ function InputHandler.new(game, inventory)
         end
 
         if key == 'a' then
-            blockingFunction = selectTarget(game, 1, 'attack', 'a');
-            blockingFunction();
-        end
-
-        if key == 'f' then
-            blockingFunction = selectTarget(game, 8, 'rangedattack', 'f');
-            blockingFunction();
+            local weapon = game:getPlayer():inventory():getWeapon();
+            if weapon and weapon:getWeaponType() == 'melee' then
+                blockingFunction = selectTarget(game, 1, 'attack', 'a');
+                blockingFunction();
+            elseif weapon and weapon:getWeaponType() == 'ranged' then
+                blockingFunction = selectTarget(game, 8, 'rangedattack', 'a');
+                blockingFunction();
+            end
         end
 
         if key == 'i' then
