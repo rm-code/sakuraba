@@ -20,6 +20,16 @@ local WEAPONS = {
         type = 'melee',
         dmg = 5,
     },
+    bow = {
+        name = 'Bow',
+        type = 'ranged',
+        dmg = 3,
+    },
+    crossbow = {
+        name = 'Crossbow',
+        type = 'ranged',
+        dmg = 5,
+    }
 }
 
 local Weapon = {};

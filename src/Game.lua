@@ -50,8 +50,8 @@ function Game.new()
             local actor = actors[i];
             if actor:health():isDead() then
                 -- TODO replace with proper loot system
-                local loot = { 'knife', 'sword' };
-                local rnd = loot[love.math.random(1, 2)];
+                local loot = { 'knife', 'sword', 'bow', 'crossbow' };
+                local rnd = loot[love.math.random(1, #loot)];
                 actor:getTile():addItem(Weapon.new(rnd));
             end
         end
