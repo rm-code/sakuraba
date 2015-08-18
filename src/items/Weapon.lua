@@ -9,26 +9,31 @@ local WEAPONS = {
         name = 'Claw',
         type = 'melee',
         dmg = 3,
+        range = 1,
     },
     knife = {
         name = 'Knife',
         type = 'melee',
         dmg = 4,
+        range = 1,
     },
     sword = {
         name = 'Sword',
         type = 'melee',
         dmg = 5,
+        range = 1,
     },
     bow = {
         name = 'Bow',
         type = 'ranged',
         dmg = 3,
+        range = 8,
     },
     crossbow = {
         name = 'Crossbow',
         type = 'ranged',
         dmg = 5,
+        range = 10,
     }
 }
 
@@ -39,9 +44,14 @@ function Weapon.new(id)
 
     local weaponType = WEAPONS[id].type;
     local damage = WEAPONS[id].dmg;
+    local range = WEAPONS[id].range;
 
     function self:getDamage()
         return damage;
+    end
+
+    function self:getRange()
+        return range;
     end
 
     function self:getWeaponType()
