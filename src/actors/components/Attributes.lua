@@ -3,12 +3,20 @@ local Attributes = {};
 function Attributes.new(faction, stats, skills)
     local self = {};
 
-    function self:getAttackRating()
+    function self:getDexterity()
+        return stats.dexterity;
+    end
+
+    function self:getMeleeSkill()
         return skills.melee;
     end
 
-    function self:getDefenseRating()
-        return skills.melee;
+    function self:getRangedSkill()
+        return skills.ranged;
+    end
+
+    function self:getStrength()
+        return stats.strength;
     end
 
     function self:getFaction()

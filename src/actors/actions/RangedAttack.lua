@@ -1,4 +1,14 @@
 local BaseAction = require('src.actors.actions.BaseAction');
+local Constants = require('src.constants.Constants');
+
+local BODY_PARTS = Constants.BODY_PARTS;
+local RND_BODY_PARTS = {
+    BODY_PARTS.HEAD,
+    BODY_PARTS.HANDS,
+    BODY_PARTS.TORSO,
+    BODY_PARTS.LEGS,
+    BODY_PARTS.FEET,
+};
 
 local RangedAttack = {};
 
@@ -9,30 +19,39 @@ function RangedAttack.new(target)
     -- Local Functions
     -- ------------------------------------------------
 
-    local function doesHit(ar, dr)
-        -- Roll 3d6.
-        local rnd = 3 * love.math.random(1, 6);
-        if ar < dr * 0.5 then
-            return rnd > 14;
-        elseif ar < dr then
-            return rnd > 11;
-        elseif ar == dr then
-            return rnd > 8;
-        elseif ar > dr then
-            return rnd > 4;
+    local function doesHit(attacker, defender)
+        local skill = attacker:attributes():getRangedSkill();
+        local dex = attacker:attributes():getDexterity();
+
+        local ax, ay = attacker:getTile():getPosition();
+        local bx, by = defender:getTile():getPosition();
+        local dx, dy = ax - bx, ay - by;
+        local distance = math.sqrt(dx * dx + dy * dy);
+
+        -- Forumla: BaseSkill - (30% of BaseSkill) + (8% for each point of (dexterity / 2)) - (2% per distance).
+        local attackRating = skill - (skill * 0.3) + (dex * 0.5 * 8) - (distance * 2);
+        attackRating = math.floor(attackRating + 0.5);
+
+        local rnd = love.math.random(1, 100);
+        if rnd < attackRating then
+            return true;
         end
+        return false;
+    end
+
+    local function calculateDamage(attacker, defender)
+        local baseDamage = attacker:inventory():getWeapon():getDamage();
+        local bodyPart = RND_BODY_PARTS[love.math.random(1, #RND_BODY_PARTS)];
+        local dmgResistance = defender:inventory():getArmor(bodyPart):getDamageResistance();
+
+        local adjustedDamage = baseDamage - (baseDamage * (dmgResistance * 0.01));
+
+        return math.max(1, math.floor(adjustedDamage + 0.5));
     end
 
     local function calculateOutcome(attacker, defender)
-        local ar = attacker:attributes():getAttackRating();
-        local dr = defender:attributes():getDefenseRating();
-
-        if doesHit(ar, dr) then
-            local weapon = attacker:inventory():getWeapon();
-            defender:health():damage(weapon:getDamage());
-
-            -- TODO remove
-            print(attacker:getType() .. ' hit ' .. defender:getType() .. ' with a ' .. weapon:getName() .. ' for ' .. weapon:getDamage() .. ' dmg.');
+        if doesHit(attacker, defender) then
+            defender:health():damage(calculateDamage(attacker, defender));
         end
     end
 

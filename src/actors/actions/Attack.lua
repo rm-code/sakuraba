@@ -1,5 +1,15 @@
 local BaseAction = require('src.actors.actions.BaseAction');
 local SwitchPositions = require('src.actors.actions.SwitchPositions');
+local Constants = require('src.constants.Constants');
+
+local BODY_PARTS = Constants.BODY_PARTS;
+local RND_BODY_PARTS = {
+    BODY_PARTS.HEAD,
+    BODY_PARTS.HANDS,
+    BODY_PARTS.TORSO,
+    BODY_PARTS.LEGS,
+    BODY_PARTS.FEET,
+};
 
 local Attack = {};
 
@@ -10,30 +20,33 @@ function Attack.new(target)
     -- Local Functions
     -- ------------------------------------------------
 
-    local function doesHit(ar, dr)
-        -- Roll 3d6.
-        local rnd = 3 * love.math.random(1, 6);
-        if ar < dr * 0.5 then
-            return rnd > 14;
-        elseif ar < dr then
-            return rnd > 11;
-        elseif ar == dr then
-            return rnd > 8;
-        elseif ar > dr then
-            return rnd > 4;
+    local function doesHit(attacker, defender)
+        local skill = attacker:attributes():getMeleeSkill();
+        local armorRating = defender:attributes():getDexterity() + defender:inventory():getArmorRating();
+
+        local rnd = love.math.random(1, 100);
+        if rnd > 95 then
+            return false
+        elseif rnd <= (skill - armorRating) then
+            return true;
         end
+        return false;
+    end
+
+    local function calculateDamage(attacker, defender)
+        local baseDamage = attacker:inventory():getWeapon():getDamage() + attacker:attributes():getStrength() * 0.5;
+
+        -- Reduce damage based on the defender's armor.
+        local bodyPart = RND_BODY_PARTS[love.math.random(1, #RND_BODY_PARTS)];
+        local dmgResistance = defender:inventory():getArmor(bodyPart):getDamageResistance();
+        local adjustedDamage = baseDamage - (baseDamage * (dmgResistance * 0.01));
+
+        return math.max(1, math.floor(adjustedDamage + 0.5));
     end
 
     local function calculateOutcome(attacker, defender)
-        local ar = attacker:attributes():getAttackRating();
-        local dr = defender:attributes():getDefenseRating();
-
-        if doesHit(ar, dr) then
-            local weapon = attacker:inventory():getWeapon();
-            defender:health():damage(weapon:getDamage());
-
-            -- TODO remove
-            print(attacker:getType() .. ' hit ' .. defender:getType() .. ' with a ' .. weapon:getName() .. ' for ' .. weapon:getDamage() .. ' dmg.');
+        if doesHit(attacker, defender) then
+            defender:health():damage(calculateDamage(attacker, defender));
         end
     end
 
