@@ -57,7 +57,6 @@ function Inventory.new(actor)
         return equippedItems[ITEM_TYPES.WEAPON];
     end
 
-
     return self;
 end
 
