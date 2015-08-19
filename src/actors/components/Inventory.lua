@@ -13,22 +13,21 @@ function Inventory.new(actor)
     };
 
     function self:equip(item)
-        if item:getType() == ITEM_TYPES.WEAPON then
-            -- Unequip item if the slot is already taken.
-            if equippedItems[ITEM_TYPES.WEAPON] then
-                self:unequip(equippedItems[ITEM_TYPES.WEAPON]);
-            end
+        local type = item:getType();
 
-            equippedItems[ITEM_TYPES.WEAPON] = item;
-            item:setEquipped(true);
+        -- Unequip item if the slot is already taken.
+        if equippedItems[type] then
+            self:unequip(equippedItems[type]);
         end
+
+        -- Equip the item and set its equipped flag to true.
+        equippedItems[type] = item;
+        item:setEquipped(true);
     end
 
     function self:unequip(item)
-        if item:getType() == ITEM_TYPES.WEAPON then
-            equippedItems[ITEM_TYPES.WEAPON] = nil;
-            item:setEquipped(false);
-        end
+        equippedItems[item:getType()] = nil;
+        item:setEquipped(false);
     end
 
     function self:add(item)
