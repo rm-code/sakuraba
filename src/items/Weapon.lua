@@ -8,31 +8,31 @@ local WEAPONS = {
     claw = {
         name = 'Claw',
         type = 'melee',
-        dmg = 3,
+        dmg = { 1, 3 },
         range = 1,
     },
     knife = {
         name = 'Knife',
         type = 'melee',
-        dmg = 4,
+        dmg = { 1, 4 },
         range = 1,
     },
     sword = {
         name = 'Sword',
         type = 'melee',
-        dmg = 5,
+        dmg = { 3, 5 },
         range = 1,
     },
     bow = {
         name = 'Bow',
         type = 'ranged',
-        dmg = 3,
+        dmg = { 2, 4 },
         range = 8,
     },
     crossbow = {
         name = 'Crossbow',
         type = 'ranged',
-        dmg = 5,
+        dmg = { 3, 6 },
         range = 10,
     }
 }
@@ -47,7 +47,7 @@ function Weapon.new(id)
     local range = WEAPONS[id].range;
 
     function self:getDamage()
-        return damage;
+        return love.math.random(damage[1], damage[2]);
     end
 
     function self:getRange()
