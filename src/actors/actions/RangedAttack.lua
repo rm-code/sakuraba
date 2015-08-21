@@ -33,9 +33,7 @@ function RangedAttack.new(target)
 
             -- TODO remove
             print(attacker:getType() .. ' hit ' .. defender:getType() .. ' with a ' .. weapon:getName() .. ' for ' .. weapon:getDamage() .. ' dmg.');
-            return;
         end
-        return;
     end
 
     -- ------------------------------------------------
