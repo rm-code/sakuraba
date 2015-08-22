@@ -25,6 +25,15 @@ local TILE_TYPES = {
 
 local ITEM_TYPES = {
     WEAPON = 'weapon',
+    ARMOR = 'armor',
+}
+
+local BODY_PARTS = {
+    HEAD = 'head',
+    HANDS = 'hands',
+    TORSO = 'torso',
+    LEGS = 'legs',
+    FEET = 'feet'
 }
 
 local TILE_SPRITES = {
@@ -55,6 +64,7 @@ return {
     FACTIONS     = FACTIONS,
     TILE_TYPES   = TILE_TYPES,
     ITEM_TYPES   = ITEM_TYPES,
+    BODY_PARTS   = BODY_PARTS,
     TILE_SPRITES = TILE_SPRITES,
     COLORS       = COLORS,
     ENERGY_THRESHOLD = ENERGY_THRESHOLD,

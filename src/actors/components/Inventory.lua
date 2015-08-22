@@ -1,6 +1,7 @@
 local Constants = require('src.constants.Constants');
 
 local ITEM_TYPES = Constants.ITEM_TYPES;
+local BODY_PARTS = Constants.BODY_PARTS;
 
 local Inventory = {};
 
@@ -10,6 +11,11 @@ function Inventory.new(actor)
     local items = {};
     local equippedItems = {
         [ITEM_TYPES.WEAPON] = nil,
+        [BODY_PARTS.HEAD]  = nil,
+        [BODY_PARTS.HANDS] = nil,
+        [BODY_PARTS.TORSO] = nil,
+        [BODY_PARTS.LEGS]  = nil,
+        [BODY_PARTS.FEET]  = nil,
     };
 
     function self:equip(item)
@@ -45,6 +51,16 @@ function Inventory.new(actor)
         table.remove(items, toRemove);
     end
 
+    function self:getArmorRating()
+        local rating = 0;
+        rating = rating + equippedItems[BODY_PARTS.HEAD]:getArmorRating();
+        rating = rating + equippedItems[BODY_PARTS.HANDS]:getArmorRating();
+        rating = rating + equippedItems[BODY_PARTS.TORSO]:getArmorRating();
+        rating = rating + equippedItems[BODY_PARTS.LEGS]:getArmorRating();
+        rating = rating + equippedItems[BODY_PARTS.FEET]:getArmorRating();
+        return rating;
+    end
+
     function self:getItems()
         return items;
     end
@@ -55,6 +71,10 @@ function Inventory.new(actor)
 
     function self:getWeapon()
         return equippedItems[ITEM_TYPES.WEAPON];
+    end
+
+    function self:getArmor(bodypart)
+        return equippedItems[bodypart];
     end
 
     return self;
