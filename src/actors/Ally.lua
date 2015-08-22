@@ -2,6 +2,7 @@ local Constants = require('src.constants.Constants');
 local Actor = require('src.actors.Actor');
 local Walk = require('src.actors.actions.Walk');
 local Weapon = require('src.items.Weapon');
+local Armor = require('src.items.Armor');
 
 -- ------------------------------------------------
 -- Constants
@@ -24,6 +25,26 @@ function Ally.new(type, tile)
     local weapon = Weapon.new('claw');
     self:inventory():add(weapon);
     self:inventory():equip(weapon);
+
+    local armor = Armor.new('cap');
+    self:inventory():add(armor);
+    self:inventory():equip(armor);
+
+    local armor = Armor.new('gloves');
+    self:inventory():add(armor);
+    self:inventory():equip(armor);
+
+    local armor = Armor.new('pullover');
+    self:inventory():add(armor);
+    self:inventory():equip(armor);
+
+    local armor = Armor.new('jeans');
+    self:inventory():add(armor);
+    self:inventory():equip(armor);
+
+    local armor = Armor.new('boots');
+    self:inventory():add(armor);
+    self:inventory():equip(armor);
 
     local direction = DIRECTION.NORTH;
 
