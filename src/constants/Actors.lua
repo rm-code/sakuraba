@@ -22,8 +22,8 @@ local ACTOR_STATS = {
         }
     },
     [ACTOR_TYPES.CAT]     = {
-        maxhealth = 20,
-        speed = 8,
+        maxhealth = 6,
+        speed = 6,
         stats = {
             strength = 2,
             dexterity = 8,
@@ -35,8 +35,8 @@ local ACTOR_STATS = {
         }
     },
     [ACTOR_TYPES.TURTLE]  = {
-        maxhealth = 20,
-        speed = 8,
+        maxhealth = 12,
+        speed = 1,
         stats = {
             strength = 3,
             dexterity = 3,
@@ -48,8 +48,8 @@ local ACTOR_STATS = {
         }
     },
     [ACTOR_TYPES.TROLL]   = {
-        maxhealth = 20,
-        speed = 8,
+        maxhealth = 34,
+        speed = 2,
         stats = {
             strength = 8,
             dexterity = 4,
@@ -61,8 +61,8 @@ local ACTOR_STATS = {
         }
     },
     [ACTOR_TYPES.GOBLIN]  = {
-        maxhealth = 20,
-        speed = 8,
+        maxhealth = 18,
+        speed = 4,
         stats = {
             strength = 5,
             dexterity = 5,
@@ -74,7 +74,7 @@ local ACTOR_STATS = {
         }
     },
     [ACTOR_TYPES.VAMPIRE] = {
-        maxhealth = 20,
+        maxhealth = 22,
         speed = 8,
         stats = {
             strength = 6,
