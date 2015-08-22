@@ -1,5 +1,6 @@
 local Screen = require('lib.screenmanager.Screen');
 local Constants = require('src.constants.Constants');
+local Actors = require('src.constants.Actors');
 local InputHandler = require('src.ui.InputHandler');
 local InventoryScreen = require('src.ui.InventoryScreen');
 local Game = require('src.Game');
@@ -11,6 +12,7 @@ local Game = require('src.Game');
 local TILE_SIZE  = Constants.TILE_SIZE;
 local TILE_TYPES = Constants.TILE_TYPES;
 local TILE_SPRITES = Constants.TILE_SPRITES;
+local ACTOR_SPRITES = Actors.ACTOR_SPRITES;
 local COLORS = Constants.COLORS;
 local FACTIONS = Constants.FACTIONS;
 
@@ -106,7 +108,7 @@ function MainScreen.new()
     -- Returns a sprite for actors based on their type.
     --
     local function selectActorSprite(actor)
-        return TILE_SPRITES[actor:getType()];
+        return ACTOR_SPRITES[actor:getType()];
     end
 
     ---

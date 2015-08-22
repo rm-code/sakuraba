@@ -1,4 +1,5 @@
 local Constants = require('src.constants.Constants');
+local Actors = require('src.constants.Actors');
 local Health = require('src.actors.components.Health');
 local Energy = require('src.actors.components.Energy');
 local Attributes = require('src.actors.components.Attributes');
@@ -10,7 +11,7 @@ local Inventory = require('src.actors.components.Inventory');
 -- ------------------------------------------------
 
 local TILE_SIZE = Constants.TILE_SIZE;
-local ACTOR_STATS = Constants.ACTOR_STATS;
+local ACTOR_STATS = Actors.ACTOR_STATS;
 
 -- ------------------------------------------------
 -- Module
