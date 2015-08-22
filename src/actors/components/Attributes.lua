@@ -1,14 +1,14 @@
 local Attributes = {};
 
-function Attributes.new(faction, ar, dr)
+function Attributes.new(faction, stats, skills)
     local self = {};
 
     function self:getAttackRating()
-        return ar;
+        return skills.melee;
     end
 
     function self:getDefenseRating()
-        return dr;
+        return skills.melee;
     end
 
     function self:getFaction()

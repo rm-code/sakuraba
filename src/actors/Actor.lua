@@ -32,7 +32,7 @@ function Actor.new(type, tile, faction)
     -- Load components.
     local health = Health.new(ACTOR_STATS[type].maxhealth);
     local energy = Energy.new(ACTOR_STATS[type].speed);
-    local attributes = Attributes.new(faction, ACTOR_STATS[type].ar, ACTOR_STATS[type].dr);
+    local attributes = Attributes.new(faction, ACTOR_STATS[type].stats, ACTOR_STATS[type].skills);
     local action = Action.new(self);
     local inventory = Inventory.new(self);
 

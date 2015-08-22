@@ -8,12 +8,84 @@ local ACTOR_TYPES = {
 };
 
 local ACTOR_STATS = {
-    [ACTOR_TYPES.PLAYER]  = { maxhealth = 20, ar = 10, dr = 10, speed = 8 },
-    [ACTOR_TYPES.CAT]     = { maxhealth = 6,  ar =  5, dr =  2, speed = 6 },
-    [ACTOR_TYPES.TURTLE]  = { maxhealth = 12, ar =  6, dr =  8, speed = 1 },
-    [ACTOR_TYPES.TROLL]   = { maxhealth = 34, ar = 12, dr = 14, speed = 2 },
-    [ACTOR_TYPES.GOBLIN]  = { maxhealth = 18, ar = 10, dr = 11, speed = 4 },
-    [ACTOR_TYPES.VAMPIRE] = { maxhealth = 22, ar = 14, dr =  9, speed = 8 }
+    [ACTOR_TYPES.PLAYER] = {
+        maxhealth = 20,
+        speed = 8,
+        stats = {
+            strength = 5,
+            dexterity = 6,
+            endurance = 5
+        },
+        skills = {
+            melee  = 70,
+            ranged = 70,
+        }
+    },
+    [ACTOR_TYPES.CAT]     = {
+        maxhealth = 20,
+        speed = 8,
+        stats = {
+            strength = 2,
+            dexterity = 8,
+            endurance = 5
+        },
+        skills = {
+            melee  = 60,
+            ranged =  0,
+        }
+    },
+    [ACTOR_TYPES.TURTLE]  = {
+        maxhealth = 20,
+        speed = 8,
+        stats = {
+            strength = 3,
+            dexterity = 3,
+            endurance = 5
+        },
+        skills = {
+            melee  = 40,
+            ranged =  0,
+        }
+    },
+    [ACTOR_TYPES.TROLL]   = {
+        maxhealth = 20,
+        speed = 8,
+        stats = {
+            strength = 8,
+            dexterity = 4,
+            endurance = 5
+        },
+        skills = {
+            melee  = 70,
+            ranged = 30,
+        }
+    },
+    [ACTOR_TYPES.GOBLIN]  = {
+        maxhealth = 20,
+        speed = 8,
+        stats = {
+            strength = 5,
+            dexterity = 5,
+            endurance = 5
+        },
+        skills = {
+            melee  = 80,
+            ranged = 50,
+        }
+    },
+    [ACTOR_TYPES.VAMPIRE] = {
+        maxhealth = 20,
+        speed = 8,
+        stats = {
+            strength = 6,
+            dexterity = 8,
+            endurance = 5
+        },
+        skills = {
+            melee  = 95,
+            ranged = 75,
+        }
+    }
 };
 
 local ACTOR_SPRITES = {
