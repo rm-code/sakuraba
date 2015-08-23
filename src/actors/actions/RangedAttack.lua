@@ -1,14 +1,4 @@
 local BaseAction = require('src.actors.actions.BaseAction');
-local Constants = require('src.constants.Constants');
-
-local BODY_PARTS = Constants.BODY_PARTS;
-local RND_BODY_PARTS = {
-    BODY_PARTS.HEAD,
-    BODY_PARTS.HANDS,
-    BODY_PARTS.TORSO,
-    BODY_PARTS.LEGS,
-    BODY_PARTS.FEET,
-};
 
 local RangedAttack = {};
 
@@ -41,7 +31,7 @@ function RangedAttack.new(target)
 
     local function calculateDamage(attacker, defender)
         local baseDamage = attacker:inventory():getWeapon():getDamage();
-        local bodyPart = RND_BODY_PARTS[love.math.random(1, #RND_BODY_PARTS)];
+        local bodyPart = defender:inventory():getRandomBodyPart();
         local dmgResistance = defender:inventory():getArmor(bodyPart):getDamageResistance();
 
         local adjustedDamage = baseDamage - (baseDamage * (dmgResistance * 0.01));

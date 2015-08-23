@@ -3,6 +3,15 @@ local Constants = require('src.constants.Constants');
 local ITEM_TYPES = Constants.ITEM_TYPES;
 local BODY_PARTS = Constants.BODY_PARTS;
 
+-- Storing body parts as array makes picking a random body part simpler.
+local RND_BODY_PARTS = {
+    BODY_PARTS.HEAD,
+    BODY_PARTS.HANDS,
+    BODY_PARTS.TORSO,
+    BODY_PARTS.LEGS,
+    BODY_PARTS.FEET,
+};
+
 local Inventory = {};
 
 function Inventory.new(actor)
@@ -75,6 +84,10 @@ function Inventory.new(actor)
 
     function self:getArmor(bodypart)
         return equippedItems[bodypart];
+    end
+
+    function self:getRandomBodyPart()
+        return RND_BODY_PARTS[love.math.random(1, #RND_BODY_PARTS)];
     end
 
     return self;
