@@ -40,7 +40,7 @@ function Inventory.new(default)
         if instanceof(item, 'Armor') then
             slot = item:getArmorType();
         elseif instanceof(item, 'Weapon') then
-            slot = item.getType();
+            slot = item:getType();
         end
         return slot;
     end
