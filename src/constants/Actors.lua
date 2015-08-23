@@ -21,7 +21,7 @@ local ACTOR_STATS = {
             ranged = 70,
         }
     },
-    [ACTOR_TYPES.CAT]     = {
+    [ACTOR_TYPES.CAT] = {
         maxhealth = 6,
         speed = 6,
         stats = {
@@ -34,7 +34,7 @@ local ACTOR_STATS = {
             ranged =  0,
         }
     },
-    [ACTOR_TYPES.TURTLE]  = {
+    [ACTOR_TYPES.TURTLE] = {
         maxhealth = 12,
         speed = 1,
         stats = {
@@ -47,7 +47,7 @@ local ACTOR_STATS = {
             ranged =  0,
         }
     },
-    [ACTOR_TYPES.TROLL]   = {
+    [ACTOR_TYPES.TROLL] = {
         maxhealth = 34,
         speed = 2,
         stats = {
@@ -60,7 +60,7 @@ local ACTOR_STATS = {
             ranged = 30,
         }
     },
-    [ACTOR_TYPES.GOBLIN]  = {
+    [ACTOR_TYPES.GOBLIN] = {
         maxhealth = 18,
         speed = 4,
         stats = {
