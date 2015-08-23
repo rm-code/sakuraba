@@ -1,9 +1,9 @@
 local DEFAULT_NAME = 'DefaultName';
 local DEFAULT_TYPE = 'DefaultType';
 
-local BaseItem = {};
+local Item = {};
 
-function BaseItem.new(name, type)
+function Item.new(name, type)
     local self = {};
 
     local equipped = false;
@@ -27,4 +27,4 @@ function BaseItem.new(name, type)
     return self;
 end
 
-return BaseItem;
+return Item;

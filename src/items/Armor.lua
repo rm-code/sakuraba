@@ -1,4 +1,4 @@
-local BaseItem = require('src.items.BaseItem');
+local Item = require('src.items.Item');
 local Constants = require('src.constants.Constants');
 
 local ITEM_TYPES = Constants.ITEM_TYPES;
@@ -41,7 +41,7 @@ local ARMOR = {
 local Armor = {};
 
 function Armor.new(id)
-    local self = BaseItem.new(ARMOR[id].name, ARMOR[id].type);
+    local self = Item.new(ARMOR[id].name, ARMOR[id].type);
 
     local armorRating = ARMOR[id].armorRating;
     local damageResistance = ARMOR[id].damageResistance;
