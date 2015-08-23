@@ -27,21 +27,30 @@ function Inventory.new(actor)
         [BODY_PARTS.FEET]  = nil,
     };
 
+    local function getSlot(item)
+        local slot;
+        if instanceof(item, 'Armor') then
+            slot = item:getArmorType();
+        elseif instanceof(item, 'Weapon') then
+            slot = item.getType();
+        end
+        return slot;
+    end
+
     function self:equip(item)
-        local type = item:getType();
+        local slot = getSlot(item);
 
         -- Unequip item if the slot is already taken.
-        if equippedItems[type] then
-            self:unequip(equippedItems[type]);
+        if equippedItems[slot] then
+            self:unequip(equippedItems[slot]);
         end
 
-        -- Equip the item and set its equipped flag to true.
-        equippedItems[type] = item;
+        equippedItems[slot] = item;
         item:setEquipped(true);
     end
 
     function self:unequip(item)
-        equippedItems[item:getType()] = nil;
+        equippedItems[getSlot(item)] = nil;
         item:setEquipped(false);
     end
 
