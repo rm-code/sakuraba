@@ -60,6 +60,10 @@ function Inventory.new(actor)
         table.remove(items, toRemove);
     end
 
+    function self:getArmor(bodypart)
+        return equippedItems[bodypart];
+    end
+
     function self:getArmorRating()
         local rating = 0;
         rating = rating + equippedItems[BODY_PARTS.HEAD]:getArmorRating();
@@ -78,16 +82,12 @@ function Inventory.new(actor)
         return equippedItems;
     end
 
-    function self:getWeapon()
-        return equippedItems[ITEM_TYPES.WEAPON];
-    end
-
-    function self:getArmor(bodypart)
-        return equippedItems[bodypart];
-    end
-
     function self:getRandomBodyPart()
         return RND_BODY_PARTS[love.math.random(1, #RND_BODY_PARTS)];
+    end
+
+    function self:getWeapon()
+        return equippedItems[ITEM_TYPES.WEAPON];
     end
 
     return self;
