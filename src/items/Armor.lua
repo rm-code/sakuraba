@@ -41,7 +41,7 @@ local ARMOR = {
 local Armor = {};
 
 function Armor.new(id)
-    local self = Item.new(ARMOR[id].name, ARMOR[id].type);
+    local self = Item.new(ARMOR[id].name, ARMOR[id].type):addInstance('Armor');
 
     local armorRating = ARMOR[id].armorRating;
     local damageResistance = ARMOR[id].damageResistance;

@@ -40,7 +40,7 @@ local WEAPONS = {
 local Weapon = {};
 
 function Weapon.new(id)
-    local self = Item.new(WEAPONS[id].name, ITEM_TYPES.WEAPON);
+    local self = Item.new(WEAPONS[id].name, ITEM_TYPES.WEAPON):addInstance('Weapon');
 
     local weaponType = WEAPONS[id].type;
     local damage = WEAPONS[id].dmg;

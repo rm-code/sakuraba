@@ -1,10 +1,12 @@
+local Object = require('src.Object');
+
 local DEFAULT_NAME = 'DefaultName';
 local DEFAULT_TYPE = 'DefaultType';
 
 local Item = {};
 
 function Item.new(name, type)
-    local self = {};
+    local self = Object.new():addInstance('Item');
 
     local equipped = false;
 
