@@ -87,13 +87,13 @@ function Game.new()
 
         actors = {};
         actors[#actors + 1] =  player;
-        actors[#actors + 1] =  Ally.new(ACTOR_TYPES.CAT,     map:getTileAt(26,  6));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.GOBLIN,  map:getTileAt( 8,  2));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.TROLL,   map:getTileAt( 8,  8));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.TURTLE,  map:getTileAt(10, 10));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.VAMPIRE, map:getTileAt(12, 12));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.TURTLE,  map:getTileAt(18, 18));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.GOBLIN,  map:getTileAt(18,  2));
+        actors[#actors + 1] =  Ally.new(ACTOR_TYPES.CAT, map:getTileAt(26,  6));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt( 8,  2));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt( 8,  8));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt(10, 10));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt(12, 12));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt(18, 18));
+        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt(18,  2));
 
         turns = 0;
 

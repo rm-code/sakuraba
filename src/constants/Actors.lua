@@ -1,10 +1,7 @@
 local ACTOR_TYPES = {
     PLAYER  = 'player',
     CAT     = 'cat',
-    TURTLE  = 'turtle',
-    TROLL   = 'troll',
-    GOBLIN  = 'goblin',
-    VAMPIRE = 'vampire'
+    DOG     = 'dog'
 };
 
 local ACTOR_STATS = {
@@ -34,56 +31,17 @@ local ACTOR_STATS = {
             ranged =  0,
         }
     },
-    [ACTOR_TYPES.TURTLE] = {
-        maxhealth = 12,
-        speed = 1,
+    [ACTOR_TYPES.DOG] = {
+        maxhealth = 10,
+        speed = 6,
         stats = {
             strength = 3,
-            dexterity = 3,
-            endurance = 5
-        },
-        skills = {
-            melee  = 40,
-            ranged =  0,
-        }
-    },
-    [ACTOR_TYPES.TROLL] = {
-        maxhealth = 34,
-        speed = 2,
-        stats = {
-            strength = 8,
-            dexterity = 4,
-            endurance = 5
-        },
-        skills = {
-            melee  = 70,
-            ranged = 30,
-        }
-    },
-    [ACTOR_TYPES.GOBLIN] = {
-        maxhealth = 18,
-        speed = 4,
-        stats = {
-            strength = 5,
-            dexterity = 5,
-            endurance = 5
-        },
-        skills = {
-            melee  = 80,
-            ranged = 50,
-        }
-    },
-    [ACTOR_TYPES.VAMPIRE] = {
-        maxhealth = 22,
-        speed = 8,
-        stats = {
-            strength = 6,
             dexterity = 8,
             endurance = 5
         },
         skills = {
-            melee  = 95,
-            ranged = 75,
+            melee  = 70,
+            ranged =  0,
         }
     }
 };
@@ -91,10 +49,7 @@ local ACTOR_STATS = {
 local ACTOR_SPRITES = {
     [ACTOR_TYPES.PLAYER]  = '@',
     [ACTOR_TYPES.CAT]     = 'c',
-    [ACTOR_TYPES.TURTLE]  = 't',
-    [ACTOR_TYPES.TROLL]   = 'T',
-    [ACTOR_TYPES.GOBLIN]  = 'G',
-    [ACTOR_TYPES.VAMPIRE] = 'V'
+    [ACTOR_TYPES.DOG]     = 'd'
 };
 
 return {
