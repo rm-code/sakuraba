@@ -122,12 +122,16 @@ function Map.new()
     end
 
     ---
-    -- Resets the visibility flags for all tiles in the map.
+    -- Resets the visibility flags for all visible tiles in the map.
     --
     function self:resetVisibility()
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
-                tiles[x][y]:setVisible(false);
+                local tile = tiles[x][y];
+                if tile:isVisible() then
+                    tile:setVisible(false);
+                    tile:setDirty(true); -- Mark tile for updating.
+                end
             end
         end
     end
@@ -147,6 +151,7 @@ function Map.new()
                 local target = tiles[math.floor(ox)][math.floor(oy)];
                 target:setVisible(true);
                 target:setExplored(true);
+                target:setDirty(true); -- Mark tile for updating.
                 if not target:isPassable() then
                     break;
                 end

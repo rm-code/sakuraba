@@ -121,8 +121,13 @@ function MainScreen.new()
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
                 local tile = tiles[x][y];
-                spritebatch:setColor(selectTileColor(tile));
-                spritebatch:set(tile:getId(), selectTileSprite(tile), x * TILE_SIZE, y * TILE_SIZE);
+
+                -- Only update tiles which are marked dirty for updating.
+                if tile:isDirty() then
+                    spritebatch:setColor(selectTileColor(tile));
+                    spritebatch:set(tile:getId(), selectTileSprite(tile), x * TILE_SIZE, y * TILE_SIZE);
+                    tile:setDirty(false);
+                end
             end
         end
     end

@@ -24,6 +24,7 @@ function Tile.new(x, y, type, passable)
     local visible = false;
     local explored = false;
     local inventory = {};
+    local dirty = false;
     local id;
 
     function self:update(dt)
@@ -43,6 +44,10 @@ function Tile.new(x, y, type, passable)
 
     function self:setActor(nactor)
         content.actor = nactor;
+    end
+
+    function self:setDirty(ndirty)
+        dirty = ndirty;
     end
 
     function self:setExplored(nexplored)
@@ -70,6 +75,10 @@ function Tile.new(x, y, type, passable)
 
     function self:getActor()
         return content.actor;
+    end
+
+    function self:isDirty()
+        return dirty;
     end
 
     function self:getId()
