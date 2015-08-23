@@ -16,6 +16,9 @@ local ACTOR_STATS = {
         skills = {
             melee  = 70,
             ranged = 70,
+        },
+        defaultItems = {
+            weapon = 'fist',
         }
     },
     [ACTOR_TYPES.CAT] = {
@@ -29,6 +32,9 @@ local ACTOR_STATS = {
         skills = {
             melee  = 60,
             ranged =  0,
+        },
+        defaultItems = {
+            weapon = 'claw',
         }
     },
     [ACTOR_TYPES.DOG] = {
@@ -42,6 +48,9 @@ local ACTOR_STATS = {
         skills = {
             melee  = 70,
             ranged =  0,
+        },
+        defaultItems = {
+            weapon = 'claw',
         }
     }
 };

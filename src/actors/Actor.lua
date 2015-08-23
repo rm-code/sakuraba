@@ -34,7 +34,7 @@ function Actor.new(type, tile, faction)
     local energy = Energy.new(ACTOR_STATS[type].speed);
     local attributes = Attributes.new(faction, ACTOR_STATS[type].stats, ACTOR_STATS[type].skills);
     local action = Action.new(self);
-    local inventory = Inventory.new(self);
+    local inventory = Inventory.new(ACTOR_STATS[type].defaultItems);
 
     function self:update(dt)
         return;

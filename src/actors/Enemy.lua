@@ -21,10 +21,6 @@ local Enemy = {};
 function Enemy.new(type, tile)
     local self = Actor.new(type, tile, FACTIONS.ENEMY);
 
-    local weapon = Weapon.new('claw');
-    self:inventory():add(weapon);
-    self:inventory():equip(weapon);
-
     local armor = Armor.new('cap');
     self:inventory():add(armor);
     self:inventory():equip(armor);

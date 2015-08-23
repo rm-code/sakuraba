@@ -1,4 +1,5 @@
 local Constants = require('src.constants.Constants');
+local Weapon = require('src.items.Weapon');
 
 local ITEM_TYPES = Constants.ITEM_TYPES;
 local BODY_PARTS = Constants.BODY_PARTS;
@@ -14,12 +15,17 @@ local RND_BODY_PARTS = {
 
 local Inventory = {};
 
-function Inventory.new(actor)
+function Inventory.new(default)
     local self = {};
 
     local items = {};
+
+    local defaultItems = {
+        [ITEM_TYPES.WEAPON] = Weapon.new(default[ITEM_TYPES.WEAPON])
+    };
+
     local equippedItems = {
-        [ITEM_TYPES.WEAPON] = nil,
+        [ITEM_TYPES.WEAPON] = defaultItems[ITEM_TYPES.WEAPON],
         [BODY_PARTS.HEAD]  = nil,
         [BODY_PARTS.HANDS] = nil,
         [BODY_PARTS.TORSO] = nil,
@@ -60,7 +66,8 @@ function Inventory.new(actor)
             armorRating = armorRating - item:getArmorRating();
         end
 
-        equippedItems[getSlot(item)] = nil;
+        local slot = getSlot(item);
+        equippedItems[slot] = defaultItems[slot];
         item:setEquipped(false);
     end
 

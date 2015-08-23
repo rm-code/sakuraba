@@ -24,7 +24,7 @@ function InventoryScreen.new(game)
             love.graphics.setColor(COLORS.WHITE);
         end
 
-        love.graphics.print('Weapon: ' .. (equipment.weapon and equipment.weapon:getName() or 'none'), love.graphics.getWidth() - 200, 200);
+        love.graphics.print('Weapon: ' .. (equipment.weapon and equipment.weapon:getName()), love.graphics.getWidth() - 200, 200);
     end
 
     function self:setInventorySelection(nselection)

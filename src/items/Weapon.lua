@@ -11,6 +11,12 @@ local WEAPONS = {
         dmg = { 1, 3 },
         range = 1,
     },
+    fist = {
+        name = 'Fist',
+        type = 'melee',
+        dmg = { 1, 2 },
+        range = 1,
+    },
     knife = {
         name = 'Knife',
         type = 'melee',
