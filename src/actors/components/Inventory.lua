@@ -27,6 +27,8 @@ function Inventory.new(actor)
         [BODY_PARTS.FEET]  = nil,
     };
 
+    local armorRating = 0;
+
     local function getSlot(item)
         local slot;
         if instanceof(item, 'Armor') then
@@ -40,6 +42,10 @@ function Inventory.new(actor)
     function self:equip(item)
         local slot = getSlot(item);
 
+        if instanceof(item, 'Armor') then
+            armorRating = armorRating + item:getArmorRating();
+        end
+
         -- Unequip item if the slot is already taken.
         if equippedItems[slot] then
             self:unequip(equippedItems[slot]);
@@ -50,6 +56,10 @@ function Inventory.new(actor)
     end
 
     function self:unequip(item)
+        if instanceof(item, 'Armor') then
+            armorRating = armorRating - item:getArmorRating();
+        end
+
         equippedItems[getSlot(item)] = nil;
         item:setEquipped(false);
     end
@@ -74,13 +84,7 @@ function Inventory.new(actor)
     end
 
     function self:getArmorRating()
-        local rating = 0;
-        rating = rating + equippedItems[BODY_PARTS.HEAD]:getArmorRating();
-        rating = rating + equippedItems[BODY_PARTS.HANDS]:getArmorRating();
-        rating = rating + equippedItems[BODY_PARTS.TORSO]:getArmorRating();
-        rating = rating + equippedItems[BODY_PARTS.LEGS]:getArmorRating();
-        rating = rating + equippedItems[BODY_PARTS.FEET]:getArmorRating();
-        return rating;
+        return armorRating;
     end
 
     function self:getItems()
