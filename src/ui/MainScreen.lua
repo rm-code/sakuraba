@@ -4,6 +4,7 @@ local Actors = require('src.constants.Actors');
 local InputHandler = require('src.ui.InputHandler');
 local InventoryScreen = require('src.ui.InventoryScreen');
 local Game = require('src.Game');
+local Camera = require('lib.Camera');
 
 -- ------------------------------------------------
 -- Constants
@@ -33,9 +34,12 @@ function MainScreen.new()
 
     local map;
     local actors;
+    local player;
     local turns;
 
     local input;
+
+    local camera;
 
     -- ------------------------------------------------
     -- Local Functions
@@ -146,16 +150,18 @@ function MainScreen.new()
         inventory = InventoryScreen.new(game);
 
         input = InputHandler.new(game, inventory);
+
+        camera = Camera.new();
     end
 
     function self:draw()
+        camera:attach();
         drawMap(map);
         drawActors(actors);
+        input:draw();
+        camera:detach();
 
         inventory:draw();
-
-        input:draw();
-
         love.graphics.print(string.format('%.5d', turns), love.graphics.getWidth() - 45, love.graphics.getHeight() - 20);
     end
 
@@ -165,6 +171,10 @@ function MainScreen.new()
         map = game:getMap();
         actors = game:getActors();
         turns = game:getTurns();
+
+        -- Track the player's position.
+        local px, py = game:getPlayer():getTile():getPosition();
+        camera:lookAt(px * TILE_SIZE, py * TILE_SIZE);
     end
 
     function self:keypressed(key)
