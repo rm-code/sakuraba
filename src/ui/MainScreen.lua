@@ -132,11 +132,6 @@ function MainScreen.new()
             if tile:isVisible() then
                 drawTile(selectActorSprite(actor), tile:getX(), tile:getY(), selectActorColor(actor));
             end
-
-            -- TODO remove
-            love.graphics.print(selectActorSprite(actor), 10, 400 + i * 20)
-            love.graphics.print(actor:health():getHealth(), 30, 400 + i * 20)
-            love.graphics.rectangle('fill', 50, 400 + i * 20, actors[i]:energy():getEnergy() * 15, 15);
         end
     end
 
