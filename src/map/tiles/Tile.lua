@@ -24,6 +24,7 @@ function Tile.new(x, y, type, passable)
     local visible = false;
     local explored = false;
     local inventory = {};
+    local id;
 
     function self:update(dt)
     end
@@ -48,6 +49,10 @@ function Tile.new(x, y, type, passable)
         explored = nexplored;
     end
 
+    function self:setId(nid)
+        id = nid;
+    end
+
     function self:setNeighbours(n, s, e, w)
         neighbours[DIRECTION.NORTH] = n;
         neighbours[DIRECTION.SOUTH] = s;
@@ -65,6 +70,10 @@ function Tile.new(x, y, type, passable)
 
     function self:getActor()
         return content.actor;
+    end
+
+    function self:getId()
+        return id;
     end
 
     function self:getItems()

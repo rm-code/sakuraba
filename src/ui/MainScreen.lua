@@ -16,20 +16,21 @@ local ACTOR_TYPES = Actors.ACTOR_TYPES;
 local COLORS = Constants.COLORS;
 local FACTIONS = Constants.FACTIONS;
 
+local TILESET = love.graphics.newImage('res/tiles/tileset_16px.png');
 local TILE_SPRITES = {
-    -- Map Tiles
-    [TILE_TYPES.WALL]       = '#',
-    [TILE_TYPES.FLOOR]      = '.',
-    [TILE_TYPES.DOOROPEN]   = 'O',
-    [TILE_TYPES.DOORCLOSED] = '/',
-    [TILE_TYPES.ITEM_STACK] = '!',
+    ['empty']               = love.graphics.newQuad(0 * TILE_SIZE, 0 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
+    [TILE_TYPES.FLOOR]      = love.graphics.newQuad(1 * TILE_SIZE, 0 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
+    [TILE_TYPES.WALL]       = love.graphics.newQuad(2 * TILE_SIZE, 0 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
+    [TILE_TYPES.DOORCLOSED] = love.graphics.newQuad(3 * TILE_SIZE, 0 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
+    [TILE_TYPES.DOOROPEN]   = love.graphics.newQuad(4 * TILE_SIZE, 0 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
+    [TILE_TYPES.ITEM_STACK] = love.graphics.newQuad(5 * TILE_SIZE, 0 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
 }
 
 local ACTOR_SPRITES = {
-    [ACTOR_TYPES.PLAYER]  = '@',
-    [ACTOR_TYPES.CAT]     = 'c',
-    [ACTOR_TYPES.DOG]     = 'd'
-};
+    [ACTOR_TYPES.PLAYER]  = love.graphics.newQuad(0 * TILE_SIZE, 8 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
+    [ACTOR_TYPES.DOG]     = love.graphics.newQuad(1 * TILE_SIZE, 8 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
+    [ACTOR_TYPES.CAT]     = love.graphics.newQuad(2 * TILE_SIZE, 8 * TILE_SIZE, TILE_SIZE, TILE_SIZE, TILESET:getDimensions());
+}
 
 -- ------------------------------------------------
 -- Module
@@ -54,18 +55,11 @@ function MainScreen.new()
 
     local camera;
 
+    local spritebatch;
+
     -- ------------------------------------------------
     -- Local Functions
     -- ------------------------------------------------
-
-    ---
-    -- Draws a sprite at the given position.
-    --
-    local function drawTile(sprite, x, y, color)
-        love.graphics.setColor(color);
-        love.graphics.print(sprite, x * TILE_SIZE, y * TILE_SIZE);
-        love.graphics.setColor(255, 255, 255, 255);
-    end
 
     ---
     -- Returns the color with which the tile will be drawn.
@@ -122,17 +116,26 @@ function MainScreen.new()
         end
     end
 
-    ---
-    -- Draws all tiles of the map.
-    --
-    local function drawMap(map)
+    local function updateMap(map)
         local tiles = map:getTiles();
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
                 local tile = tiles[x][y];
-                drawTile(selectTileSprite(tile), x, y, selectTileColor(tile));
+                spritebatch:setColor(selectTileColor(tile));
+                spritebatch:set(tile:getId(), selectTileSprite(tile), x * TILE_SIZE, y * TILE_SIZE);
             end
         end
+    end
+
+    local function initialiseSpritebatch(spritebatch, map)
+        local tiles = map:getTiles();
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
+                local id = spritebatch:add(TILE_SPRITES.empty, x * TILE_SIZE, y * TILE_SIZE);
+                tiles[x][y]:setId(id);
+            end
+        end
+        print(string.format('Initialised %d tiles.', spritebatch:getCount()));
     end
 
     -- ------------------------------------------------
@@ -148,11 +151,15 @@ function MainScreen.new()
         input = InputHandler.new(game, inventory);
 
         camera = Camera.new();
+
+        spritebatch = love.graphics.newSpriteBatch(TILESET, 10000, 'dynamic');
+        map = game:getMap();
+        initialiseSpritebatch(spritebatch, map);
     end
 
     function self:draw()
         camera:attach();
-        drawMap(map);
+        love.graphics.draw(spritebatch, 0, 0);
         input:draw();
         camera:detach();
 
@@ -165,6 +172,8 @@ function MainScreen.new()
 
         map = game:getMap();
         turns = game:getTurns();
+
+        updateMap(map);
 
         -- Track the player's position.
         local px, py = game:getPlayer():getTile():getPosition();
