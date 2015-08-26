@@ -33,7 +33,6 @@ function MainScreen.new()
     local game;
 
     local map;
-    local actors;
     local player;
     local turns;
 
@@ -73,7 +72,11 @@ function MainScreen.new()
 
         -- Occupied tiles will be invisible.
         if tile:isOccupied() then
-            return COLORS.INVISIBLE;
+            local actor = tile:getActor();
+            if actor:attributes():getFaction() == FACTIONS.ALLIED then
+                return COLORS.GREEN;
+            end
+            return COLORS.RED;
         end
 
         -- Tiles containing items are purple.
@@ -84,35 +87,25 @@ function MainScreen.new()
         return COLORS.WHITE;
     end
 
-    local function selectActorColor(actor)
-        if actor:attributes():getFaction() == FACTIONS.ALLIED then
-            return COLORS.GREEN;
-        end
-        return COLORS.RED;
-    end
-
     ---
     -- Returns a sprite based on the tile type.
     --
     local function selectTileSprite(tile)
         local type = tile:getType();
-        if type == TILE_TYPES.DOOR then
-            if tile:isPassable() then
-                return TILE_SPRITES[TILE_TYPES.DOOROPEN];
-            else
-                return TILE_SPRITES[TILE_TYPES.DOORCLOSED];
+        if tile:isVisible() and tile:isOccupied() then
+            return ACTOR_SPRITES[tile:getActor():getType()];
+        else
+            if type == TILE_TYPES.DOOR then
+                if tile:isPassable() then
+                    return TILE_SPRITES[TILE_TYPES.DOOROPEN];
+                else
+                    return TILE_SPRITES[TILE_TYPES.DOORCLOSED];
+                end
+            elseif tile:hasItems() then
+                return TILE_SPRITES[TILE_TYPES.ITEM_STACK];
             end
-        elseif tile:hasItems() then
-            return TILE_SPRITES[TILE_TYPES.ITEM_STACK];
+            return TILE_SPRITES[type];
         end
-        return TILE_SPRITES[type];
-    end
-
-    ---
-    -- Returns a sprite for actors based on their type.
-    --
-    local function selectActorSprite(actor)
-        return ACTOR_SPRITES[actor:getType()];
     end
 
     ---
@@ -124,17 +117,6 @@ function MainScreen.new()
             for y = 1, #tiles[x] do
                 local tile = tiles[x][y];
                 drawTile(selectTileSprite(tile), x, y, selectTileColor(tile));
-            end
-        end
-    end
-
-    local function drawActors(actors)
-        for i = 1, #actors do
-            local actor = actors[i];
-            local tile = actor:getTile();
-
-            if tile:isVisible() then
-                drawTile(selectActorSprite(actor), tile:getX(), tile:getY(), selectActorColor(actor));
             end
         end
     end
@@ -157,7 +139,6 @@ function MainScreen.new()
     function self:draw()
         camera:attach();
         drawMap(map);
-        drawActors(actors);
         input:draw();
         camera:detach();
 
@@ -169,7 +150,6 @@ function MainScreen.new()
         game:update(dt);
 
         map = game:getMap();
-        actors = game:getActors();
         turns = game:getTurns();
 
         -- Track the player's position.
