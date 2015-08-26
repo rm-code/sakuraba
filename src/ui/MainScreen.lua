@@ -12,10 +12,24 @@ local Camera = require('lib.Camera');
 
 local TILE_SIZE  = Constants.TILE_SIZE;
 local TILE_TYPES = Constants.TILE_TYPES;
-local TILE_SPRITES = Constants.TILE_SPRITES;
-local ACTOR_SPRITES = Actors.ACTOR_SPRITES;
+local ACTOR_TYPES = Actors.ACTOR_TYPES;
 local COLORS = Constants.COLORS;
 local FACTIONS = Constants.FACTIONS;
+
+local TILE_SPRITES = {
+    -- Map Tiles
+    [TILE_TYPES.WALL]       = '#',
+    [TILE_TYPES.FLOOR]      = '.',
+    [TILE_TYPES.DOOROPEN]   = 'O',
+    [TILE_TYPES.DOORCLOSED] = '/',
+    [TILE_TYPES.ITEM_STACK] = '!',
+}
+
+local ACTOR_SPRITES = {
+    [ACTOR_TYPES.PLAYER]  = '@',
+    [ACTOR_TYPES.CAT]     = 'c',
+    [ACTOR_TYPES.DOG]     = 'd'
+};
 
 -- ------------------------------------------------
 -- Module

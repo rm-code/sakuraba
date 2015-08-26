@@ -36,15 +36,6 @@ local BODY_PARTS = {
     FEET = 'feet'
 }
 
-local TILE_SPRITES = {
-    -- Map Tiles
-    [TILE_TYPES.WALL]       = '#',
-    [TILE_TYPES.FLOOR]      = '.',
-    [TILE_TYPES.DOOROPEN]   = 'O',
-    [TILE_TYPES.DOORCLOSED] = '/',
-    [TILE_TYPES.ITEM_STACK] = '!',
-}
-
 local COLORS = {
     INVISIBLE = {   0,   0,   0,   0 },
     WHITE     = { 255, 255, 255, 255 },
@@ -65,7 +56,6 @@ return {
     TILE_TYPES   = TILE_TYPES,
     ITEM_TYPES   = ITEM_TYPES,
     BODY_PARTS   = BODY_PARTS,
-    TILE_SPRITES = TILE_SPRITES,
     COLORS       = COLORS,
     ENERGY_THRESHOLD = ENERGY_THRESHOLD,
 };

@@ -55,14 +55,7 @@ local ACTOR_STATS = {
     }
 };
 
-local ACTOR_SPRITES = {
-    [ACTOR_TYPES.PLAYER]  = '@',
-    [ACTOR_TYPES.CAT]     = 'c',
-    [ACTOR_TYPES.DOG]     = 'd'
-};
-
 return {
     ACTOR_TYPES   = ACTOR_TYPES,
     ACTOR_STATS   = ACTOR_STATS,
-    ACTOR_SPRITES = ACTOR_SPRITES
 }
