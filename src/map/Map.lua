@@ -169,6 +169,16 @@ function Map.new()
         return tiles[x][y];
     end
 
+    function self:getTileCount()
+        local count = 0;
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
+                count = count + 1;
+            end
+        end
+        return count;
+    end
+
     function self:getTiles()
         return tiles;
     end

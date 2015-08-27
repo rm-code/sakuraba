@@ -157,8 +157,8 @@ function MainScreen.new()
 
         camera = Camera.new();
 
-        spritebatch = love.graphics.newSpriteBatch(TILESET, 10000, 'dynamic');
         map = game:getMap();
+        spritebatch = love.graphics.newSpriteBatch(TILESET, map:getTileCount(), 'dynamic');
         initialiseSpritebatch(spritebatch, map);
     end
 
