@@ -183,7 +183,6 @@ function Map.new()
         return tiles;
     end
 
-
     return self;
 end
 
