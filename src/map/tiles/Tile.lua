@@ -69,6 +69,10 @@ function Tile.new(x, y, type, passable)
         passable = np;
     end
 
+    function self:setType(ntype)
+        type = ntype;
+    end
+
     function self:setVisible(nvisible)
         visible = nvisible;
     end
