@@ -59,6 +59,8 @@ function Map.new()
                     tiles[x][y] = Floor.new(x, y);
                 elseif tile == '>' then
                     tiles[x][y] = Floor.new(x, y);
+                elseif tile == '/' then
+                    tiles[x][y] = Door.new(x, y);
                 end
             end
         end
@@ -225,6 +227,36 @@ function Map.new()
     end
 
     ---
+    -- Spawns doors across the map under the following conditions:
+    -- The tile has to be a corridor tile. It has to have two opposing wall
+    -- tiles either and an opposing floor and corridor tile.
+    --  E.g.:
+    --   #>#    ##.
+    --   #>#    >>.
+    --   ...    ##.
+    --
+    local function spawnDoors(tiles)
+        local count = 0;
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
+                local n, s, e, w = tiles[x][y - 1], tiles[x][y + 1], tiles[x - 1] and tiles[x - 1][y], tiles[x + 1] and tiles[x + 1][y];
+                if tiles[x][y] == '>' then
+                    if (e == '#' and w == '#') and (n == '>' and s == '.')
+                        or (e == '#' and w == '#') and (n == '.' and s == '>')
+                        or (e == '>' and w == '.') and (n == '#' and s == '#')
+                        or (e == '.' and w == '>') and (n == '#' and s == '#') then
+                            if love.math.random(1, 100) < 60 then
+                                tiles[x][y] = '/';
+                                count = count + 1;
+                            end
+                    end
+                end
+            end
+        end
+        print('Created ' .. count .. ' doors');
+    end
+
+    ---
     -- Saves the whole map to 'map.txt'.
     -- TODO remove
     local function saveMapToFile(tiles)
@@ -249,6 +281,7 @@ function Map.new()
         rooms = generateRooms(partitions);
         generateCorridors(rooms);
         cleanUpMap(tiles);
+        spawnDoors(tiles)
 
         -- TODO remove
         saveMapToFile(tiles);
