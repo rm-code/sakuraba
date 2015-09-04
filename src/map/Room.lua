@@ -1,7 +1,3 @@
-local Floor = require('src.map.tiles.Floor');
-local Wall  = require('src.map.tiles.Wall');
-local Door  = require('src.map.tiles.Door');
-
 local Room = {};
 
 function Room.new(map, x, y, w, h)
