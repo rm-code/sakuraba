@@ -83,7 +83,8 @@ function Game.new()
         map = Map.new();
         map:init();
 
-        player = Player.new(ACTOR_TYPES.PLAYER, map:getTileAt(26, 2));
+        local spawnX, spawnY = map:getRandomRoom():getCenter();
+        player = Player.new(ACTOR_TYPES.PLAYER, map:getTileAt(spawnX, spawnY));
 
         actors = {};
         actors[#actors + 1] =  player;
