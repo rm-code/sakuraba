@@ -73,6 +73,26 @@ function Game.new()
         end
     end
 
+    local function spawnActors(map, player)
+        local actors = { player };
+        local count  = 0;
+        local tiles  = map:getTiles();
+
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
+                local tile = tiles[x][y];
+                if tile:getType() == 'floor' and not tile:isOccupied() then
+                    if love.math.random(1, 100) == 100 then
+                        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, tile);
+                        count = count + 1;
+                    end
+                end
+            end
+        end
+
+        return actors;
+    end
+
     -- ------------------------------------------------
     -- Public Functions
     -- ------------------------------------------------
@@ -86,15 +106,7 @@ function Game.new()
         local spawnX, spawnY = map:getRandomRoom():getCenter();
         player = Player.new(ACTOR_TYPES.PLAYER, map:getTileAt(spawnX, spawnY));
 
-        actors = {};
-        actors[#actors + 1] =  player;
-        actors[#actors + 1] =  Ally.new(ACTOR_TYPES.CAT, map:getTileAt(26,  6));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt( 8,  2));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt( 8,  8));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt(10, 10));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt(12, 12));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt(18, 18));
-        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, map:getTileAt(18,  2));
+        actors = spawnActors(map, player);
 
         turns = 0;
 
