@@ -183,6 +183,22 @@ function Map.new()
         end
     end
 
+    local function cleanUpMap(tiles)
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
+                local tile = tiles[x][y];
+                local neighbours = tile:getNeighbours();
+                local n, s, e, w = neighbours.n, neighbours.s, neighbours.e, neighbours.w;
+
+                if n and s and n:getType() == 'floor' and s:getType() == 'floor' then
+                    updateTile(x, y, 'floor', true);
+                elseif e and w and e:getType() == 'floor' and w:getType() == 'floor' then
+                    updateTile(x, y, 'floor', true);
+                end
+            end
+        end
+    end
+
     ---
     -- Saves the whole map to 'map.txt'.
     -- TODO remove
@@ -212,6 +228,7 @@ function Map.new()
         partitions = generateMapPartitions(tiles);
         rooms = generateRooms(partitions);
         generateCorridors(rooms);
+        cleanUpMap(tiles);
 
         -- TODO remove
         saveMapToFile(tiles);
