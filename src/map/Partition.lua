@@ -2,7 +2,7 @@ local Room = require('src.map.Room');
 
 local Partition = {};
 
-function Partition.new(map, x, y, w, h)
+function Partition.new(x, y, w, h)
     local self = {};
 
     local childOne;
@@ -28,12 +28,12 @@ function Partition.new(map, x, y, w, h)
 
         if dir == 0 then -- Horizontal
             local split = math.floor(h * size);
-            childOne = Partition.new(map, x, y        , w,     split);
-            childTwo = Partition.new(map, x, y + split, w, h - split);
+            childOne = Partition.new(x, y        , w,     split);
+            childTwo = Partition.new(x, y + split, w, h - split);
         else
             local split = math.floor(w * size);
-            childOne = Partition.new(map, x,         y,     split, h);
-            childTwo = Partition.new(map, x + split, y, w - split, h);
+            childOne = Partition.new(x,         y,     split, h);
+            childTwo = Partition.new(x + split, y, w - split, h);
         end
         return childOne, childTwo;
     end
@@ -50,7 +50,7 @@ function Partition.new(map, x, y, w, h)
             rh = math.floor(rh * rndSize);
 
             local rx, ry = x + math.floor((w - rw) * 0.5), y + math.floor((h - rh) * 0.5);
-            room = Room.new(map, rx, ry, rw, rh);
+            room = Room.new(rx, ry, rw, rh);
         end
     end
 

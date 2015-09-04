@@ -34,32 +34,34 @@ function Map.new()
     -- ------------------------------------------------
 
     ---
-    -- Updates the tile at the specified position.
-    -- @param x
-    -- @param y
-    -- @param type
-    -- @param passable
-    local function updateTile(x, y, type, passable)
-        local tile = tiles[x][y];
-        tile:setType(type);
-        tile:setPassable(true);
-    end
-
-    ---
-    -- Fills the map grid with actual tiles.
+    -- Initialise the tile grid and fill it with placeholder chars for walls.
     --
-    local function createTiles()
+    local function initialiseGrid()
         local tiles = {};
 
-        -- Create tiles.
         for x = 1, GRID_W do
             tiles[x] = {};
             for y = 1, GRID_H do
-                tiles[x][y] = Wall.new(x, y);
+                tiles[x][y] = '#';
             end
         end
 
         return tiles;
+    end
+
+    local function createTiles(tiles)
+        for x = 1, #tiles do
+            for y = 1, #tiles[x] do
+                local tile = tiles[x][y];
+                if tile == '#' then
+                    tiles[x][y] = Wall.new(x, y);
+                elseif tile == '.' then
+                    tiles[x][y] = Floor.new(x, y);
+                elseif tile == '>' then
+                    tiles[x][y] = Floor.new(x, y);
+                end
+            end
+        end
     end
 
     ---
@@ -83,10 +85,8 @@ function Map.new()
                     w = tiles[x - 1][y];
                 end
                 tiles[x][y]:setNeighbours(n, s, e, w);
-            end
-        end
-
-        return tiles;
+             end
+         end
     end
 
     ---
@@ -96,7 +96,7 @@ function Map.new()
     -- @param tiles - The 2d array holding our map.
     --
     local function generateMapPartitions(tiles)
-        local partitions = { Partition.new(self, 1, 1, GRID_W, GRID_H) };
+        local partitions = { Partition.new(1, 1, GRID_W, GRID_H) };
 
         for _ = 1, 6 do
             for i = 1, #partitions do
@@ -128,6 +128,14 @@ function Map.new()
             -- Check if this partition has a room.
             if room then
                 rooms[#rooms + 1] = room;
+                -- Map the room's blueprint to the tile grid.
+                local rx, ry = room:getPosition();
+                local rw, rh = room:getDimensions();
+                for ix = rx, rx + rw do
+                    for iy = ry, ry + rh do
+                        tiles[ix][iy] = '.';
+                    end
+                end
             end
         end
         print('Created ' .. #rooms .. ' rooms');
@@ -162,41 +170,58 @@ function Map.new()
             -- Draw corridor in horitzontal direction.
             if dx < 0 then
                 for x = 0, math.abs(dx) do
-                    updateTile(cxo + x, cyo, 'floor', true);
+                    if tiles[cxo + x][cyo] ~= '.' then
+                        tiles[cxo + x][cyo] = '>';
+                    end
                 end
             elseif dx > 0 then
                 for x = 0, -dx, -1 do
-                    updateTile(cxo + x, cyo, 'floor', true);
+                    if tiles[cxo + x][cyo] ~= '.' then
+                        tiles[cxo + x][cyo] = '>';
+                    end
                 end
             end
 
             -- Draw corridor in vertical direction.
             if dy < 0 then
                 for y = 0, math.abs(dy) do
-                    updateTile(cxt, cyo + y, 'floor', true);
+                    if tiles[cxt][cyo + y] ~= '.' then
+                        tiles[cxt][cyo + y] = '>';
+                    end
                 end
             elseif dy > 0 then
                 for y = 0, -dy, -1 do
-                    updateTile(cxt, cyo + y, 'floor', true);
+                    if tiles[cxt][cyo + y] ~= '.' then
+                        tiles[cxt][cyo + y] = '>';
+                    end
                 end
             end
         end
     end
 
     local function cleanUpMap(tiles)
+        local counter = 0;
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
-                local tile = tiles[x][y];
-                local neighbours = tile:getNeighbours();
-                local n, s, e, w = neighbours.n, neighbours.s, neighbours.e, neighbours.w;
-
-                if n and s and n:getType() == 'floor' and s:getType() == 'floor' then
-                    updateTile(x, y, 'floor', true);
-                elseif e and w and e:getType() == 'floor' and w:getType() == 'floor' then
-                    updateTile(x, y, 'floor', true);
+                local n, s, e, w = tiles[x][y - 1], tiles[x][y + 1], tiles[x - 1] and tiles[x - 1][y], tiles[x + 1] and tiles[x + 1][y];
+                if tiles[x][y] == '#' then
+                    if n and s and n == '.' and s == '.' then
+                        tiles[x][y] = '.';
+                        counter = counter + 1;
+                    elseif e and w and e == '.' and w == '.' then
+                        tiles[x][y] = '.';
+                        counter = counter + 1;
+                    elseif n and s and n == '>' and s == '>' then
+                        tiles[x][y] = '>';
+                        counter = counter + 1;
+                    elseif e and w and e == '>' and w == '>' then
+                        tiles[x][y] = '>';
+                        counter = counter + 1;
+                    end
                 end
             end
         end
+        print('Cleaned up ' .. counter .. ' tiles');
     end
 
     ---
@@ -207,11 +232,7 @@ function Map.new()
         local file = love.filesystem.newFile('map.txt', 'a');
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
-                if tiles[x][y]:getType() == 'floor' then
-                    file:write('.');
-                elseif tiles[x][y]:getType() == 'wall' then
-                    file:write('#');
-                end
+                file:write(tiles[x][y]);
             end
             file:write('\n');
         end
@@ -223,8 +244,7 @@ function Map.new()
     -- ------------------------------------------------
 
     function self:init()
-        tiles = createTiles();
-        tiles = addNeighbours(tiles);
+        tiles = initialiseGrid();
         partitions = generateMapPartitions(tiles);
         rooms = generateRooms(partitions);
         generateCorridors(rooms);
@@ -232,6 +252,9 @@ function Map.new()
 
         -- TODO remove
         saveMapToFile(tiles);
+
+        createTiles(tiles);
+        addNeighbours(tiles);
     end
 
     function self:update(dt)
