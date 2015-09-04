@@ -41,7 +41,7 @@ function Map.new()
     -- @param passable
     local function updateTile(x, y, type, passable)
         local tile = tiles[x][y];
-        tile:setType('floor');
+        tile:setType(type);
         tile:setPassable(true);
     end
 
