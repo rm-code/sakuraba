@@ -27,9 +27,6 @@ function Tile.new(x, y, type, passable)
     local dirty = false;
     local id;
 
-    function self:update(dt)
-    end
-
     function self:addItem(item)
         inventory[#inventory + 1] = item;
     end

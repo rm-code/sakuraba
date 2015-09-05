@@ -173,8 +173,6 @@ function MainScreen.new()
     end
 
     function self:update(dt)
-        game:update(dt);
-
         map = game:getMap();
         turns = game:getTurns();
 

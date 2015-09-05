@@ -290,10 +290,6 @@ function Map.new()
         addNeighbours(tiles);
     end
 
-    function self:update(dt)
-        return;
-    end
-
     ---
     -- Resets the visibility flags for all visible tiles in the map.
     --

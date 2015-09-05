@@ -113,10 +113,6 @@ function Game.new()
         map:calculateVisibility(player:getTile());
     end
 
-    function self:update(dt)
-        return;
-    end
-
     function self:processTurn()
         -- Process turns until the currently pending action of the player is
         -- correctly performed or cancelled.
