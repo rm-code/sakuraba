@@ -1,8 +1,5 @@
-local ActorConstants = require('src.constants.ActorConstants');
 local Map = require('src.map.Map');
-local Player = require('src.actors.Player');
-local Enemy = require('src.actors.Enemy');
-local Ally = require('src.actors.Ally');
+local Actors = require('src.actors.Actors');
 local Walk = require('src.actors.actions.Walk');
 local Wait = require('src.actors.actions.Wait');
 local Interact = require('src.actors.actions.Interact');
@@ -13,12 +10,6 @@ local Equip = require('src.actors.actions.Equip');
 local Unequip = require('src.actors.actions.Unequip');
 local DropItem = require('src.actors.actions.DropItem');
 local Weapon = require('src.items.Weapon');
-
--- ------------------------------------------------
--- Constants
--- ------------------------------------------------
-
-local ACTOR_TYPES = ActorConstants.ACTOR_TYPES;
 
 -- ------------------------------------------------
 -- Module
@@ -34,7 +25,6 @@ function Game.new()
     local self = {};
 
     local map;
-    local player;
     local actors;
     local turns;
 
@@ -57,42 +47,6 @@ function Game.new()
         end
     end
 
-    ---
-    -- Removes all dead actors from the game.
-    -- We iterate from the top so that we can remove the actor and shift keys
-    -- without breaking the iteration. Besides removing each actor from the list
-    -- of actors we also have to remove its reference from the tile it last
-    -- occupied.
-    local function removeDeadActors(actors)
-        for i = #actors, 1, -1 do
-            local actor = actors[i];
-            if actor:health():isDead() then
-                actor:getTile():removeActor();
-                table.remove(actors, i);
-            end
-        end
-    end
-
-    local function spawnActors(map, player)
-        local actors = { player };
-        local count  = 0;
-        local tiles  = map:getTiles();
-
-        for x = 1, #tiles do
-            for y = 1, #tiles[x] do
-                local tile = tiles[x][y];
-                if tile:getType() == 'floor' and not tile:isOccupied() then
-                    if love.math.random(1, 100) == 100 then
-                        actors[#actors + 1] = Enemy.new(ACTOR_TYPES.DOG, tile);
-                        count = count + 1;
-                    end
-                end
-            end
-        end
-
-        return actors;
-    end
-
     -- ------------------------------------------------
     -- Public Functions
     -- ------------------------------------------------
@@ -103,21 +57,21 @@ function Game.new()
         map = Map.new();
         map:init();
 
-        local spawnX, spawnY = map:getRandomRoom():getCenter();
-        player = Player.new(ACTOR_TYPES.PLAYER, map:getTileAt(spawnX, spawnY));
-
-        actors = spawnActors(map, player);
+        actors = Actors.new(map);
+        actors:init();
 
         turns = 0;
 
-        map:calculateVisibility(player:getTile());
+        map:calculateVisibility(actors:getPlayer():getTile());
     end
 
     function self:processTurn()
+        local player = actors:getPlayer();
+
         -- Process turns until the currently pending action of the player is
         -- correctly performed or cancelled.
         while player:action():hasAction() and not player:health():isDead() do
-            for i, actor in ipairs(actors) do
+            for i, actor in ipairs(actors:getActors()) do
                 if not actor:health():isDead() then
                     actor:update(dt);
                     actor:energy():grantEnergy();
@@ -151,13 +105,15 @@ function Game.new()
         end
 
         -- Spawn items where actors have died.
-        spawnItems(actors);
+        spawnItems(actors:getActors());
 
         -- Remove actors which have died during this turn from the game.
-        removeDeadActors(actors);
+        actors:removeDeadActors();
     end
 
     function self:control(msg, arg)
+        local player = actors:getPlayer();
+
         if msg == 'walk' then
             player:action():setAction(Walk.new(player:getTile():getNeighbours()[arg]));
         elseif msg == 'wait' then
@@ -187,11 +143,11 @@ function Game.new()
     end
 
     function self:getActors()
-        return actors;
+        return actors:getActors();
     end
 
     function self:getPlayer()
-        return player;
+        return actors:getPlayer();
     end
 
     function self:getTurns()
