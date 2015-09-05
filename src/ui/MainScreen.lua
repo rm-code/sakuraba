@@ -1,6 +1,6 @@
 local Screen = require('lib.screenmanager.Screen');
 local Constants = require('src.constants.Constants');
-local Actors = require('src.constants.Actors');
+local ActorConstants = require('src.constants.ActorConstants');
 local InputHandler = require('src.ui.InputHandler');
 local InventoryScreen = require('src.ui.InventoryScreen');
 local Game = require('src.Game');
@@ -12,7 +12,7 @@ local Camera = require('lib.Camera');
 
 local TILE_SIZE  = Constants.TILE_SIZE;
 local TILE_TYPES = Constants.TILE_TYPES;
-local ACTOR_TYPES = Actors.ACTOR_TYPES;
+local ACTOR_TYPES = ActorConstants.ACTOR_TYPES;
 local COLORS = Constants.COLORS;
 local FACTIONS = Constants.FACTIONS;
 

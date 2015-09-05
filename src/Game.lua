@@ -1,4 +1,4 @@
-local Actors = require('src.constants.Actors');
+local ActorConstants = require('src.constants.ActorConstants');
 local Map = require('src.map.Map');
 local Player = require('src.actors.Player');
 local Enemy = require('src.actors.Enemy');
@@ -18,7 +18,7 @@ local Weapon = require('src.items.Weapon');
 -- Constants
 -- ------------------------------------------------
 
-local ACTOR_TYPES = Actors.ACTOR_TYPES;
+local ACTOR_TYPES = ActorConstants.ACTOR_TYPES;
 
 -- ------------------------------------------------
 -- Module
