@@ -73,7 +73,7 @@ function Game.new()
         while player:action():hasAction() and not player:health():isDead() do
             for i, actor in ipairs(actors:getActors()) do
                 if not actor:health():isDead() then
-                    actor:update(dt);
+                    actor:processTurn();
                     actor:energy():grantEnergy();
 
                     if actor:action():hasAction() and actor:energy():canPerform() then

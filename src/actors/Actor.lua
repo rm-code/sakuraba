@@ -36,7 +36,7 @@ function Actor.new(type, tile, faction)
     local action = Action.new(self);
     local inventory = Inventory.new(ACTOR_STATS[type].defaultItems);
 
-    function self:update(dt)
+    function self:processTurn()
         return;
     end
 

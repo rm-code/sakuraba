@@ -43,7 +43,7 @@ function Enemy.new(type, tile)
 
     local direction = DIRECTION.NORTH;
 
-    function self:update(dt)
+    function self:processTurn()
         local rnd = love.math.random(4);
         if rnd == 1 then
             direction = DIRECTION.NORTH;
