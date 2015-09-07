@@ -104,6 +104,8 @@ function Game.new()
             turns = turns + 1;
         end
 
+        actors:checkPathfinding();
+
         -- Spawn items where actors have died.
         spawnItems(actors:getActors());
 

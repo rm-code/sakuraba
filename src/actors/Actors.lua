@@ -1,6 +1,7 @@
 local ActorConstants = require('src.constants.ActorConstants');
 local Player = require('src.actors.Player');
 local Enemy = require('src.actors.Enemy');
+local Bresenham = require('lib.Bresenham');
 
 -- ------------------------------------------------
 -- Constants
@@ -43,6 +44,36 @@ function Actors.new(map)
         end
 
         return actors;
+    end
+
+    function self:checkPathfinding()
+        local px, py = player:getTile():getPosition();
+        for i = 1, #actors do
+            local actor = actors[i];
+            if actor ~= player then
+                local ax, ay = actor:getTile():getPosition();
+                local dx, dy = ax - px, ay - py;
+                local distance = math.sqrt(dx * dx + dy * dy);
+
+                -- Only update actors close to the player
+                if distance < 20 then
+                    Bresenham.calculateLine(ax, ay, px, py,
+                            function (nx, ny, counter)
+                                -- Stop the algorithm if the target tile is not passable.
+                                if not map:getTileAt(nx, ny):isPassable() then
+                                    return false;
+                                end
+
+                                if nx == px and ny == py then
+                                    actor:setMovementTarget(px, py);
+                                    return false;
+                                end
+
+                                return true;
+                            end);
+                end
+            end
+        end
     end
 
     function self:init()
