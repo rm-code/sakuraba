@@ -166,6 +166,16 @@ function MainScreen.new()
         camera:attach();
         love.graphics.draw(spritebatch, 0, 0);
         input:draw();
+
+        ---[[ TODO remove
+        for i = 1, #TEMP_PATHS do
+            for j = 1, #TEMP_PATHS[i] do
+                local t = TEMP_PATHS[i][j];
+                love.graphics.rectangle('line', t:getX() * TILE_SIZE, t:getY() * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+            end
+        end
+        --]]
+
         camera:detach();
 
         inventory:draw();

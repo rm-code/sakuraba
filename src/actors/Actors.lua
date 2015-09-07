@@ -46,7 +46,12 @@ function Actors.new(map)
         return actors;
     end
 
+    -- TODO remove
+    TEMP_PATHS = {};
+
     function self:checkPathfinding()
+        TEMP_PATHS = {}; -- TODO remove
+
         local px, py = player:getTile():getPosition();
         for i = 1, #actors do
             local actor = actors[i];
@@ -65,7 +70,11 @@ function Actors.new(map)
                                 end
 
                                 if nx == px and ny == py then
-                                    actor:setMovementTarget(px, py);
+                                    local path = actor:getMovementTarget(map:getTileAt(px, py));
+                                    TEMP_PATHS[#TEMP_PATHS + 1] = path; -- TODO remove
+                                    if path then
+                                        actor:setPath(path);
+                                    end
                                     return false;
                                 end
 
