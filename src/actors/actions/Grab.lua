@@ -10,6 +10,11 @@ function Grab.new()
 
         local tile = actor:getTile();
         local items = tile:getItems();
+
+        if #items == 0 then
+            return false;
+        end
+
         for i = #items, 1, -1 do
             actor:inventory():add(items[i]);
             tile:removeItem(i);
