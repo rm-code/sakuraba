@@ -46,7 +46,9 @@ function Enemy.new(type, tile)
     function self:processTurn()
         if path then
             local target = table.remove(path);
-            self:action():setAction(Walk.new(target));
+            if target then -- TODO fix properly (see https://github.com/rm-code/sakuraba/issues/8)
+                self:action():setAction(Walk.new(target));
+            end
         end
     end
 
