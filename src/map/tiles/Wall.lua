@@ -8,7 +8,7 @@ local SPRITE = '#';
 local Wall = {};
 
 function Wall.new(x, y)
-    return Tile.new(x, y, TILE_TYPES.WALL, PASSABLE, SPRITE);
+    return Tile.new(x, y, TILE_TYPES.WALL, PASSABLE, SPRITE):addInstance('Wall');
 end
 
 return Wall;

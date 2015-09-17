@@ -1,4 +1,5 @@
 local Constants = require('src.constants.Constants');
+local Object = require('src.Object');
 
 -- ------------------------------------------------
 -- Constants
@@ -17,7 +18,7 @@ local Tile = {};
 -- ------------------------------------------------
 
 function Tile.new(x, y, type, passable)
-    local self = {};
+    local self = Object.new():addInstance('Tile');
 
     local neighbours = {};
     local content = {};

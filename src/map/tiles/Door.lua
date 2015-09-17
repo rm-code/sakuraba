@@ -8,7 +8,7 @@ local SPRITE = '/';
 local Door = {};
 
 function Door.new(x, y)
-    local self = Tile.new(x, y, TILE_TYPES.DOOR, PASSABLE, SPRITE);
+    local self = Tile.new(x, y, TILE_TYPES.DOOR, PASSABLE, SPRITE):addInstance('Door');
 
     function self:open()
         self:setPassable(true);
