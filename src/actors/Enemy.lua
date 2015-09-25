@@ -121,16 +121,21 @@ function Enemy.new(type, tile)
 
                 -- Check if the tile is passable and not in the closed list.
                 if tile:isPassable() and not isInList(closedList, tile) then
-                    -- Check if the tile is in the open list. If it is not, then
-                    -- add it to the open list and proceed. If it already is in
-                    -- the open list replace its cost and parent variables.
-                    local visitedNode = isInList(openList, tile);
-                    if not visitedNode then
-                        openList[#openList + 1] = { tile = tile, cameFrom = current, g = g, f = f };
-                    elseif g < visitedNode.g then
-                        visitedNode.cameFrom = current;
-                        visitedNode.g = g;
-                        visitedNode.f = f;
+                    -- Check if the tile is the target tile (because the target tile will always
+                    -- be occupied by the player). If not, make sure it is not occupied and add
+                    -- it to the open list.
+                    if tile == target or not tile:isOccupied() then
+                        -- Check if the tile is in the open list. If it is not, then
+                        -- add it to the open list and proceed. If it already is in
+                        -- the open list replace its cost and parent variables.
+                        local visitedNode = isInList(openList, tile);
+                        if not visitedNode then
+                            openList[#openList + 1] = { tile = tile, cameFrom = current, g = g, f = f };
+                        elseif g < visitedNode.g then
+                            visitedNode.cameFrom = current;
+                            visitedNode.g = g;
+                            visitedNode.f = f;
+                        end
                     end
                 end
             end
