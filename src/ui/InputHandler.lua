@@ -108,14 +108,22 @@ function InputHandler.new(game, inventory)
         local actorIndex = 1;
 
         return function(key)
-            if key == 'up' then
+            if key == 'w' then
                 direction = DIRECTION.NORTH;
-            elseif key == 'down' then
+            elseif key == 'x' then
                 direction = DIRECTION.SOUTH;
-            elseif key == 'right' then
+            elseif key == 'd' then
                 direction = DIRECTION.EAST;
-            elseif key == 'left' then
+            elseif key == 'a' then
                 direction = DIRECTION.WEST;
+            elseif key == 'q' then
+                direction = DIRECTION.NORTH_WEST;
+            elseif key == 'e' then
+                direction = DIRECTION.NORTH_EAST;
+            elseif key == 'y' then
+                direction = DIRECTION.SOUTH_WEST;
+            elseif key == 'c' then
+                direction = DIRECTION.SOUTH_EAST;
             elseif key == 'tab' then
                 -- Cycle through all actors and select them as targets automatially.
                 local tmp = actorIndex;
@@ -210,32 +218,40 @@ function InputHandler.new(game, inventory)
             return;
         end
 
-        if key == 'up' then
+        if key == 'w' then
             game:control('walk', DIRECTION.NORTH);
-        elseif key == 'down' then
+        elseif key == 'x' then
             game:control('walk', DIRECTION.SOUTH);
-        elseif key == 'right' then
+        elseif key == 'd' then
             game:control('walk', DIRECTION.EAST);
-        elseif key == 'left' then
+        elseif key == 'a' then
             game:control('walk', DIRECTION.WEST);
+        elseif key == 'q' then
+            game:control('walk', DIRECTION.NORTH_WEST);
+        elseif key == 'e' then
+            game:control('walk', DIRECTION.NORTH_EAST);
+        elseif key == 'y' then
+            game:control('walk', DIRECTION.SOUTH_WEST);
+        elseif key == 'c' then
+            game:control('walk', DIRECTION.SOUTH_EAST);
         end
 
-        if key == 'return' then
+        if key == 's' then
             game:control('wait');
         end
 
-        if key == 'e' then
+        if key == 'return' then
             blockingFunction = selectTarget(game, 1, 'interact', 'e');
             blockingFunction();
         end
 
-        if key == 'a' then
+        if key == 'space' then
             local weapon = game:getPlayer():inventory():getWeapon();
             if weapon and weapon:getWeaponType() == 'melee' then
-                blockingFunction = selectTarget(game, weapon:getRange(), 'attack', 'a');
+                blockingFunction = selectTarget(game, weapon:getRange(), 'attack', 'space');
                 blockingFunction();
             elseif weapon and weapon:getWeaponType() == 'ranged' then
-                blockingFunction = selectTarget(game, weapon:getRange(), 'rangedattack', 'a');
+                blockingFunction = selectTarget(game, weapon:getRange(), 'rangedattack', 'space');
                 blockingFunction();
             end
         end
