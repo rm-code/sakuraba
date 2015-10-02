@@ -15,6 +15,7 @@ local Map = {};
 -- ------------------------------------------------
 
 local TILE_SIZE = Constants.TILE_SIZE;
+local DIRECTION = Constants.DIRECTION;
 local GRID_W = 200;
 local GRID_H = 200;
 
@@ -73,20 +74,34 @@ function Map.new()
     local function addNeighbours(tiles)
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
-                local n, s, e, w;
+                local neighbours = {};
+
                 if tiles[x][y - 1] then
-                    n = tiles[x][y - 1];
+                    neighbours[DIRECTION.NORTH] = tiles[x][y - 1];
                 end
                 if tiles[x][y + 1] then
-                    s = tiles[x][y + 1];
+                    neighbours[DIRECTION.SOUTH] = tiles[x][y + 1];
+                end
+                if tiles[x + 1] and tiles[x + 1][y - 1] then
+                    neighbours[DIRECTION.NORTH_EAST] = tiles[x + 1][y - 1];
+                end
+                if tiles[x - 1] and tiles[x - 1][y - 1] then
+                    neighbours[DIRECTION.NORTH_WEST] = tiles[x - 1][y - 1];
+                end
+                if tiles[x + 1] and tiles[x + 1][y + 1] then
+                    neighbours[DIRECTION.SOUTH_EAST] = tiles[x + 1][y + 1];
+                end
+                if tiles[x - 1] and tiles[x - 1][y + 1] then
+                    neighbours[DIRECTION.SOUTH_WEST] = tiles[x - 1][y + 1];
                 end
                 if tiles[x + 1] and tiles[x + 1][y] then
-                    e = tiles[x + 1][y];
+                    neighbours[DIRECTION.EAST] = tiles[x + 1][y];
                 end
                 if tiles[x - 1] and tiles[x - 1][y] then
-                    w = tiles[x - 1][y];
+                    neighbours[DIRECTION.WEST] = tiles[x - 1][y];
                 end
-                tiles[x][y]:setNeighbours(n, s, e, w);
+
+                tiles[x][y]:setNeighbours(neighbours);
              end
          end
     end

@@ -1,11 +1,4 @@
-local Constants = require('src.constants.Constants');
 local Object = require('src.Object');
-
--- ------------------------------------------------
--- Constants
--- ------------------------------------------------
-
-local DIRECTION = Constants.DIRECTION;
 
 -- ------------------------------------------------
 -- Module
@@ -20,7 +13,7 @@ local Tile = {};
 function Tile.new(x, y, type, passable)
     local self = Object.new():addInstance('Tile');
 
-    local neighbours = {};
+    local neighbours;
     local content = {};
     local visible = false;
     local explored = false;
@@ -56,11 +49,8 @@ function Tile.new(x, y, type, passable)
         id = nid;
     end
 
-    function self:setNeighbours(n, s, e, w)
-        neighbours[DIRECTION.NORTH] = n;
-        neighbours[DIRECTION.SOUTH] = s;
-        neighbours[DIRECTION.EAST]  = e;
-        neighbours[DIRECTION.WEST]  = w;
+    function self:setNeighbours(nneighbours)
+        neighbours = nneighbours;
     end
 
     function self:setPassable(np)

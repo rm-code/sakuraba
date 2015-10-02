@@ -1,10 +1,14 @@
 local TILE_SIZE  = 16;
 
 local DIRECTION = {
-    NORTH = 'n',
-    SOUTH = 's',
-    EAST  = 'e',
-    WEST  = 'w',
+    NORTH      =  'n',
+    NORTH_EAST = 'ne',
+    NORTH_WEST = 'nw',
+    SOUTH      =  's',
+    SOUTH_EAST = 'se',
+    SOUTH_WEST = 'sw',
+    EAST       =  'e',
+    WEST       =  'w',
 };
 
 -- The factions to which the actors can belong. The factions are created from
