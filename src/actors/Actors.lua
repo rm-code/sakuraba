@@ -70,10 +70,10 @@ function Actors.new(map)
                                 end
 
                                 if nx == px and ny == py then
-                                    local path = actor:getMovementTarget(map:getTileAt(px, py));
-                                    TEMP_PATHS[#TEMP_PATHS + 1] = path; -- TODO remove
+                                    actor:pathfinding():calculatePath(map:getTileAt(px, py));
+                                    local path = actor:pathfinding():getPath();
                                     if path then
-                                        actor:setPath(path);
+                                        TEMP_PATHS[#TEMP_PATHS + 1] = path; -- TODO remove
                                     end
                                     return false;
                                 end
