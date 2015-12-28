@@ -27,7 +27,7 @@ function Attack.new(target)
         local baseDamage = attacker:inventory():getWeapon():getDamage() + attacker:attributes():getStrength() * 0.5;
 
         -- Reduce damage based on the defender's armor.
-        local bodyPart = defender:inventory():getRandomBodyPart();
+        local bodyPart = defender:body():getRandomBodyPart();
         local dmgResistance = defender:inventory():getArmor(bodyPart):getDamageResistance();
         local adjustedDamage = baseDamage - (baseDamage * (dmgResistance * 0.01));
 

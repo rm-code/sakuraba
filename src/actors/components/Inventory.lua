@@ -2,16 +2,6 @@ local Constants = require('src.constants.Constants');
 local Weapon = require('src.items.Weapon');
 
 local ITEM_TYPES = Constants.ITEM_TYPES;
-local BODY_PARTS = Constants.BODY_PARTS;
-
--- Storing body parts as array makes picking a random body part simpler.
-local RND_BODY_PARTS = {
-    BODY_PARTS.HEAD,
-    BODY_PARTS.HANDS,
-    BODY_PARTS.TORSO,
-    BODY_PARTS.LEGS,
-    BODY_PARTS.FEET,
-};
 
 local Inventory = {};
 
@@ -25,12 +15,7 @@ function Inventory.new(default)
     };
 
     local equippedItems = {
-        [ITEM_TYPES.WEAPON] = defaultItems[ITEM_TYPES.WEAPON],
-        [BODY_PARTS.HEAD]  = nil,
-        [BODY_PARTS.HANDS] = nil,
-        [BODY_PARTS.TORSO] = nil,
-        [BODY_PARTS.LEGS]  = nil,
-        [BODY_PARTS.FEET]  = nil,
+        [ITEM_TYPES.WEAPON] = defaultItems[ITEM_TYPES.WEAPON]
     };
 
     local armorRating = 0;
@@ -100,10 +85,6 @@ function Inventory.new(default)
 
     function self:getEquippedItems()
         return equippedItems;
-    end
-
-    function self:getRandomBodyPart()
-        return RND_BODY_PARTS[love.math.random(1, #RND_BODY_PARTS)];
     end
 
     function self:getWeapon()

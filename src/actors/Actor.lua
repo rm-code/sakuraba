@@ -3,6 +3,7 @@ local ActorConstants = require('src.constants.ActorConstants');
 local Health = require('src.actors.components.Health');
 local Energy = require('src.actors.components.Energy');
 local Attributes = require('src.actors.components.Attributes');
+local Body = require('src.actors.components.Body');
 local Action = require('src.actors.components.Action');
 local Inventory = require('src.actors.components.Inventory');
 
@@ -31,6 +32,7 @@ function Actor.new(type, tile, faction)
     -- Load components.
     local health = Health.new(ACTOR_STATS[type].maxhealth);
     local energy = Energy.new(ACTOR_STATS[type].speed);
+    local body = Body.new(ACTOR_STATS[type].bodyParts);
     local attributes = Attributes.new(faction, ACTOR_STATS[type].stats, ACTOR_STATS[type].skills);
     local action = Action.new(self);
     local inventory = Inventory.new(ACTOR_STATS[type].defaultItems);
@@ -49,6 +51,10 @@ function Actor.new(type, tile, faction)
 
     function self:getType()
         return type;
+    end
+
+    function self:body()
+        return body;
     end
 
     function self:health()

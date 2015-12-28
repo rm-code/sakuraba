@@ -17,6 +17,13 @@ local ACTOR_STATS = {
             melee  = 70,
             ranged = 70,
         },
+        bodyParts = {
+            'head',
+            'hands',
+            'torso',
+            'legs',
+            'feet'
+        },
         defaultItems = {
             weapon = 'fist',
         }
@@ -33,6 +40,13 @@ local ACTOR_STATS = {
             melee  = 60,
             ranged =  0,
         },
+        bodyParts = {
+            'head',
+            'paws',
+            'torso',
+            'legs',
+            'tail'
+        },
         defaultItems = {
             weapon = 'claw',
         }
@@ -48,6 +62,13 @@ local ACTOR_STATS = {
         skills = {
             melee  = 70,
             ranged =  0,
+        },
+        bodyParts = {
+            'head',
+            'paws',
+            'torso',
+            'legs',
+            'tail'
         },
         defaultItems = {
             weapon = 'claw',
