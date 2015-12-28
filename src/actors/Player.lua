@@ -7,7 +7,6 @@ local Armor = require('src.items.Armor');
 -- Constants
 -- ------------------------------------------------
 
-local TILE_SIZE = Constants.TILE_SIZE;
 local ENERGY_THRESHOLD = Constants.ENERGY_THRESHOLD;
 local FACTIONS = Constants.FACTIONS;
 

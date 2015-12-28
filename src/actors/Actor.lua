@@ -10,7 +10,6 @@ local Inventory = require('src.actors.components.Inventory');
 -- Constants
 -- ------------------------------------------------
 
-local TILE_SIZE = Constants.TILE_SIZE;
 local ACTOR_STATS = ActorConstants.ACTOR_STATS;
 
 -- ------------------------------------------------

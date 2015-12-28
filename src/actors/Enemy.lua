@@ -9,7 +9,6 @@ local Pathfinding = require('src.actors.components.Pathfinding');
 -- Constants
 -- ------------------------------------------------
 
-local TILE_SIZE = Constants.TILE_SIZE;
 local DIRECTION = Constants.DIRECTION;
 local FACTIONS  = Constants.FACTIONS;
 
