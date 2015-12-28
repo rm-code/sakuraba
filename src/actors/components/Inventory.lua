@@ -22,9 +22,9 @@ function Inventory.new(default)
 
     local function getSlot(item)
         local slot;
-        if instanceof(item, 'Armor') then
+        if item:isInstanceOf( 'Armor' ) then
             slot = item:getArmorType();
-        elseif instanceof(item, 'Weapon') then
+        elseif item:isInstanceOf( 'Weapon' ) then
             slot = item:getType();
         end
         return slot;
@@ -33,7 +33,7 @@ function Inventory.new(default)
     function self:equip(item)
         local slot = getSlot(item);
 
-        if instanceof(item, 'Armor') then
+        if item:isInstanceOf( 'Armor' ) then
             armorRating = armorRating + item:getArmorRating();
         end
 
@@ -47,7 +47,7 @@ function Inventory.new(default)
     end
 
     function self:unequip(item)
-        if instanceof(item, 'Armor') then
+        if item:isInstanceOf( 'Armor' ) then
             armorRating = armorRating - item:getArmorRating();
         end
 
