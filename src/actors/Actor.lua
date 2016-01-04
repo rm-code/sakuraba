@@ -1,4 +1,3 @@
-local Constants = require('src.constants.Constants');
 local ActorConstants = require('src.constants.ActorConstants');
 local Health = require('src.actors.components.Health');
 local Energy = require('src.actors.components.Energy');
