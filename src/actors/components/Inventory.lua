@@ -1,5 +1,5 @@
 local Constants = require('src.constants.Constants');
-local Weapon = require('src.items.Weapon');
+local ItemFactory = require('src.items.ItemFactory');
 
 local ITEM_TYPES = Constants.ITEM_TYPES;
 
@@ -10,28 +10,20 @@ function Inventory.new(default)
 
     local items = {};
 
+    -- TODO Find a better way to create and assign default items.
     local defaultItems = {
-        [ITEM_TYPES.WEAPON] = Weapon.new(default[ITEM_TYPES.WEAPON])
+        [ITEM_TYPES.WEAPON] = ItemFactory.createItem( default[ITEM_TYPES.WEAPON] );
     };
 
+    -- TODO Find a better way to create and assign default items.
     local equippedItems = {
         [ITEM_TYPES.WEAPON] = defaultItems[ITEM_TYPES.WEAPON]
     };
 
     local armorRating = 0;
 
-    local function getSlot(item)
-        local slot;
-        if item:isInstanceOf( 'Armor' ) then
-            slot = item:getArmorType();
-        elseif item:isInstanceOf( 'Weapon' ) then
-            slot = item:getType();
-        end
-        return slot;
-    end
-
-    function self:equip(item)
-        local slot = getSlot(item);
+    function self:equip( item )
+        local slot = item:getSlot();
 
         if item:isInstanceOf( 'Armor' ) then
             armorRating = armorRating + item:getArmorRating();
@@ -51,7 +43,7 @@ function Inventory.new(default)
             armorRating = armorRating - item:getArmorRating();
         end
 
-        local slot = getSlot(item);
+        local slot = item:getSlot();
         equippedItems[slot] = defaultItems[slot];
         item:setEquipped(false);
     end

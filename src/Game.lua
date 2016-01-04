@@ -9,7 +9,7 @@ local Grab = require('src.actors.actions.Grab');
 local Equip = require('src.actors.actions.Equip');
 local Unequip = require('src.actors.actions.Unequip');
 local DropItem = require('src.actors.actions.DropItem');
-local Weapon = require('src.items.Weapon');
+local ItemFactory = require('src.items.ItemFactory');
 
 -- ------------------------------------------------
 -- Module
@@ -40,9 +40,9 @@ function Game.new()
             local actor = actors[i];
             if actor:health():isDead() then
                 -- TODO replace with proper loot system
-                local loot = { 'knife', 'sword', 'bow', 'crossbow' };
-                local rnd = loot[love.math.random(1, #loot)];
-                actor:getTile():addItem(Weapon.new(rnd));
+                local loot = { 'club', 'knife', 'pistol' };
+                local rnd = loot[love.math.random( 1, #loot )];
+                actor:getTile():addItem( ItemFactory.createItem( rnd ) );
             end
         end
     end
@@ -56,6 +56,8 @@ function Game.new()
 
         map = Map.new();
         map:init();
+
+        ItemFactory.loadItemTemplates();
 
         actors = Actors.new(map);
         actors:init();

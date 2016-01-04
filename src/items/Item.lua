@@ -1,25 +1,22 @@
 local Object = require('src.Object');
 
-local DEFAULT_NAME = 'DefaultName';
-local DEFAULT_TYPE = 'DefaultType';
-
 local Item = {};
 
-function Item.new(name, type)
-    local self = Object.new():addInstance('Item');
+function Item.new( name, slot )
+    local self = Object.new():addInstance( 'Item' );
 
     local equipped = false;
 
-    function self:setEquipped(nequipped)
+    function self:setEquipped( nequipped )
         equipped = nequipped;
     end
 
     function self:getName()
-        return name or DEFAULT_NAME;
+        return name;
     end
 
-    function self:getType()
-        return type or DEFAULT_TYPE;
+    function self:getSlot()
+        return slot;
     end
 
     function self:isEquipped()

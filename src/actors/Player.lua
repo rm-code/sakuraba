@@ -1,7 +1,6 @@
 local Constants = require('src.constants.Constants');
 local Actor = require('src.actors.Actor');
-local Weapon = require('src.items.Weapon');
-local Armor = require('src.items.Armor');
+local ItemFactory = require('src.items.ItemFactory');
 
 -- ------------------------------------------------
 -- Constants
@@ -19,23 +18,24 @@ local Player = {};
 function Player.new(type, tile)
     local self = Actor.new(type, tile, FACTIONS.ALLIED);
 
-    local armor = Armor.new('cap');
+    -- TODO Find a better way to create and assign default items.
+    local armor = ItemFactory.createItem( 'cap' );
     self:inventory():add(armor);
     self:inventory():equip(armor);
 
-    local armor = Armor.new('gloves');
+    local armor = ItemFactory.createItem( 'gloves' );
     self:inventory():add(armor);
     self:inventory():equip(armor);
 
-    local armor = Armor.new('pullover');
+    local armor = ItemFactory.createItem( 'pullover' );
     self:inventory():add(armor);
     self:inventory():equip(armor);
 
-    local armor = Armor.new('jeans');
+    local armor = ItemFactory.createItem( 'jeans' );
     self:inventory():add(armor);
     self:inventory():equip(armor);
 
-    local armor = Armor.new('boots');
+    local armor = ItemFactory.createItem( 'boots' );
     self:inventory():add(armor);
     self:inventory():equip(armor);
 
