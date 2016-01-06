@@ -9,7 +9,7 @@ function Unequip.new(item)
         local actor = self:getActor();
 
         if item:isEquipped() then
-            actor:inventory():unequip(item);
+            actor:getComponent( 'inventory' ):unequip(item);
             return true;
         end
         return false;

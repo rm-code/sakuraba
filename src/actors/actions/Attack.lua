@@ -11,8 +11,8 @@ function Attack.new(target)
     -- ------------------------------------------------
 
     local function doesHit(attacker, defender)
-        local skill = attacker:attributes():getMeleeSkill();
-        local armorRating = defender:attributes():getDexterity() + defender:inventory():getArmorRating();
+        local skill = attacker:getComponent( 'attributes' ):getMeleeSkill();
+        local armorRating = defender:getComponent( 'attributes' ):getDexterity() + defender:getComponent( 'inventory' ):getArmorRating();
 
         local rnd = love.math.random(1, 100);
         if rnd > 95 then
@@ -24,11 +24,11 @@ function Attack.new(target)
     end
 
     local function calculateDamage(attacker, defender)
-        local baseDamage = attacker:inventory():getWeapon():getDamage() + attacker:attributes():getStrength() * 0.5;
+        local baseDamage = attacker:getComponent( 'inventory' ):getWeapon():getDamage() + attacker:getComponent( 'attributes' ):getStrength() * 0.5;
 
         -- Reduce damage based on the defender's armor.
-        local bodyPart = defender:body():getRandomBodyPart();
-        local dmgResistance = defender:inventory():getArmor(bodyPart):getDamageResistance();
+        local bodyPart = defender:getComponent( 'body' ):getRandomBodyPart();
+        local dmgResistance = defender:getComponent( 'inventory' ):getArmor(bodyPart):getDamageResistance();
         local adjustedDamage = baseDamage - (baseDamage * (dmgResistance * 0.01));
 
         return math.max(1, math.floor(adjustedDamage + 0.5));
@@ -36,7 +36,7 @@ function Attack.new(target)
 
     local function calculateOutcome(attacker, defender)
         if doesHit(attacker, defender) then
-            defender:body():damage(calculateDamage(attacker, defender));
+            defender:getComponent( 'body' ):damage(calculateDamage(attacker, defender));
         end
     end
 
@@ -49,7 +49,7 @@ function Attack.new(target)
 
         if target:isOccupied() then
             local opponent = target:getActor();
-            if opponent:attributes():getFaction() ~= actor:attributes():getFaction() then
+            if opponent:getComponent( 'attributes' ):getFaction() ~= actor:getComponent( 'attributes' ):getFaction() then
                 calculateOutcome(actor, opponent);
                 return true;
             else

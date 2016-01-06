@@ -22,37 +22,33 @@ function Enemy.new(type, tile)
 
     -- TODO Find a better way to create and assign default items.
     local armor = ItemFactory.createItem( 'cap' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'gloves' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'pullover' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'jeans' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'boots' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
-    local pathfinding = Pathfinding.new(self);
-
-    function self:pathfinding()
-        return pathfinding;
-    end
+    self:addComponent( 'pathfinding', Pathfinding.new(self) );
 
     function self:processTurn()
-        local path = self:pathfinding():getPath();
+        local path = self:getComponent( 'pathfinding' ):getPath();
         if path then
             local target = table.remove(path); -- Get next tile from the A* path.
             if target then -- TODO fix properly (see https://github.com/rm-code/sakuraba/issues/8)
-                self:action():setAction(Walk.new(target));
+                self:getComponent( 'action' ):setAction(Walk.new(target));
             end
         end
     end

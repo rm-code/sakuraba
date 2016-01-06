@@ -20,24 +20,24 @@ function Player.new(type, tile)
 
     -- TODO Find a better way to create and assign default items.
     local armor = ItemFactory.createItem( 'cap' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'gloves' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'pullover' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'jeans' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'boots' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     return self;
 end

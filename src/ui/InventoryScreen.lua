@@ -7,8 +7,8 @@ local InventoryScreen = {};
 function InventoryScreen.new(game)
     local self = {};
 
-    local inventory = game:getPlayer():inventory():getItems();
-    local equipment = game:getPlayer():inventory():getEquippedItems();
+    local inventory = game:getPlayer():getComponent( 'inventory' ):getItems();
+    local equipment = game:getPlayer():getComponent( 'inventory' ):getEquippedItems();
 
     local selection;
 

@@ -81,7 +81,7 @@ function MainScreen.new()
         -- Occupied tiles will be invisible.
         if tile:isOccupied() then
             local actor = tile:getActor();
-            if actor:attributes():getFaction() == FACTIONS.ALLIED then
+            if actor:getComponent( 'attributes' ):getFaction() == FACTIONS.ALLIED then
                 return COLORS.GREEN;
             end
             return COLORS.RED;

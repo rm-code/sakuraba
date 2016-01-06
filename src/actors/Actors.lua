@@ -65,7 +65,7 @@ function Actors.new(map)
                                 end
 
                                 if nx == px and ny == py then
-                                    actor:pathfinding():calculatePath(map:getTileAt(px, py));
+                                    actor:getComponent( 'pathfinding' ):calculatePath(map:getTileAt(px, py));
                                     return false;
                                 end
 
@@ -90,7 +90,7 @@ function Actors.new(map)
     function self:removeDeadActors()
         for i = #actors, 1, -1 do
             local actor = actors[i];
-            if actor:body():isDead() then
+            if actor:getComponent( 'body' ):isDead() then
                 actor:getTile():removeActor();
                 table.remove(actors, i);
             end

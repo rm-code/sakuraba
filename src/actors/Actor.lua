@@ -28,15 +28,27 @@ function Actor.new(type, tile, faction)
     -- Register the actor on the tile it spawns.
     tile:setActor(self);
 
-    -- Load components.
-    local energy = Energy.new(ACTOR_STATS[type].speed);
-    local body = Body.new(ACTOR_STATS[type].bodyParts, ACTOR_STATS[type].maxhealth);
-    local attributes = Attributes.new(faction, ACTOR_STATS[type].stats, ACTOR_STATS[type].skills);
-    local action = Action.new(self);
-    local inventory = Inventory.new(ACTOR_STATS[type].defaultItems);
+    local components = {};
+
+    function self:addComponent( id, component )
+        assert( not components[id], string.format( 'Component "%s" already exists!', id ));
+        components[id] = component;
+    end
+
+    -- TODO rewrite:
+    self:addComponent('energy', Energy.new(ACTOR_STATS[type].speed));
+    self:addComponent('body', Body.new(ACTOR_STATS[type].bodyParts, ACTOR_STATS[type].maxhealth));
+    self:addComponent('attributes', Attributes.new(faction, ACTOR_STATS[type].stats, ACTOR_STATS[type].skills));
+    self:addComponent('action', Action.new(self));
+    self:addComponent('inventory', Inventory.new(ACTOR_STATS[type].defaultItems));
+    --/
 
     function self:processTurn()
         return;
+    end
+
+    function self:getComponent( component )
+        return components[component];
     end
 
     function self:setTile(ntile)
@@ -51,24 +63,8 @@ function Actor.new(type, tile, faction)
         return type;
     end
 
-    function self:body()
-        return body;
-    end
-
-    function self:energy()
-        return energy;
-    end
-
-    function self:attributes()
-        return attributes;
-    end
-
-    function self:action()
-        return action;
-    end
-
-    function self:inventory()
-        return inventory;
+    function self:hasComponent( component )
+        return components[component] ~= nil;
     end
 
     return self;

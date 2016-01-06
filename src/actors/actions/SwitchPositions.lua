@@ -19,7 +19,7 @@ function SwitchPositions.new(target)
 
         if targetTile:isOccupied() then
             local targetActor = targetTile:getActor();
-            if targetActor:attributes():getFaction() == actor:attributes():getFaction() then
+            if targetActor:getComponent( 'attributes' ):getFaction() == actor:getComponent( 'attributes' ):getFaction() then
                 -- Remove the target actor and move the performing actor to the new tile.
                 moveToTile(targetTile, actor);
 

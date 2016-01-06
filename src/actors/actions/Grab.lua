@@ -16,7 +16,7 @@ function Grab.new()
         end
 
         for i = #items, 1, -1 do
-            actor:inventory():add(items[i]);
+            actor:getComponent( 'inventory' ):add(items[i]);
             tile:removeItem(i);
         end
 

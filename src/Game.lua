@@ -38,7 +38,7 @@ function Game.new()
     local function spawnItems(actors)
         for i = 1, #actors do
             local actor = actors[i];
-            if actor:body():isDead() then
+            if actor:getComponent( 'body' ):isDead() then
                 -- TODO replace with proper loot system
                 local loot = { 'club', 'knife', 'pistol' };
                 local rnd = loot[love.math.random( 1, #loot )];
@@ -72,17 +72,17 @@ function Game.new()
 
         -- Process turns until the currently pending action of the player is
         -- correctly performed or cancelled.
-        while player:action():hasAction() and not player:body():isDead() do
+        while player:getComponent( 'action' ):hasAction() and not player:getComponent( 'body' ):isDead() do
             for i, actor in ipairs(actors:getActors()) do
-                if not actor:body():isDead() then
+                if not actor:getComponent( 'body' ):isDead() then
                     actor:processTurn();
-                    actor:energy():grantEnergy();
+                    actor:getComponent( 'energy' ):grantEnergy();
 
-                    if actor:action():hasAction() and actor:energy():canPerform() then
-                        actor:energy():drainEnergy();
+                    if actor:getComponent( 'action' ):hasAction() and actor:getComponent( 'energy' ):canPerform() then
+                        actor:getComponent( 'energy' ):drainEnergy();
                         while true do
-                            local success = actor:action():getAction():perform();
-                            actor:action():clearAction();
+                            local success = actor:getComponent( 'action' ):getAction():perform();
+                            actor:getComponent( 'action' ):clearAction();
 
                             -- If the action is invalid we cancel the rest of the turn.
                             -- This will only be done for the player's actions.
@@ -93,7 +93,7 @@ function Game.new()
                             -- If the action returned an alternative we set it as the
                             -- next action and restart the loop.
                             if type(success) ~= 'boolean' then
-                                actor:action():setAction(success);
+                                actor:getComponent( 'action' ):setAction(success);
                             else
                                 break;
                             end
@@ -119,23 +119,23 @@ function Game.new()
         local player = actors:getPlayer();
 
         if msg == 'walk' then
-            player:action():setAction(Walk.new(player:getTile():getNeighbours()[arg]));
+            player:getComponent( 'action' ):setAction(Walk.new(player:getTile():getNeighbours()[arg]));
         elseif msg == 'wait' then
-            player:action():setAction(Wait.new());
+            player:getComponent( 'action' ):setAction(Wait.new());
         elseif msg == 'interact' then
-            player:action():setAction(Interact.new(arg));
+            player:getComponent( 'action' ):setAction(Interact.new(arg));
         elseif msg == 'attack' then
-            player:action():setAction(Attack.new(arg));
+            player:getComponent( 'action' ):setAction(Attack.new(arg));
         elseif msg == 'rangedattack' then
-            player:action():setAction(RangedAttack.new(arg));
+            player:getComponent( 'action' ):setAction(RangedAttack.new(arg));
         elseif msg == 'grab' then
-            player:action():setAction(Grab.new());
+            player:getComponent( 'action' ):setAction(Grab.new());
         elseif msg == 'equip' then
-            player:action():setAction(Equip.new(arg));
+            player:getComponent( 'action' ):setAction(Equip.new(arg));
         elseif msg == 'unequip' then
-            player:action():setAction(Unequip.new(arg));
+            player:getComponent( 'action' ):setAction(Unequip.new(arg));
         elseif msg == 'drop' then
-            player:action():setAction(DropItem.new(arg));
+            player:getComponent( 'action' ):setAction(DropItem.new(arg));
         end
 
         -- Process the next turn and return control back to the player at the end.

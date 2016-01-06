@@ -34,7 +34,7 @@ function InputHandler.new(game, inventory)
 
     local function modifyInventory(game)
         local player = game:getPlayer();
-        local items = player:inventory():getItems();
+        local items = player:getComponent( 'inventory' ):getItems();
         local index = 1;
 
         inventory:setInventorySelection(index);
@@ -135,7 +135,7 @@ function InputHandler.new(game, inventory)
                     local actor = actors[actorIndex];
                     if actor ~= player and
                         actor:getTile():isVisible() and
-                        actor:attributes():getFaction() ~= player:attributes():getFaction() then
+                        actor:getComponent( 'attributes' ):getFaction() ~= player:getComponent( 'attributes' ):getFaction() then
                             target = actor:getTile();
                             break;
                     end
@@ -246,7 +246,7 @@ function InputHandler.new(game, inventory)
         end
 
         if key == 'space' then
-            local weapon = game:getPlayer():inventory():getWeapon();
+            local weapon = game:getPlayer():getComponent( 'inventory' ):getWeapon();
             if weapon and weapon:getWeaponType() == 'melee' then
                 blockingFunction = selectTarget(game, weapon:getRange(), 'attack', 'space');
                 blockingFunction();

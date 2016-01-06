@@ -22,24 +22,24 @@ function Ally.new(type, tile)
 
     -- TODO Find a better way to create and assign default items.
     local armor = ItemFactory.createItem( 'cap' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'gloves' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'pullover' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'jeans' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local armor = ItemFactory.createItem( 'boots' );
-    self:inventory():add(armor);
-    self:inventory():equip(armor);
+    self:getComponent( 'inventory' ):add(armor);
+    self:getComponent( 'inventory' ):equip(armor);
 
     local direction = DIRECTION.NORTH;
 
@@ -55,7 +55,7 @@ function Ally.new(type, tile)
             direction = DIRECTION.WEST;
         end
 
-        self:action():setAction(Walk.new(self:getTile():getNeighbours()[direction]));
+        self:getComponent( 'action' ):setAction(Walk.new(self:getTile():getNeighbours()[direction]));
     end
 
     return self;

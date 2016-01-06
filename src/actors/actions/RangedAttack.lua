@@ -10,8 +10,8 @@ function RangedAttack.new(target)
     -- ------------------------------------------------
 
     local function doesHit(attacker, defender)
-        local skill = attacker:attributes():getRangedSkill();
-        local dex = attacker:attributes():getDexterity();
+        local skill = attacker:getComponent( 'attributes' ):getRangedSkill();
+        local dex = attacker:getComponent( 'attributes' ):getDexterity();
 
         local ax, ay = attacker:getTile():getPosition();
         local bx, by = defender:getTile():getPosition();
@@ -30,9 +30,9 @@ function RangedAttack.new(target)
     end
 
     local function calculateDamage(attacker, defender)
-        local baseDamage = attacker:inventory():getWeapon():getDamage();
-        local bodyPart = defender:inventory():getRandomBodyPart();
-        local dmgResistance = defender:inventory():getArmor(bodyPart):getDamageResistance();
+        local baseDamage = attacker:getComponent( 'inventory' ):getWeapon():getDamage();
+        local bodyPart = defender:getComponent( 'inventory' ):getRandomBodyPart();
+        local dmgResistance = defender:getComponent( 'inventory' ):getArmor(bodyPart):getDamageResistance();
 
         local adjustedDamage = baseDamage - (baseDamage * (dmgResistance * 0.01));
 
@@ -41,7 +41,7 @@ function RangedAttack.new(target)
 
     local function calculateOutcome(attacker, defender)
         if doesHit(attacker, defender) then
-            defender:body():damage(calculateDamage(attacker, defender));
+            defender:getComponent( 'body' ):damage(calculateDamage(attacker, defender));
         end
     end
 
@@ -55,7 +55,7 @@ function RangedAttack.new(target)
          -- Get the actor standing on the target tile.
         if target:isOccupied() then
             local opponent = target:getActor();
-            if opponent:attributes():getFaction() ~= actor:attributes():getFaction() then
+            if opponent:getComponent( 'attributes' ):getFaction() ~= actor:getComponent( 'attributes' ):getFaction() then
                 calculateOutcome(actor, opponent);
                 return true;
             end
