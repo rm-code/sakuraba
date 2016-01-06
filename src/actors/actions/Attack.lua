@@ -36,7 +36,7 @@ function Attack.new(target)
 
     local function calculateOutcome(attacker, defender)
         if doesHit(attacker, defender) then
-            defender:health():damage(calculateDamage(attacker, defender));
+            defender:body():damage(calculateDamage(attacker, defender));
         end
     end
 

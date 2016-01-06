@@ -38,7 +38,7 @@ function Game.new()
     local function spawnItems(actors)
         for i = 1, #actors do
             local actor = actors[i];
-            if actor:health():isDead() then
+            if actor:body():isDead() then
                 -- TODO replace with proper loot system
                 local loot = { 'club', 'knife', 'pistol' };
                 local rnd = loot[love.math.random( 1, #loot )];
@@ -72,9 +72,9 @@ function Game.new()
 
         -- Process turns until the currently pending action of the player is
         -- correctly performed or cancelled.
-        while player:action():hasAction() and not player:health():isDead() do
+        while player:action():hasAction() and not player:body():isDead() do
             for i, actor in ipairs(actors:getActors()) do
-                if not actor:health():isDead() then
+                if not actor:body():isDead() then
                     actor:processTurn();
                     actor:energy():grantEnergy();
 

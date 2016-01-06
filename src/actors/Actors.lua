@@ -90,7 +90,7 @@ function Actors.new(map)
     function self:removeDeadActors()
         for i = #actors, 1, -1 do
             local actor = actors[i];
-            if actor:health():isDead() then
+            if actor:body():isDead() then
                 actor:getTile():removeActor();
                 table.remove(actors, i);
             end
