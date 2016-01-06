@@ -1,3 +1,4 @@
+local Object = require('src.Object');
 local ActorConstants = require('src.constants.ActorConstants');
 local Energy = require('src.actors.components.Energy');
 local Attributes = require('src.actors.components.Attributes');
@@ -22,7 +23,7 @@ local Actor = {};
 -- @param ed - The amount of energy this actor gets per turn.
 --
 function Actor.new(type, tile, faction)
-    local self = {};
+    local self = Object.new():addInstance( 'Actor' );
 
     -- Register the actor on the tile it spawns.
     tile:setActor(self);
