@@ -40,7 +40,7 @@ function Actor.new(type, tile, faction)
     self:addComponent('body', Body.new(ACTOR_STATS[type].bodyParts, ACTOR_STATS[type].maxhealth));
     self:addComponent('attributes', Attributes.new(faction, ACTOR_STATS[type].stats, ACTOR_STATS[type].skills));
     self:addComponent('action', Action.new(self));
-    self:addComponent('inventory', Inventory.new(ACTOR_STATS[type].defaultItems));
+    self:addComponent('inventory', Inventory.new(ACTOR_STATS[type].inventory));
     --/
 
     function self:processTurn()

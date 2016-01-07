@@ -8,7 +8,6 @@ function InventoryScreen.new(game)
     local self = {};
 
     local inventory = game:getPlayer():getComponent( 'inventory' ):getItems();
-    local equipment = game:getPlayer():getComponent( 'inventory' ):getEquippedItems();
 
     local selection;
 
@@ -23,8 +22,6 @@ function InventoryScreen.new(game)
             love.graphics.print(inventory[i]:getName(), love.graphics.getWidth() - 200, i * 20 + 20);
             love.graphics.setColor(COLORS.WHITE);
         end
-
-        love.graphics.print('Weapon: ' .. (equipment.weapon and equipment.weapon:getName()), love.graphics.getWidth() - 200, 200);
     end
 
     function self:setInventorySelection(nselection)

@@ -24,8 +24,17 @@ local ACTOR_STATS = {
             'legs',
             'feet'
         },
-        defaultItems = {
-            weapon = 'fist',
+        inventory = {
+            weapons = {
+                { id =  'hands', weapon = 'fist' },
+            },
+            armor = {
+                { id =  'head', armor = 'skin' },
+                { id = 'hands', armor = 'skin' },
+                { id = 'torso', armor = 'skin' },
+                { id =  'legs', armor = 'skin' },
+                { id =  'feet', armor = 'skin' }
+            }
         }
     },
     [ACTOR_TYPES.CAT] = {
@@ -47,8 +56,18 @@ local ACTOR_STATS = {
             'legs',
             'tail'
         },
-        defaultItems = {
-            weapon = 'claw',
+        inventory = {
+            weapons = {
+                { id =  'paws', weapon = 'claw' },
+                { id =  'head', weapon = 'bite' },
+            },
+            armor = {
+                { id =  'head', armor = 'fur' },
+                { id =  'paws', armor = 'fur' },
+                { id = 'torso', armor = 'fur' },
+                { id =  'legs', armor = 'fur' },
+                { id =  'tail', armor = 'fur' }
+            }
         }
     },
     [ACTOR_TYPES.DOG] = {
@@ -70,8 +89,18 @@ local ACTOR_STATS = {
             'legs',
             'tail'
         },
-        defaultItems = {
-            weapon = 'claw',
+        inventory = {
+            weapons = {
+                { id =  'paws', weapon = 'claw' },
+                { id =  'head', weapon = 'bite' },
+            },
+            armor = {
+                { id =  'head', armor = 'fur' },
+                { id =  'paws', armor = 'fur' },
+                { id = 'torso', armor = 'fur' },
+                { id =  'legs', armor = 'fur' },
+                { id =  'tail', armor = 'fur' }
+            }
         }
     }
 };
