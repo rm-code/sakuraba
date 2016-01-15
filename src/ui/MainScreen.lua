@@ -48,8 +48,9 @@ function MainScreen.new()
     local game;
 
     local map;
-    local player;
     local turns;
+
+    local inventoryPanel;
 
     local input;
 
@@ -116,7 +117,7 @@ function MainScreen.new()
         end
     end
 
-    local function updateMap( map )
+    local function updateMap()
         local tiles = map:getTiles();
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
@@ -132,7 +133,7 @@ function MainScreen.new()
         end
     end
 
-    local function initialiseSpritebatch( spritebatch, map )
+    local function initialiseSpritebatch()
         local tiles = map:getTiles();
         for x = 1, #tiles do
             for y = 1, #tiles[x] do
@@ -151,9 +152,9 @@ function MainScreen.new()
         game = Game.new();
         game:init();
 
-        inventory = InventoryScreen.new( game );
+        inventoryPanel = InventoryScreen.new( game );
 
-        input = InputHandler.new( game, inventory );
+        input = InputHandler.new( game, inventoryPanel );
 
         camera = Camera.new();
 
@@ -169,11 +170,11 @@ function MainScreen.new()
 
         camera:detach();
 
-        inventory:draw();
+        inventoryPanel:draw();
         love.graphics.print( string.format('%.5d', turns), love.graphics.getWidth() - 45, love.graphics.getHeight() - 20 );
     end
 
-    function self:update( dt )
+    function self:update()
         map = game:getMap();
         turns = game:getTurns();
 
