@@ -31,7 +31,7 @@ function RangedAttack.new(target)
 
     local function calculateDamage(attacker, defender)
         local baseDamage = attacker:getComponent( 'inventory' ):getWeapon():getDamage();
-        local bodyPart = defender:getComponent( 'inventory' ):getRandomBodyPart();
+        local bodyPart = defender:getComponent( 'body' ):getRandomBodyPart();
         local dmgResistance = defender:getComponent( 'inventory' ):getArmor(bodyPart):getDamageResistance();
 
         local adjustedDamage = baseDamage - (baseDamage * (dmgResistance * 0.01));
